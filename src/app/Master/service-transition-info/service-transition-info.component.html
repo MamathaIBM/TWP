@@ -1,0 +1,86 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://1.www.s81c.com/common/v18/css/grid-fluid.css" rel="stylesheet">
+ 
+   <div  style="margin-left: -12px;">
+         <mat-form-field class="searchField">
+               <mat-label class="searchstyle" >Search</mat-label>
+               <input   class="searchstyle" id="STInfoSearch" matInput (keyup)="applyFilter($event.target.value)">
+            </mat-form-field>
+
+            <div class="text"> 
+                  <button id="STInfoAdd"  class="btn btn-info" 
+                   type="submit" [disabled]="editFlag === 1"  [hidden]="FlagHide=== 'Yes'" (click) ="Add_openDialog()">ADD Service Transition Info </button>                                     
+                  &nbsp;&nbsp;                                              
+            </div>
+       
+   <div class="example-container mat-elevation-z8" >
+
+    <table id="StInfoDataTable" mat-table [dataSource]="dataSource" matSort>
+
+      <ng-container matColumnDef="STScopeLevel">
+            <mat-header-cell mat-header-cell class="headerrow" *matHeaderCellDef mat-sort-header  >
+                     <span class="headerrow"> ST Scope Category </span>        
+            </mat-header-cell>
+            <mat-cell mat-cell *matCellDef="let element" ><span class="columnrrow">{{element.STScopeLevel}}</span>  
+            </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="STScope">
+         <mat-header-cell mat-header-cell class="headerrow" *matHeaderCellDef mat-sort-header  >
+                  <span class="headerrow"> ST Scope </span>        
+         </mat-header-cell>
+         <mat-cell mat-cell *matCellDef="let element" ><span class="columnrrow">{{element.STScope}} </span> 
+         </mat-cell>
+      </ng-container>
+      
+      <ng-container matColumnDef="STDetailedScope">
+         <mat-header-cell mat-header-cell class="headerrow" *matHeaderCellDef mat-sort-header  >
+                  <span class="headerrow">ST Detailed Scope </span>        
+         </mat-header-cell>
+         <mat-cell mat-cell *matCellDef="let element" ><span class="columnrrow">{{element.STDetailedScope}}</span>  
+         </mat-cell>
+      </ng-container>
+      
+      <ng-container matColumnDef="STScopeActivity">
+         <mat-header-cell mat-header-cell class="headerrow" *matHeaderCellDef mat-sort-header  >
+                  <span class="headerrow"> ST Scope Activity </span>        
+         </mat-header-cell>
+         <mat-cell mat-cell *matCellDef="let element" > <span class="columnrrow">{{element.STScopeActivity}} </span>
+         </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="STToolUsage">
+         <mat-header-cell mat-header-cell class="headerrow" *matHeaderCellDef mat-sort-header  >
+                  <span class="headerrow"> ST Tool Usage </span>        
+         </mat-header-cell>
+         <mat-cell mat-cell *matCellDef="let element" > <span class="columnrrow">{{element.STToolUsage}} </span>
+         </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="icon">
+                <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                <mat-cell class="headerrow" *matCellDef="let element; let i = index;" >  
+                        <button id="{{'EpicEdit'+i}}" class="btn btn-info" [hidden]="FlagHide=== 'Yes'"  (click)="setClickedRow(i,element,'Edit')"> <em class="fa fa-edit"></em>
+                        </button>     &nbsp;  
+                        <button id="{{'ViewEdit'+i}}" class="btn btn-info" [hidden]="FlagHide !== 'Yes'"  (click)="setClickedRow(i,element,'View')"> <em class="fa fa-eye"></em>
+                        </button>     &nbsp;                                                       
+                        <button id="{{'EpicDelete'+i}}" class="btn btn-info" [hidden]="FlagHide=== 'Yes'|| baselinePageFlag === 1 || baselineFlagValue===1" (click)="onDelete(element)">
+                        <em class="fa fa-trash"></em>
+                        </button>
+                     </mat-cell>
+      </ng-container>
+
+
+         <mat-header-row class="columnName" *matHeaderRowDef="displayedColumns;">
+         </mat-header-row>
+         <mat-row mat-row  class="result-row" *matRowDef="let row; let element; columns:displayedColumns;">
+         </mat-row> 
+
+
+      </table>
+     
+</div>
+<mat-paginator class="mat-elevation-z8" [pageSizeOptions]="[5, 1, 10, 20]" showFirstLastButtons></mat-paginator>
+   </div>
+   
+

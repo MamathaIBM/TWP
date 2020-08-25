@@ -1,0 +1,83 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://1.www.s81c.com/common/v18/css/grid-fluid.css" rel="stylesheet">      
+&nbsp;&nbsp;&nbsp;
+
+<div class="row" style="margin-left: -12px;">
+    <mat-form-field class="fntsz">
+     <mat-label class="fntsz">Select the Phase Name</mat-label>
+      <mat-select class="fntsz" id="TECPhaseName">
+        <mat-option class="fntsz"></mat-option>
+        <mat-option class="fntsz" (onSelectionChange)="change($event)" *ngFor="let TECPhaseName of TECPhaseNames" [value]="TECPhaseName.PHASE_NAME">          
+            {{TECPhaseName.PHASE_NAME}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- *ngIf="!(accountExistLength || updateFlag)" -->
+    <!-- *ngIf="ECaccountExistLength" -->
+    <div style="text-align:right;">
+        <button id="TECSave" class="btn btn-info" *ngIf="savedFlag && !ECaccountExistLength" [disabled]="progress>0" [hidden] ="FlagHide === 'Yes'" (click)="onSave()">
+            <em class="fa fa-save "></em>Save
+        </button>
+        <button id="TECUpdate" class="btn btn-info" *ngIf="ECaccountExistLength && updateFlg" [disabled]="progress>0" [hidden] ="FlagHide === 'Yes'" (click)="onUpdate()">
+                <em class="fa fa-save "></em> Update
+        </button>
+    </div>
+    <mat-progress-bar mode="indeterminate" *ngIf="progress"></mat-progress-bar>    
+    <div *ngIf="progress" ><h2> Please wait while data loads</h2></div>
+    <br>
+</div>
+<div class="row" *ngIf="FlagHide=== 'No'"  style="margin-left: -12px;">
+        <form *ngIf="ECaccountExistLength && updateFlg" #form="ngForm" [formGroup]="TailorECForm">
+                <table id="TECFormTable" ><tr>
+                    <td>                    
+                    <mat-form-field class="fntsz" style="width:300px">
+                    <mat-label class="fntsz">New Exit Criteria</mat-label>
+                    <textarea class="fntsz" id="TECExitCriteria" matInput formControlName="EXIT_CRITERIA"></textarea>
+                    </mat-form-field>                    
+                    &nbsp; 
+                    <button id="TECAdd" class="btn btn-info" [disabled]="TailorECForm.controls['EXIT_CRITERIA'].value === ''" [hidden] ="FlagHide === 'Yes'" (click)="addActivities()">
+                            <em class="fa fa-save "></em>Add Account Specific Exit Criteria  
+                    </button>
+                </td>
+                </tr></table>
+        </form>        
+</div>
+<div class="row" style="margin-left: -12px;">
+        <table id="TECDataTable" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+            <ng-container matColumnDef="TEC_STANDARD_ACTIVITY_NAME">
+                <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass'" style="display:flex !important;">
+                    <th class="matHeader">Exit Criteria</th>
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element; let i = index;" [ngClass]="'customWidthClass'" style="display:flex !important;">                    
+                    <mat-form-field class="fntszTrName">
+                      <textarea class="fntszTrName" rows="1" id="{{'TECExit'+i}}" matInput placeholder="" [readonly]="FlagHide === 'Yes'" (keyup)="onKey($event,element)"
+                      [value] = "element.EXIT_CRITERIA">                                    
+                      </textarea>
+                   </mat-form-field>
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="TECChecked">
+                <mat-header-cell *matHeaderCellDef [ngClass]="'customWidthlessClass'" style="display:flex !important;justify-content:center!important;">
+                    <th class="matHeader">Select All / De-Select All
+                        <mat-checkbox class="example-margin"  [checked]= "s_dFlag"   
+                        [disabled]="FlagHide === 'Yes'"                                    
+                        (change)="select_deselect()">
+                        </mat-checkbox> 
+                    </th>
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element; let i = index;" [ngClass]="'customWidthlessClass'" style="display:flex !important;justify-content:center!important;">                                  
+                    <mat-checkbox id="{{'TECCheckBox'+i}}" class="example-margin" [checked]= "element.CheckedValue" [disabled] ="FlagHide === 'Yes'" 
+                    (change)="onChange($event,element)">
+                    </mat-checkbox>                                                
+                </mat-cell>
+            </ng-container>   
+            
+            <!-- "element.CheckedValue" -->
+
+            <mat-header-row class="columnName" *matHeaderRowDef="displayedColumns"></mat-header-row>                                         
+            <mat-row class="result-row" *matRowDef="let row; let element; columns:displayedColumns;" [ngClass]="{ highlight: row == selectedRow }">
+                </mat-row>  
+        </table> 
+</div>

@@ -1,0 +1,153 @@
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://1.www.s81c.com/common/v18/css/grid-fluid.css" rel="stylesheet">    
+
+&nbsp;&nbsp;&nbsp;
+
+<div class="row" style="margin-left: -12px;font-size:11px;">
+
+  <div class="container" style="text-align: center;width: 100%;padding-left: 10%;padding-right: 10%;" >
+
+   <table  class="container" style="width: 100%;">
+
+    <tr style="text-align:left;">
+         <td class="headerrowheadpage" style="text-align:left;display:inline-flex">
+                Health & Readiness Criteria List for {{parameterName}} 
+        </td>
+
+       <!--
+            <div class="headerrow" style="width: 100%;" *ngIf="userAccessProfileService.getViewFlag()=='No'" >     
+                    Health & Readiness Criteria List for {{parameterName}}
+            </div>
+
+            <div class="headerrow"  *ngIf="userAccessProfileService.getViewFlag()=='Yes'" >     
+                    Health & Readiness Criteria List for {{parameterName}}
+            </div>
+        --> 
+
+            <td style="text-align: right;">
+                    
+                                <div  *ngIf="thereAreMoreToAdopt==='Y'"> 
+
+                                        <label class="fntsz">Adopt</label>
+                                        <button mat-icon-button type="button" id="id_save" (click)="save()">
+                                                <mat-icon >save</mat-icon> 
+                                        </button> 
+                                        <button mat-icon-button type="submit" id="id_create" (click)="createNew()">
+                                                <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+                                        </button>
+                                        <button mat-icon-button type="button" id="id_back" (click)="back()">                                                
+                                                <mat-icon>arrow_back</mat-icon>
+                                        </button>
+                                </div>
+                                <div  *ngIf="thereAreMoreToAdopt!=='Y'"> 
+                                        <button mat-icon-button type="submit" id="id_create" (click)="createNew()">
+                                                <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+                                        </button> 
+                                        <button mat-icon-button type="button" id="id_back" (click)="back()">                                                
+                                                <mat-icon>arrow_back</mat-icon>
+                                        </button>
+                                </div>        
+                        
+            </td>
+      </tr>
+    </table> 
+&nbsp;&nbsp;&nbsp;
+    
+            <form [formGroup]="readinessQuestionDesignListForm" >
+                    <div formArrayName="questions" style="width: 100%;">
+                            <table mat-table [dataSource]="dataSource"   matSort  style="width: 100%;" >
+
+                                <!--- Note that these columns can be defined in any order.
+                                    The actual rendered columns are set as a property on the row definition" -->
+                            
+
+
+                            
+                                <!-- Readiness Question Column -->
+                                <ng-container matColumnDef="readinessQuestion">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                        <th class="matHeader">Readiness Question</th>
+                                    </mat-header-cell>
+                                <mat-cell  *matCellDef="let readinessQuestion" > {{readinessQuestion.readinessQuestion}}                               
+                                </mat-cell>
+                                </ng-container>
+
+                            
+                                <!-- Field Type -->
+                                <ng-container matColumnDef="readinessQuestionAnswerFieldType">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                        <th class="matHeader">Field Type</th>
+                                    </mat-header-cell>
+                                <mat-cell *matCellDef="let readinessQuestion"> {{readinessQuestion.readinessQuestionAnswerFieldType}} </mat-cell>
+                                </ng-container>
+
+                            
+                                
+                                <!--Data Type -->
+                                <ng-container matColumnDef="readinessQuestionDataType">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                        <th class="matHeader">Data<br>Type</th>
+                                    </mat-header-cell>
+                                <mat-cell  *matCellDef="let readinessQuestion" > {{readinessQuestion.readinessQuestionDataType}}                               
+                                </mat-cell>
+                                </ng-container> 
+
+                                <!-- Answer Set -->
+                                <ng-container matColumnDef="readinessQuestionAnswerSet">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                        <th class="matHeader">Answer<br>Set</th>
+                                    </mat-header-cell>
+                                    <mat-cell  *matCellDef="let readinessQuestion"> {{readinessQuestion.readinessQuestionAnswerSet}}                               
+                                    </mat-cell>
+                                </ng-container>
+
+                                
+
+                                <!-- Operations Column -->
+                                <ng-container matColumnDef="readinessQuestionId" >
+                                    
+                                
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                        <th class="matHeader">
+                                            Operation<br>
+                                            <mat-checkbox  disabled="{{view_flag}}" class="checkBoxStyle" id="id_checkbox_overall" (change)="onCheckAll($event)"  ></mat-checkbox>                                                
+                                        </th>
+                                    </mat-header-cell>
+                                    <mat-cell  *matCellDef="let readinessQuestion; let rowIndex = index" style=" width: 20em;"  [formGroupName]="rowIndex"> 
+                                            <div *ngIf="readinessQuestion.adopted==='N'">     
+                                                    <mat-checkbox class="example-margin" (change)="onCheck($event)" id="id_checkbox_overall{{readinessQuestion.readinessQuestionId}}"  [checked]="checked_value"  value="{{rowIndex}}" disabled="{{view_flag}}" ></mat-checkbox>                                                
+                                            </div>            
+                                            <div *ngIf="readinessQuestion.adopted==='Y'  || readinessQuestion.adopted === 'NA' ">
+                                                    <div *ngIf="userAccessProfileService.getViewFlag()=='No'" >
+                                                        <button mat-icon-button type="submit" id="checkbox_delete{{readinessQuestion.readinessQuestionId}}" (click)="onDelete(readinessQuestion)" >
+                                                            <mat-icon aria-label="Example icon-button with a heart icon">delete_forever</mat-icon>
+                                                        </button>            
+                                                        <button mat-icon-button type="submit" id="checkbox_update{{readinessQuestion.readinessQuestionId}}" (click)="onUpdate(readinessQuestion)">
+                                                            <mat-icon aria-label="Example icon-button with a heart icon">edit</mat-icon>
+                                                        </button>  
+                                                </div>
+                                                <div *ngIf="userAccessProfileService.getViewFlag()=='Yes'" >          
+                                                        <button mat-icon-button type="submit" id="id_button_update{{readinessQuestion.readinessQuestionId}}"(click)="onUpdate(readinessQuestion)">
+                                                            View
+                                                        </button>  
+                                                </div>                      
+                                        </div>
+                                    </mat-cell>        
+                            
+                                </ng-container>      
+
+
+                                <mat-header-row class="columnName" *matHeaderRowDef="displayedColumns"></mat-header-row>                
+
+                                <mat-row class="result-row" *matRowDef="let row; let element; columns:displayedColumns;"  [ngClass]="{ highlight: row == selectedRow }">
+                                    </mat-row>  
+
+
+                            </table>
+                    </div>
+            </form>     
+    </div>
+
+</div>
+

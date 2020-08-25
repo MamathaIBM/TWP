@@ -1,0 +1,163 @@
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+&nbsp;&nbsp;&nbsp;
+
+
+<link href="https://1.www.s81c.com/common/v18/css/grid-fluid.css" rel="stylesheet">      
+&nbsp;&nbsp;&nbsp;
+
+<div style="text-align: left;"><label>SECTION TABLE</label></div>
+<div class="line" style="text-align:right;width:100%;padding-left: 5%;padding-right: 5%;" >      
+</div>
+<form [formGroup]="sectionTableAddForm"   >
+
+            <table>
+                <tr style="text-align: left;">
+                        <td style="text-align: left;width: 70%;">
+                               <mat-form-field style="width: 100%;font-size: 11px;">
+                                     <input matInput style="font-size: 11px;"  placeholder="Section title"   id="sectionTableName_id"  formControlName="sectionName" >
+                               </mat-form-field>
+                        </td>                       
+                        <td style="text-align: right;width: 50%;">
+ 
+                                <button mat-icon-button type="submit" id="del_id" (click)="removeSelf()">
+                                        <mat-icon aria-label="Example icon-button with a heart icon">delete_forever</mat-icon>
+                                </button> 
+                                <button mat-icon-button type="submit" id="up_id" (click)="goUp()">
+                                        <mat-icon aria-label="Example icon-button with a heart icon">arrow_upward</mat-icon>
+                                </button> 
+                                <button mat-icon-button type="submit" id="up_id" (click)="goDown()">
+                                        <mat-icon aria-label="Example icon-button with a heart icon">arrow_downward</mat-icon>
+                                </button>
+                                <br> 
+                                <button mat-icon-button type="submit" id="get_data_id" (click)="getContent()">
+                                         Get content
+                                </button>
+                                <!--
+                                <button mat-icon-button type="submit" id="get_data_id" (click)="openExcelUpload()">
+                                        Excel Upload
+                               </button>
+                               -->
+                        </td>   
+                </tr>  
+            </table>    
+            <table>
+                        <tr style="text-align: left;">
+                                <td>  
+                                        <mat-form-field style="width:100px" class="fntsz" matTooltip="Content bg color">
+                                                <input matInput placeholder="Content bg color" class="fntsz" id="body_color_id"  formControlName="bodyColor"  required>
+                                        </mat-form-field>                  
+                                </td>
+                                <td  class="fntsz">
+                                        <mat-form-field style="width:100px" class="fntsz" matTooltip="Title text color">
+                                            <input matInput placeholder="Title text color" class="fntsz" id="title_color_id"  formControlName="titleColor"  required>
+                                        </mat-form-field>
+                                </td>
+                                <td >
+                                        <mat-form-field style="width:100px" class="fntsz" matTooltip="Title bg color">
+                                            <input matInput placeholder="Title bg color" class="fntsz" id="title_bg_color_id"  formControlName="titleBgColor"  required>
+                                        </mat-form-field>
+                                </td>   
+                                <td >
+                                        <mat-form-field style="width:100px" class="fntsz" matTooltip="Title height">
+                                             <input matInput placeholder="Title height" class="fntsz"  id="title_height_id"  formControlName="titleHeight"  required>
+                                        </mat-form-field>
+                                </td>  
+                                <td style="text-align: right;">  
+                                        <mat-form-field style="width:100px" class="fntsz" matTooltip="Title font size">
+                                            <input matInput placeholder="Title font size" class="fntsz" id="title_font_size_id"  formControlName="titleFontSize"  required>
+                                        </mat-form-field>                  
+                                </td>                                                                       
+                
+                        </tr>  
+                        <tr style="text-align: left;"> 
+                                <td style="text-align: left;">
+                                        <mat-select class="fntsz"  placeholder="Select slide" id="slide_id" formControlName="sectionSlide" style="width:100px" required>
+                                                <mat-option *ngFor="let slide of slideTypes" value="{{slide.id}}">
+                                                        {{slide.param}}
+                                                </mat-option>
+                                        </mat-select>
+                                </td>                           
+                                       
+                            <td style="text-align: left;">
+                                    <mat-form-field style="width:100px" class="fntsz">
+                                        <input matInput placeholder="X(%)" class="fntsz"  id="x_id"  formControlName="positionX"  required>
+                                    </mat-form-field>                        
+                            </td>
+                            <td >  
+                                    <mat-form-field style="width:100px" class="fntsz">
+                                        <input matInput placeholder="Y(%)" class="fntsz" id="y_id"  formControlName="positionY"  required>
+                                    </mat-form-field>                  
+                            </td> 
+                            <td >  
+                                <mat-form-field style="width:100px" class="fntsz" matTooltip="Tab height">
+                                         <input matInput placeholder="Tab height" class="fntsz" id="body_height_id"  formControlName="bodyHeight"  required>
+                                </mat-form-field>                  
+                            </td>                     
+                            <td style="text-align: right;">  
+                                    <mat-form-field style="width:100px" class="fntsz" matTooltip="Tab txt size">
+                                        <input matInput placeholder="Tab txt size" class="fntsz" id="font_size_id"  formControlName="fontSize"  required>
+                                    </mat-form-field>                  
+                            </td>                             
+                        </tr>
+                    </table>
+</form>
+<form [formGroup]="sectionTableAdd1Form" >
+    <div style="text-align: center;">    
+        <td style="text-align: left;font-size: 11px;"><label>Records fetched at:</label> {{dataTime}}</td> 
+        <div class="container" style="text-align:right;height:350px;width:100%;overflow-x: scroll;overflow: auto;">  
+            <ng-container formArrayName="tabs"  style="height:350px;overflow-x: scroll;overflow: auto;">
+                    <table mat-table  [dataSource]="dataSource" class="mat-elevation-z8" style="overflow-x: scroll;">                
+                                <!--- Note that these columns can be defined in any order.
+                                        The actual rendered columns are set as a property on the row definition" -->                                                                
+                                <ng-container *ngFor="let disCol of displayedColumns; let colIndex = index" matColumnDef="{{disCol}}">
+                                
+                                                <mat-header-cell matTooltip="{{columnKeyValue[disCol]}}" style="font-size:11px;" *matHeaderCellDef class="headerrow_table" >                    
+                                                
+                                                                        <div style="font-size:11px;word-wrap:break-word;text-align: center;width:150px !important;">      
+                                                                                        <!-- {{columnKeyValue[disCol].substring(0,16)}}...  -->
+                                                                                    <mat-form-field style="width:150px !important;font-size:11px;text-align: center;">   
+                                                                                           <textarea matInput style="font-size: 11px;" id="text{{colIndex}}" [formControlName]="colIndex"   (change)="onChange(rowIndex*(displayedColumns.length) + colIndex, rowIndex, colIndex,element[disCol]==undefined?'':element[disCol])" [value]="columnKeyValue[disCol]"></textarea>
+                                                                                    </mat-form-field>         
+                                                                        </div>
+                                                                        <!--
+                                                                        <div  style="font-size:11px;word-wrap: break-word;text-align: center;width:150px !important;" *ngIf="(columnKeyValue[disCol]).length <= 20">      
+                                                                                        {{columnKeyValue[disCol]}}
+                                                                                        <input matInput style="font-size: 11px;" id="text{{rowIndex}}" formControlName="answer"  (change)="onChange(rowIndex*(displayedColumns.length) + colIndex, rowIndex, colIndex,element[disCol]==undefined?'':element[disCol])" [value]="columnKeyValue[disCol]">    
+                                                                        </div>  
+                                                                        --> 
+                                                                
+                                                </mat-header-cell>   
+                                                
+                                                
+                                                <mat-cell style="font-size:11px;width:150px !important;" *matCellDef="let element; let rowIndex = index" > 
+                                                                                                                
+                                                                        <div style="font-size:11px;width:150px !important;"  >    
+                                                                                <mat-form-field style="width:150px !important;font-size:11px;text-align: center;">                                                                                                                      
+                                                                                                <textarea matInput style="font-size: 11px;" id="text{{(rowIndex)*(displayedColumns.length) + colIndex}}" [formControlName]="(rowIndex+1)*(displayedColumns.length) + colIndex"  (change)="onChange(rowIndex*(displayedColumns.length) + colIndex, rowIndex, colIndex,element[disCol]==undefined?'':element[disCol])" [value]="element[disCol]==undefined?'':element[disCol]"></textarea>    
+                                                                                </mat-form-field>                                                                                  
+                                                                        </div>                                                   
+                                                </mat-cell>
+                                        
+                                </ng-container>                                
+                                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>                                
+                    </table>                    
+            </ng-container>
+        </div>    
+    </div>
+</form>
+
+
+    <ng-template #loading>
+            LOADING...
+            <mat-spinner></mat-spinner>  
+    </ng-template>
+
+
+    
+  
+
+
+
+

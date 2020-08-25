@@ -1,0 +1,102 @@
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<form [formGroup]="standardActivityAddForm"  >
+
+<!--
+      
+   <div style="text-align: left" >
+
+            <table>
+            <tr> 
+                              <td> 
+            <button mat-icon-button type="button" (click)="gotoFileUpload()">
+            <mat-icon >attach_file</mat-icon>            
+            </button> 
+            <button mat-icon-button id="create_activity_id" type="button" (click)="gotoCreateActivity()">
+                        <mat-icon >add</mat-icon>
+            </button> 
+            </td>
+                        </tr>
+            </table>
+    </div>
+
+    &nbsp;&nbsp;&nbsp;
+
+   -->
+   <div  class="container" style="text-align:right;width:100%;padding-left: 15%;padding-right: 15%;">    
+            <table>
+                        <tr> 
+
+                              <td>
+
+                                    <div style="text-align:left;" >   
+
+                                            <div class="headerrowheadpage" style="text-align:left;  font-size:11px; display: inline-flex;">
+                                                    Standard phase activities > {{phaseName}}
+                                            </div>    
+                                    </div>  
+                              </td>
+                              <td style="text-align:right;"> 
+                                          <button mat-icon-button type="button" (click)="gotoFileUpload()">
+                                                      <mat-icon >attach_file</mat-icon>            
+                                                      </button> 
+                                                      <button mat-icon-button id="create_activity_id" type="button" (click)="gotoCreateActivity()">
+                                                                  <mat-icon >add</mat-icon>
+                                                      </button> 
+                              </td> 
+                       </tr>                          
+                    </table>   
+<table mat-table [dataSource]="dataSource"  matSort >
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+  
+    <!-- Name Column -->
+    <ng-container matColumnDef="standardActivityName">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+               <th class="matHeader">Standard Activities</th>
+          </mat-header-cell>
+       <mat-cell *matCellDef="let standardActivity" style="text-align: left;" > {{standardActivity.standardActivityName}} </mat-cell>
+    </ng-container>
+
+    <!-- Milestone Or Task Column -->
+    <ng-container matColumnDef="milestoneOrTask">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                 <th class="matHeader">Milestone Or Task</th>
+            </mat-header-cell>
+         <mat-cell *matCellDef="let standardActivity"    > {{standardActivity.milestoneOrTask}} </mat-cell>
+      </ng-container>    
+  
+    <!-- Operations Column -->
+    <ng-container matColumnDef="standardActivityId">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                  <th class="matHeader">   
+                          Edit                                            
+                          <button mat-icon-button id="delete_activity_id" (click)="deleteActivities()">
+                                <mat-icon aria-label="Example icon-button with a heart icon">delete</mat-icon>
+                          </button>                                                  
+                  </th>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let standardActivity; let rowIndex = index"    >                                                    
+                    
+                  <button mat-icon-button id="edit_activity_id{{rowIndex}}" type="submit" (click)="onUpdate(standardActivity.standardActivityId)">
+                        <mat-icon aria-label="Example icon-button with a heart icon">edit</mat-icon>
+                   </button> 
+                   &nbsp;&nbsp;&nbsp;
+                   <mat-checkbox id="check_id{{rowIndex}}" class="example-margin" (change)="onChange($event)"  value="{{standardActivity.standardActivityId}}" ></mat-checkbox>                   
+            </mat-cell>   
+          
+               
+    </ng-container>      
+  
+    <mat-header-row class="columnName" *matHeaderRowDef="displayedColumns"></mat-header-row>     
+               
+    <mat-row class="result-row" *matRowDef="let row; let element; columns:displayedColumns;" (click)="setClickedRow(row,element)" [ngClass]="{ highlight: row == selectedRow }"></mat-row>
+
+
+</table>
+</div>
+
+

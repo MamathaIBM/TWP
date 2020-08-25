@@ -1,0 +1,20 @@
+<mat-dialog-content [formGroup]="form">
+  <div class="headerrow" >
+    Save As
+   </div>
+    <div mat-dialog-content>
+      <p>This will create a new report, please enter Report name & Version</p>
+      <mat-form-field style="font-size: 11px;" >
+          <input style="font-size: 11px;" placeholder="Report name" matInput formControlName="reportName" value="{{reportName}}" required>
+      </mat-form-field>
+    </div>
+    <div>
+    <mat-form-field style="font-size: 11px;">
+          <input matInput style="font-size: 11px;" placeholder="Version" formControlName="version" value="{{version}}" required>
+     </mat-form-field>
+    </div>
+</mat-dialog-content>
+<div mat-dialog-actions>
+    <button type="button" color="primary" (click)="onNoClick()">Cancel </button>
+    <button type="button" color="primary" (click)="save()"> Ok </button>
+</div>

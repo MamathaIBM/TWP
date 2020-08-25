@@ -1,0 +1,115 @@
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+&nbsp;&nbsp;&nbsp;
+
+
+<link href="https://1.www.s81c.com/common/v18/css/grid-fluid.css" rel="stylesheet">      
+&nbsp;&nbsp;&nbsp;
+
+<form [formGroup]="functionalityEditForm"  >
+
+    <div  class="container" style="text-align:right;width:100%;padding-left: 15%;padding-right: 15%;">  
+                <table style="width:100%;">
+                        <tr>     
+                              <td >        
+                                    <div style="text-align:left;" >           
+                                            <div class="headerrowheadpage" style="text-align:left;  font-size:11px;display: inline-flex;">
+                                                    Functionality>Functionality edit
+                                            </div>    
+                                    </div>  
+                              </td>
+                              <td>     <div style="text-align:right;" >  
+                                        
+                                                        <button type="button" id="submit_id" mat-raised-button color="primary" class="form_main_button" (click)="onSubmit()" >Submit</button>
+                                                        <button type="button" id="cancel_id" mat-raised-button color="primary" class="form_main_button" (click)="cancel()" >Cancel</button>
+                                            
+                                        
+                                        </div>                                  
+                              </td>
+                        </tr>      
+                </table> 
+                
+                
+
+
+  <table class="functionality-table" style="width: 100%;">
+    <tr>
+      <td class ="functionality-table-td-single" style="text-align:left" >
+          <mat-form-field class="text-input-width">
+              <textarea class="fntsz" matInput placeholder="Functionality Name"  id="functionalityName_id" formControlName="functionalityName" required></textarea>
+          </mat-form-field>
+      </td>
+      <td class ="functionality-table-td-single" >
+          <mat-form-field class="text-input-width">
+              <input class="fntsz" matInput placeholder="Router Link"   id="functionalityRouterLink_id" formControlName="functionalityRouterLink" required>
+          </mat-form-field>
+      </td>   
+  </tr>
+  <tr>
+    <td class ="functionality-table-td-single"style="text-align:left" >
+        <mat-form-field class="text-input-width">
+            <input class="fntsz"  matInput placeholder="Unique Operation Identifier(UOI)"  id="functionalityUOI_id"  formControlName="functionalityUOI" required>
+        </mat-form-field>
+    </td>
+    <td class ="functionality-table-td-single">
+        <mat-form-field class="text-input-width">            
+            <mat-select class="fntsz"  placeholder="Default Functionality (Y/N)?"  id="functionalityDefault_id" formControlName="functionalityDefault" required>
+                <mat-option *ngFor="let functionality of functionalities" [value]="functionality.id">
+                    {{functionality.param}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </td>   
+</tr>   
+  <tr>
+    <td class ="functionality-table-td-single" style="text-align:left">
+        <mat-form-field class="text-input-width">            
+            <mat-select class="fntsz"  placeholder="Operation Type - Read/Write/Both"  id="functionalityOperationType_id" formControlName="functionalityOperationType" required>
+                <mat-option *ngFor="let operation of operationTypes" [value]="operation.id">
+                    {{operation.param}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </td>
+    <td class ="functionality-table-td-single">
+        <mat-form-field class="text-input-width">            
+            <mat-select class="fntsz"  placeholder="Is Transition Specific? - Y/N"  id="functionalityTransitionDependency_id" formControlName="functionalityTransitionDependency" required>
+                <mat-option *ngFor="let default of defaults" [value]="default.id">
+                    {{default.param}}
+                </mat-option>
+            </mat-select>    
+        </mat-form-field>
+    </td>   
+</tr>  
+  <tr>
+    <td class ="functionality-table-td-single" style="text-align:left">
+        <mat-form-field class="text-input-width">
+            <textarea class="fntsz"  matInput placeholder="Module"  id="functionalityModule_id"  formControlName="functionalityModule"></textarea>
+          </mat-form-field>
+    </td>
+    <td class ="functionality-table-td-single">
+        <mat-form-field class="text-input-width">
+            <textarea class="fntsz"  matInput placeholder="Description" id="functionalityDescription_id"  formControlName="functionalityDescription"></textarea>
+          </mat-form-field>
+    </td>    
+  </tr> 
+
+  <!--
+    <tr >
+        <td style="text-align:center;" colspan="2">
+            <button type="button" id="submit_id" mat-raised-button color="primary" class="form_main_button" (click)="onSubmit()" >Submit</button>
+            <button type="button" id="cancel_id" mat-raised-button color="primary" class="form_main_button" (click)="cancel()" >Cancel</button>
+        </td>      
+      </tr>     
+  -->    
+</table>
+</div>
+</form>
+
+    
+  
+
+
+
+

@@ -1,0 +1,142 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://1.www.s81c.com/common/v18/css/grid-fluid.css" rel="stylesheet">
+<div class="row" *ngIf="FlagHide=== 'No'" style="margin-left: -12px;">
+    <form #form="ngForm" [formGroup]="CDForm" (ngSubmit)="onSubmit()" autocomplete="off">        
+        <table id="CDFormTable">
+            <div style="display: none;">
+            <tr>
+                <mat-form-field class="example-full-width">
+                    <input id="CDIntegrationID" matInput placeholder="Integration ID" formControlName="IntigrationID" [readonly]="!editable" [hidden]=true>
+                </mat-form-field> 
+            <td>
+                <mat-form-field class="example-full-width">
+                    <input id="CDCreated" matInput placeholder="Created By" formControlName="CreatedBy" [readonly]="!editable" [hidden]=true>
+                </mat-form-field> 
+            </td>
+            <td>
+                <mat-form-field class="example-full-width">
+                    <input id="CDModified" matInput placeholder="Modified By" formControlName="ModifiedBy" [readonly]="!editable" [hidden]=true>
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field class="example-full-width">
+                    <input id="CDuniqueID" matInput placeholder="Unique ID" formControlName="CDUNID" [readonly]="!editable" [hidden]=true>
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field class="example-full-width">
+                 <input id="CDOtherMail" matInput placeholder="Owner Email" formControlName="ContractDoc_Owneremail" [readonly]="!editable" [hidden]=true>
+                </mat-form-field>
+            </td>
+            </tr>
+        </div>
+        <tr>
+            <td>
+                <mat-form-field class="fntsz">
+                    <mat-label class="fntsz">Deliverable Name</mat-label>
+                    <mat-select class="fntsz" id="CDDeliverName" formControlName="DeliverableName" required [disabled]="editFlag=== 1" (selectionChange)="onKeyDelVal()">
+                        <mat-option class="fntsz" (click)="deselectval()">--</mat-option>
+                        <mat-option class="fntsz" (click)="deselectval()" *ngFor="let Deliverable of Deliverableoptions" [value]=Deliverable.Categoryvalues>
+                            {{Deliverable.Categoryvalues}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                &nbsp;&nbsp;
+            </td>
+            <td>
+            <div *ngIf="FlagDelOpt=== 'No'">           
+                <mat-form-field class="fntsz">
+                    <mat-label class="fntsz">Deliverable Value</mat-label>
+                    <mat-select class="fntsz" id="CDDeliverValue" formControlName="DeliverableValue" multiple required [disabled]="editFlag=== 1">
+                             <mat-option class="fntsz" *ngFor="let CDValue of CDValue" [value]=CDValue.Categoryvalues>
+                            {{CDValue.Categoryvalues}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                &nbsp;&nbsp;
+            </div>
+            </td>
+            <td>
+            <div *ngIf="FlagDelOpt==='Yes'">
+                <mat-form-field class="fntsz">
+                        <mat-label class="fntsz">Deliverable Value</mat-label>
+                    <input class="fntsz" id="CDDeliverValText" matInput formControlName="DeliverableValueText" required [disabled]="editFlag=== 1">
+                </mat-form-field>
+                &nbsp;&nbsp;
+            </div>
+        </td>
+        <td>
+                <mat-form-field class="fntsz" style="width: 300px">
+                    <mat-label class="fntsz">Owner of the Document</mat-label>
+                    <input class="fntsz" id="CDOwnName" #ContractDoc_OwnerNM matInput (keypress)="valuechange($event.target.value)" formControlName="ContractDoc_OwnerNM" [matAutocomplete]="auto">
+                    <mat-autocomplete class="fntsz" #auto="matAutocomplete">
+                      <mat-option class="fntsz" (onSelectionChange)="getEmail(option.email)" *ngFor="let option of myJSON" [value]="option.Emp_Name">
+                            <img class="ibm-downsize ibm-circle" src= {{option.photo}} alt="IBM Face" style="width:30px;height:30px;background-size: contain;"> {{option.name}}
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+                  <button id="CDNameSearch" class="btn btn-info" type="button" (click)="getEmployeeName(CDForm.controls['ContractDoc_OwnerNM'].value)"><em class="fa fa-search"></em></button> 
+            </td>
+        </tr>
+</table>
+<div class="example-button-row">                
+        <button id="CDAdd" class="btn btn-info" type="submit" [disabled]="this.editFlag === 1 || !CDForm.valid"
+        (click) ="Add()">ADD </button>   
+        <button id="CDUpdate" class="btn btn-info" type="submit" [disabled]="!CDForm.valid || this.editFlag === 0" 
+        (click)= "Update()">Update </button>
+   </div>
+    </form>
+</div>
+<br>
+<div class="row" style="margin-left: -12px;font-size:11px">
+            <tr>
+               <th style="font-size:11px" id="header">Available Contractual Deliverables :  <span>{{dataLength}}</span> </th>                  
+            </tr>  
+            <mat-form-field class="fntsz">
+                    <mat-label class="fntsz"><em class="fa fa-search" aria-hidden="true"></em></mat-label><input class="fntsz" id="CDSearch" matInput (keyup)="applyFilter($event.target.value)">
+            </mat-form-field>
+            <table id="CDDataTable" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+    
+                                <ng-container matColumnDef="DeliverableName">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                        <th class="matHeader">Deliverable Name</th>
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"  >{{element.DeliverableName}}                
+                                    </mat-cell>
+                                </ng-container>
+                
+                                <ng-container matColumnDef="DeliverableValues">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                        <th class="matHeader">Deliverable Values</th>
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"  >{{element.DeliverableValues}}                
+                                    </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="ContractDoc_OwnerNM">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                        <th class="matHeader">Owner of the Document</th>
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"  >{{element.ContractDoc_OwnerNM}}                
+                                    </mat-cell>
+                                </ng-container>
+                                   
+                                <ng-container matColumnDef="Delete">
+                                        <mat-header-cell *matHeaderCellDef>
+                                            <th class="matHeader"></th>
+                                        </mat-header-cell>
+                                        <mat-cell *matCellDef="let element; let i = index;">                                         
+                                                <button id="{{'CDDelete'+i}}" class="btn btn-info" (click)="onDelete(element)" [hidden]="FlagHide=== 'Yes'">
+                                                    <em class="fa fa-trash"></em>
+                                                </button>          
+                                        </mat-cell>
+                                </ng-container>
+                                
+                                <mat-header-row class="columnName" *matHeaderRowDef="displayedColumns"></mat-header-row>                
+                               
+                                <mat-row class="result-row" *matRowDef="let row; let element; columns:displayedColumns;" (click)="setClickedRow(row,element)" [ngClass]="{ highlight: row == selectedRow }">
+                                    </mat-row>  
+                            </table> 
+                            <mat-paginator [pageSizeOptions]="[5, 1, 10, 20]" showFirstLastButtons (click)="setClickedRow(0,element)"></mat-paginator> 
+        
+    </div>

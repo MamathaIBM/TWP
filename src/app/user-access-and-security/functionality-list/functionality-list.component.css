@@ -1,0 +1,240 @@
+
+nav.nav-center ul {
+  text-align: center;
+  background-color:paleturquoise;
+}
+nav.nav-center ul li {
+  display: inline;
+  float: none;
+}
+nav.nav-center ul li a {
+  display: inline-block;
+}
+
+table {
+  width: 100%;
+}
+
+.columnName {
+  color:white;
+  font-weight: bold;
+  background-color: #1d3649;
+  text-align: center;
+  font-size:11px;
+} 
+
+
+.highlight  {
+  background-color:cornsilk !important;
+  font-weight: bold;
+} 
+
+
+.headerrow {  
+  font-weight: bold;
+  background-color: #1d3649;
+  text-align: center;
+  color:white;
+  font-size:11px;
+    width: 100%;
+  font-size:11px;
+}
+
+
+.headerrowhead{
+  color:white;
+  font-weight: bold;
+  background-color: #3A6C92;
+  font-size:11px;
+  width: 100%;
+}
+
+.headerrowheadpage{
+  color:white;
+  font-weight: bold;
+  background-color: #1d3649;
+  font-size:11px;
+}
+
+
+.matHeader {
+  font-weight: bold;
+  color:white;    
+  font-size:11px;
+}
+
+
+.mat-cell{
+  display:flex !important;
+  font-size:11px;
+
+}
+
+.mat-row {
+  min-height: 10px !important;
+  font-size:11px;
+}
+
+
+.mat-elevation-z8 {
+  width: 1000px;
+}
+/* th.mat-sort-header {
+  color:white;
+} */
+
+.mat-form-field {
+  font-size: 14px;
+  font-size:11px;
+} 
+
+::ng-deep .mat-form-field-label {
+  /*change color of label*/
+  font-size:11px;
+}
+
+button {
+  background-color: #1d3649;
+  color: white;
+  font-size: 11px;
+
+  display: inline-flex;
+  width: fit-content;
+
+}
+
+.blueColor {
+  color:blue;   
+}
+button.btn-info {
+  background-color: #1d3649;
+  color: white;
+  font-size: 11px;
+} 
+
+.fntszacc{
+  font-size:11px;
+  word-wrap: break-word;
+  width:89%
+}
+
+.fntsz{
+  font-size:11px;
+  word-wrap: break-word;
+}
+
+.fntszDt{
+  font-size:11px;
+  width:75%
+}
+
+.mat-error{
+ font-size: 11px;
+}
+
+
+
+
+
+
+.mat-column-FUNC_NAME {
+  word-wrap: break-word !important;
+  text-align: left;
+  word-break: break-word;
+  flex: 0 0 10% !important;
+  width: 10% !important;
+
+}
+
+.mat-column-FUNCTIONALITY_ID {
+  word-wrap: break-word !important;
+  text-align: left;
+  word-break: break-word;
+  flex: 0 0 11% !important;
+  width: 11% !important;
+
+}
+
+
+.mat-column-FUNC_LINKED_ROLES {
+  word-wrap: break-word !important;
+  text-align: left;
+  word-break: break-word;
+  flex: 0 0 10% !important;
+  width: 10% !important;
+
+}
+
+.mat-column-FUNC_DESCRIPTION {
+  word-wrap: break-word !important;
+  text-align: left;
+  word-break: break-word;
+  flex: 0 0 10% !important;
+  width: 10% !important;
+
+}
+
+.mat-column-FUNC_ROUTERLINK {
+  word-wrap: break-word !important;
+  text-align: left;
+  word-break: break-word;
+  flex: 0 0 10% !important;
+  width: 10% !important;
+}
+
+.mat-column-FUNC_OPERATION_TYPE {
+  word-wrap: break-word !important;
+  text-align: left;
+  word-break: break-word;
+  flex: 0 0 10% !important;
+  width: 10% !important;
+}
+
+.mat-column-FUNC_UOI {
+  word-wrap: break-word !important;
+  text-align: left;
+  word-break: break-word;
+  flex: 0 0 10 !important;
+  width: 10% !important;
+}
+
+.mat-column-FUNC_DEFAULT {
+  word-wrap: break-word !important;
+  text-align: center;
+  word-break: break-word;
+  flex: 0 0 10% !important;
+  width: 10% !important;
+}
+
+.mat-column-FUNC_MODULE {
+  word-wrap: break-word !important;
+  text-align: left;
+  word-break: break-word;
+  flex: 0 0 10% !important;
+  width: 10% !important;
+}
+
+
+
+.mat-sort-header-arrow {
+     color: white !important;
+     opacity: 1 !important;
+}
+
+
+#wrapper {
+  display: flex;
+  flex: 0 0 100%;
+}
+
+#left {
+  flex: 0 0 30%;
+  /*flex-grow: 1*/
+}
+
+#right {  
+  /*flex: 1; */
+  flex: 0 0 90%;
+  /*justify-content: flex-end;*/
+  /*flex-grow: 1*/
+}

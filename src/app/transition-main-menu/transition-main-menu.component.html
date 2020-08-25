@@ -1,0 +1,102 @@
+<div class="headerrowmenu" style="margin-right:-10px;margin-left: 100px;"> 
+  &nbsp;
+<button style="margin-right:-10px;margin-left:50px;" mat-button id="TransitionProfile" (click)="TransitionProfile('TransitionProfile')"> Transition Profile</button>
+&nbsp;
+<button style="margin-right:-10px;margin-left:5px;" mat-button id="matMaster" [matMenuTriggerFor]="Master">Master <em class="fa fa-angle-down" aria-hidden="true"></em></button>
+&nbsp;
+<button style="margin-right:-10px;margin-left:5px;" mat-button id="TransitionPlan" [matMenuTriggerFor]="Transition_Plan">Transition Plan <em class="fa fa-angle-down" aria-hidden="true"></em></button>
+&nbsp;
+<button style="margin-right:-10px;margin-left:5px;" mat-button id="ManageSprint" [matMenuTriggerFor]="Manage_Sprint">Manage Sprint <em class="fa fa-angle-down" aria-hidden="true"></em></button>
+&nbsp;
+<button style="margin-right:-10px;margin-left:5px;" mat-button id="TranClosure" [matMenuTriggerFor]="Transition_Closure">Transition Closure <em class="fa fa-angle-down" aria-hidden="true"></em></button>
+&nbsp;
+<button style="margin-right:-10px;margin-left:5px;" mat-button id="Reports" [matMenuTriggerFor]="Reports">Account Level Reports <em class="fa fa-angle-down" aria-hidden="true"></em></button>
+  
+
+<mat-menu #Reports="matMenu">
+  <button mat-menu-item id="Standardadhocreport" [matMenuTriggerFor]="StandardReports">Standard Reports</button> 
+  <button mat-menu-item id="adhocreport" (click)="getReportList()">Custom Reports</button>    
+</mat-menu> 
+
+<mat-menu #StandardReports="matMenu">
+  <button mat-menu-item id="EpicStatusReport" (click)="exportEpicAsPPT()"><em class="fa fa-file-powerpoint-o" style="font-size:11px;color:red"></em> &nbsp; Epic Wise Status Report</button>
+  <button mat-menu-item id="TransitionPlanReport" (click)="TranSchExpPPT()"><em class="fa fa-file-powerpoint-o" style="font-size:11px;color:red"></em> &nbsp; Transition Schedule - Plan View Report</button>
+  <button mat-menu-item id="TransitionProgressReport" (click)="TranSchExpProgressPPT()"><em class="fa fa-file-powerpoint-o" style="font-size:11px;color:red"></em> &nbsp; Transition Schedule - Progress View Report</button>
+  <button mat-menu-item id="OverallDashboardReport" (click)="exportOverallTranDash()"><em class="fa fa-file-excel-o" style="font-size:11px;color:green"></em> &nbsp; Overall Transition Dashboard Report</button>
+  <button mat-menu-item id="ScopeScheduleReport" (click)="exportATSchSummary()"><em class="fa fa-file-excel-o" style="font-size:11px;color:green"></em> &nbsp; Scope Schedule Summary Report</button>
+  <button mat-menu-item id="RAIDReport" (click)="RAIDexportAsXLSX()"><em class="fa fa-file-excel-o" style="font-size:11px;color:green"></em> &nbsp; RAID Report</button>
+  <button mat-menu-item id="H&RConsolidatedReport" (click)="HealthexportAsXLSX()"><em class="fa fa-file-excel-o" style="font-size:11px;color:green"></em> &nbsp; Health & Readiness Consolidated Report</button>
+  <button mat-menu-item id="TRAReport" (click)="TRAExportExcel()"><em class="fa fa-file-excel-o" style="font-size:11px;color:green"></em> &nbsp; Transition Risk Analysis Report</button>
+  <button mat-menu-item id="TransProgramDashReport" (click)="TransProgramDashXLSX()"><em class="fa fa-file-excel-o" style="font-size:11px;color:green"></em> &nbsp; Transition Program Dashboard Report</button>
+  <button mat-menu-item id="OTPDocReport" (click)="OTP_OpenDialog()"><em class="fa fa-file-word-o" style="font-size:11px;color:blue"></em> &nbsp; Project Definition Report</button>
+</mat-menu>
+
+<mat-menu #Master="matMenu">
+  <button mat-menu-item id="TeamDetails" [matMenuTriggerFor]="Teamdetails">Team Details</button>
+  <button mat-menu-item id="appInfo" (click)="appInfo('appInfo')">Application Info</button>
+  <button mat-menu-item id="appServer" (click)="appServer('appServer')">Application Servers</button>
+  <button mat-menu-item id="ContraDeliv" (click)="ContraDeliv('ContraDeliv')">Contractual Deliverables</button>
+  <button mat-menu-item id="stInfo" (click)="stInfo('stInfo')">Service Transition Info</button>
+  <button mat-menu-item id="transition_R_A_Account" (click)="transition_R_A_Account('transition_R_A_Account')">Transition Risk Analysis</button>
+  <button mat-menu-item id="AccLevelTailor" [matMenuTriggerFor]="AccTailoring">Account Level Tailoring</button>
+  <button mat-menu-item id="showTraineeAndSearchScreen" (click)="showTraineeAndSearchScreen('showTraineeAndSearchScreen')">App Vs Trainee Mapping</button>
+</mat-menu>
+
+<mat-menu #Transition_Plan="matMenu">
+    <button mat-menu-item id="SB" (click)="SB('SB')">Service Backlog</button>
+    <button mat-menu-item id="SPB" (click)="SPB('SPB')">Sprint Backlog</button>
+    <button mat-menu-item id="SprintExePlan" [matMenuTriggerFor]="SEP">Sprint Execution Plan</button>
+    <button mat-menu-item id="TranstionClosure" (click)="TranstionClosure('TranstionClosure')">Transition Closure</button>    
+</mat-menu>
+<mat-menu #Teamdetails="matMenu">
+    <button mat-menu-item id="TransitionTeam" (click)="TransitionTeam('TransitionTeam')">Transition Team</button>
+    <button mat-menu-item id="ExecutionTeam" (click)="ExecutionTeam('ExecutionTeam')">Delivery Team</button>
+    <button mat-menu-item id="stakeholder" (click)="stakeholder('stakeholder')">Stakeholder Info</button>
+    <button mat-menu-item id="trainee" (click)="trainee('trainee')">Trainee Info</button>
+</mat-menu>
+<mat-menu #AccTailoring="matMenu">
+    <button mat-menu-item id="showParameterCustomList" (click)="showParameterCustomList('showParameterCustomList')">Health and Readiness Factor Configuration</button>  
+  <button mat-menu-item id="TWBS" (click)="TWBS('TWBS')">Tailor WBS</button>
+  <button mat-menu-item id="TEC" (click)="TEC('TEC')">Tailor Exit Criteria</button>
+</mat-menu>
+<mat-menu #Manage_Sprint="matMenu">
+    <button mat-menu-item id="parameterCustomTrackingList" color="primary"  (click)="parameterCustomTrackingList('parameterCustomTrackingList')">Health & Readiness Tracking</button>
+    <button mat-menu-item id="RAID" (click)="RAID('RAID')">RAID</button>    
+    <button mat-menu-item id="sevenkey" (click)="sevenkey('sevenkey')">Seven Key</button>    
+</mat-menu>
+
+<mat-menu #Transition_Closure="matMenu">
+    <button mat-menu-item id="ECAccount" (click)="ECAccount('ECAccount')">Exit Criteria</button>
+    <button mat-menu-item id="DeliverCompletion" (click)="DeliverCompletion('DeliverCompletion')">Deliverable Completion</button>    
+
+</mat-menu>
+<mat-menu #SEP="matMenu">
+    <button mat-menu-item id="epic" (click)="epic('epic')">Epic Plan</button>
+    <button mat-menu-item id="sprint" (click)="sprint('sprint')">Epic-Sprint Map </button>
+    <button mat-menu-item id="SprintScope" (click)="SprintScope('SprintScope')"> Sprint Scope</button>
+    <button mat-menu-item id="SprintLevelPlan1" (click)="SprintLevelPlan1('SprintLevelPlan1')">Scope Level Tracking</button>
+    <button mat-menu-item id="SprintLevelPlan" (click)="SprintLevelPlan('SprintLevelPlan')">Scope Task Level Tracking</button>    
+</mat-menu>
+<br>
+</div>
+<div class="headerrowhead" 
+style="margin-right: -10px;margin-left: 100px;text-align:center;" 
+*ngIf="userAccessProfileService.getClientName()!==null">    
+  {{userAccessProfileService.getSector()}}&nbsp;&nbsp;-&nbsp;&nbsp;{{userAccessProfileService.getIndustry()}}&nbsp;&nbsp;-&nbsp;&nbsp;{{userAccessProfileService.getClientName()}}
+  &nbsp;&nbsp;>&nbsp;&nbsp;{{SceenName}}
+</div>
+<div class="headerrowhead" 
+style="margin-right: -10px;margin-left: 100px;text-align:center;"
+*ngIf="userAccessProfileService.getClientName()===null">    
+  New Transition Execution &nbsp;&nbsp;>&nbsp;&nbsp;{{SceenName}}
+</div>
+
+<div *ngIf="ViewFlag !== 'Yes'" style="margin-right:15px;margin-left:150px;text-align:center;">
+<mat-label style="font-size: 11px; color:red;">Note: Please click outside the select window for mutiple selection to close the select window.</mat-label>     
+<mat-label style="font-size: 11px; color:red;">  /  Please provide the last name for Bluepages Search.</mat-label>
+</div>
+<!-- style="margin-right: 15px;margin-left: 150px;" -->
+<div id="right" style="margin-right:15px;margin-left:150px;">  
+        <router-outlet></router-outlet>
+</div>
+

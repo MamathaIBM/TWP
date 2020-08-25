@@ -1,0 +1,150 @@
+
+  table, td  {
+    width: 100%;
+    
+  }  
+  .customWidthClass{
+    flex: 0 0 450px;
+    word-wrap: break-word;
+ }
+
+ .customWidthlessClass{
+  flex: 0 0 250px;
+  word-wrap: break-word;
+} 
+  .headerrow {  
+    font-weight: bold;
+    background-color: #1d3649;
+    text-align: center;
+    color:white;
+    width: 100%;
+    font-size:11px;
+  }
+  .highlight  {
+    background-color:cornsilk !important;
+    font-weight: bold;
+  } 
+
+ .columnName {
+    color:white;
+    font-weight: bold;
+    background-color: #1d3649;
+    text-align: center;
+    font-size:11px;
+  }
+
+  .matHeader {
+    font-weight: bold;
+    color:white;    
+    font-size:11px;
+  }
+  .mat-elevation-z8 {
+    width: 1000px;
+    font-size:11px;
+  }
+
+  .mat-row {
+    min-height: 5px !important;
+    font-size:11px;
+  }
+  .mat-cell {    
+    font-size:11px;
+  }
+
+  button.btn-info {
+    background-color: #1d3649;
+    color: white;
+    font-size:11px;
+  }  
+
+   
+  ::ng-deep .mat-sort-header-container:not(.mat-sort-header-sorted) .mat-sort-header-arrow {
+    opacity: 0.54 !important;
+    color:white; 
+    transform: translateY(0px) !important;
+  }
+
+   
+    .fntsz{
+      font-size:11px;
+      word-wrap: break-word;
+    }
+
+    .fntszTrName {
+      font-size:11px;
+      width:100% 
+    }
+
+  ::ng-deep .mat-select-value {
+    font-size:11px;
+  }
+ 
+  ::ng-deep .mat-select-trigger {
+    font-size:11px;
+  }
+  
+  ::ng-deep .mat-select-panel {
+    font-size:11px;
+  }
+
+::ng-deep .mat-paginator-range-actions {
+font-size:11px;
+}
+
+::ng-deep .mat-paginator-container {
+font-size:11px;
+min-height: 10px !important;
+display: flex;
+}
+
+::ng-deep .mat-paginator-page-size-label {
+font-size:11px;
+}
+::ng-deep .mat-paginator-range-label {
+font-size:11px;
+} 
+
+/* ::ng-deep .mat-icon-button {
+width:25px;
+height:25px;
+font-size:11px;
+align-items: center;
+margin: 0;
+padding: 0;
+justify-content: center;
+} */
+::ng-deep .mat-paginator-navigation-first {
+font-size:11px;
+align-items: top; 
+display: flex;
+margin: 0; 
+padding: 0;
+justify-content: top;
+}
+
+::ng-deep .mat-paginator-navigation-last {
+font-size:11px;
+align-items: top; 
+display: flex;
+margin: 0; 
+padding: 0;
+justify-content: top;
+}
+
+::ng-deep .mat-paginator-navigation-next {
+font-size:11px;
+align-items: top; 
+display: flex;
+margin: 0; 
+padding: 0;
+justify-content: top;
+}
+
+::ng-deep .mat-paginator-navigation-previous {
+font-size:11px;
+align-items: top; 
+display: flex;
+margin: 0; 
+padding: 0;
+justify-content: top;
+}

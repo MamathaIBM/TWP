@@ -1,0 +1,120 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://1.www.s81c.com/common/v18/css/grid-fluid.css" rel="stylesheet">      
+<div  class="container" style="text-align:right;width:80%">  
+    <br>
+<div class="row pageMarginClass" >
+    <!-- <div class="example-container"> -->
+    <form #form="ngForm"  [formGroup]="RAUpdateeForm" (ngSubmit)="onSubmit()" autocomplete="off">  
+        <!-- <mat-form-field class="example-full-width">
+            <input id="Risk_id" matInput placeholder="" formControlName = "Risk_ID" [hidden]=true>
+        </mat-form-field> -->
+        <!-- [formControl]="Risk_Category" -->
+        <mat-form-field class="formFieldwidth" >
+          <input type="text" class="fontsizeforfields" id="Risk_Category_Id" 
+                             placeholder="Risk Category" 
+                             aria-label="Risk Category" 
+                             matInput formControlName ="Risk_Category" 
+                             [matAutocomplete]="auto"
+                             
+                            >
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+            <mat-option  class="fontsizeforfields " *ngFor="let option of filteredOptions | async" [value]="option.Risk_Category">
+              {{option.Risk_Category}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <br>
+        <mat-form-field class="formFieldwidth">
+            <textarea id ="Risk_Attribute_id" class="fontsizeforfields"  
+            rows="1"  matInput placeholder="Risk Attribute"  formControlName = "Risk_Attribute"></textarea>
+            </mat-form-field> 
+     <br>   
+        <mat-form-field class="formFieldwidth">
+          <textarea id ="Planned_Mitigation_Action_id"   class="fontsizeforfields" rows="1"  matInput placeholder="Planned Mitigation Action" 
+          formControlName ="Planned_Mitigation_Action"></textarea>
+      </mat-form-field> 
+   
+        <div class="example-button-row">
+            <button id="AppSerAdd" class="btn btn-info" type="submit" [disabled]="!RAUpdateeForm.valid || editFlag === 1  " (click) ="Add()">ADD </button>   
+            &nbsp;&nbsp;
+            <button id="AppSerUpdate" class="btn btn-info" type="submit" [disabled]="!RAUpdateeForm.valid || editFlag === 0 " (click)= "Update()">Update </button>                              
+            &nbsp;&nbsp;
+           
+            </div>
+    </form>
+<!-- </div> -->
+
+
+<!-- <div class="row searchTable" >
+    -->
+        <table>
+            <tr>
+           <!-- <td  class="riskcount" id="header">Available Risks :  <span>{{dataLength}}</span> </td>                   -->
+           <td class="searchfield">
+               <strong>Available Risks :  <span>{{dataLength}}</span></strong>
+               &nbsp;&nbsp;
+               <mat-form-field>
+                    <input id="AppSersearch" matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+                </mat-form-field>
+           </td>
+        </tr>
+        </table>
+        
+            
+        <table id="AppSerDataTable" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+                            <ng-container matColumnDef="Risk_ID">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    <th class="matHeader">Risk ID</th>
+                                </mat-header-cell>
+                                <mat-cell class="tablealignment" *matCellDef="let element"  >{{element.Risk_ID}}                
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="Risk_Category">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    <th class="matHeader">Risk Category</th>
+                                </mat-header-cell>
+                                <mat-cell class="tablealignment" *matCellDef="let element"  >{{element.Risk_Category}}                
+                                </mat-cell>
+                            </ng-container>
+            
+                            <ng-container matColumnDef="Risk_Attribute">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    <th class="matHeader">Risk Attribute</th>
+                                </mat-header-cell>
+                                <mat-cell class="tablealignment"  *matCellDef="let element"  >{{element.Risk_Attribute}}                
+                                </mat-cell>
+                            </ng-container>
+                            
+                            <ng-container matColumnDef="Planned_Mitigation_Action">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    <th class="matHeader">Planned Mitigation Action</th>
+                                </mat-header-cell>
+                                <mat-cell class="tablealignment" *matCellDef="let element"  >{{element.Planned_Mitigation_Action}}                
+                                </mat-cell>
+                            </ng-container>
+                            
+                            <ng-container matColumnDef="Delete">
+                                <mat-header-cell *matHeaderCellDef >
+                                    <th class="matHeader"></th>
+                                </mat-header-cell>
+                                <mat-cell class="tablealignmentCenter" *matCellDef="let element;let i = index;"  >                                         
+                                        <button class="btn btn-info tablealignmentCenter" id="{{'TRADelete'+i}}"  (click)="onDelete(element)">
+                                            <em class="fa fa-trash"></em>
+                                        </button>
+                                </mat-cell>
+                            </ng-container>
+
+                            
+                            <mat-header-row class="columnName" *matHeaderRowDef="displayedColumns"></mat-header-row>              
+                            <mat-row class="result-row" *matRowDef="let row; let element; columns:displayedColumns;" (click)="setClickedRow(row,element)" [ngClass]="{ highlight: row == selectedRow }">
+                            </mat-row> 
+        </table> 
+        <mat-paginator class="mat-elevation-z8" [pageSizeOptions]="[5, 1, 10, 20]" showFirstLastButtons (click)="setClickedRow(0,element)"></mat-paginator> 
+  
+</div>
+
+<!-- </div> -->
+
+</div>

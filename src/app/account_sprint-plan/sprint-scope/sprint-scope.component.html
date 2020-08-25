@@ -1,0 +1,216 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://1.www.s81c.com/common/v18/css/grid-fluid.css" rel="stylesheet">      
+
+<div class="row" style="margin-left: -12px;">
+  <form  #form="ngForm" [formGroup] ="SprintScopeForm" (ngSubmit) = "onSubmit()" autocomplete="off">
+   <table style="width: 300px;" id="ScopeRadio">
+      <tr>
+         <td> <mat-label class="Cellsize" style="font-weight: bold;">Scope Stream : </mat-label></td>
+         <td>
+            <mat-radio-group class="example-radio-group" id="ScopeLevel" formControlName="Scope_Level" (change)="OnchangeRadio()">
+            <mat-radio-button class="example-radio-button" id="{{'SprintScope'+Scope_Level.Categoryvalues}}" [value]="Scope_Level.Categoryvalues" *ngFor="let Scope_Level of Scope_Level">
+              {{Scope_Level.Categoryvalues}}</mat-radio-button>
+            </mat-radio-group>
+         </td>
+      </tr>
+   </table>     
+   <table style="width: 980px;" id="ScopeFormTable" *ngIf="FlagHide=== 'No'">
+          <!-- <div style="display: none;"> -->
+          <tr style="display: none;">
+             <td>
+                <mat-form-field class="example-full-width">
+                   <input id="ScopeIntegrationID" matInput  formControlName="Scope_IntegrationID" [readonly]="!editable" [hidden]=true>
+                </mat-form-field>
+             </td>
+             <td>
+                <mat-form-field class="example-full-width">
+                   <input id="ScopeCreated" matInput  formControlName="Scope_CreatedBy" [readonly]="!editable" [hidden]=true>
+                </mat-form-field>
+             </td>
+             <td>
+                <mat-form-field class="example-full-width">
+                   <input id="ScopeModified" matInput  formControlName="Scope_ModifiedBy" [readonly]="!editable" [hidden]=true>
+                </mat-form-field>
+             </td>
+             <td>
+                <mat-form-field class="example-full-width">
+                   <input id="ScopeUnID" matInput  formControlName="Scope_UNID" [readonly]="!editable" [hidden]=true>
+                </mat-form-field>
+             </td>
+          </tr>
+          <!-- </div> -->
+          <tr>
+             <td style="width: 20%;" *ngIf="SprintScopeForm.controls['Scope_Level'].value!==''">
+                <mat-form-field class="Cellsize">                     
+                   <mat-label class="Cellsize">Select Epic Name</mat-label>
+                   <mat-select  class="Cellsize" id="ScopeEpicID" formControlName="Scope_EpicID">
+                      <mat-option class="Cellsize" (click)="getSprints(epName.epicUNID)" *ngFor="let epName of epicNameList" [value]="epName.epicUNID">
+                      {{epName.epicName}}
+                      </mat-option>
+                   </mat-select>
+                </mat-form-field>
+             </td>
+             <td style="width: 20%;" *ngIf="SprintScopeForm.controls['Scope_Level'].value!==''">
+                <mat-form-field class="Cellsize">
+                   <mat-label class="Cellsize">Select sprint Name</mat-label>
+                   <mat-select  class="Cellsize" id="ScopeSprintName" formControlName="Scope_SprintName">
+                      <mat-option class="Cellsize" (click)="setSprintUNID(spName.sprintUNID)" *ngFor="let spName of sprintlist" [value]="spName.sprintUNID">
+                      {{spName.sprintName}}
+                      </mat-option>
+                   </mat-select>
+                </mat-form-field>
+             </td>
+             <td style="width: 20%;" *ngIf="SprintScopeForm.controls['Scope_Level'].value==='AT'">
+                <mat-form-field class="Cellsize" *ngIf="editFlag === 1">
+                   <mat-label class="Cellsize">Application Name</mat-label>
+                   <mat-select  class="Cellsize" id="ScopeAppName"  formControlName="Scope_NameOfApp1">
+                      <mat-option class="Cellsize"  *ngFor="let AppIDData of AppIDData" [value]=AppIDData.AppUNID>
+                      {{AppIDData.AppName}}
+                      </mat-option>
+                   </mat-select>
+                </mat-form-field>
+              
+                <mat-form-field class="Cellsize"  *ngIf="editFlag === 0">
+                   <mat-label class="Cellsize">Application Name</mat-label>
+                   <mat-select  class="Cellsize" id="ScopeNameofApp"formControlName="Scope_NameOfApp" multiple>
+                      <mat-option class="Cellsize" *ngFor="let MAppID of AppIDData1" [value]=MAppID.AppUNID>
+                      {{MAppID.AppName}}
+                      </mat-option>
+                   </mat-select>
+                </mat-form-field>
+               
+                <mat-form-field class="Cellsize" style="display: none;">
+                   <mat-label class="Cellsize">Application Name</mat-label>
+                   <input class="Cellsize" id="ScopeAppID" matInput  style="background-color: lightcyan" formControlName="Scope_AppID" [readonly]="!editable">
+                </mat-form-field>
+             </td>
+             <td style="width: 40%;text-align: left;" *ngIf="SprintScopeForm.controls['Scope_Level'].value==='AT'">
+                <mat-form-field class="Cellsize"  style="width:100%;">
+                   <mat-label class="Cellsize">MVS Description</mat-label>
+                   <textarea style="width: 100%;" class="Cellsize" id ="MVSDes" matInput  formControlName ="Scope_MVS_Description"></textarea>
+                </mat-form-field>
+             </td>
+             <td style="width: 80%;text-align: left;" *ngIf="SprintScopeForm.controls['Scope_Level'].value==='ST'">
+               <mat-form-field class="CellsizeLen" *ngIf="editFlag === 0">
+                  <mat-label class="CellsizeLen">Service Transition Scope</mat-label>
+                  <mat-select  class="CellsizeLen" id="ScopeSTLevelAdd"  formControlName="Scope_STInfoLevelAdd" multiple>
+                     <mat-option class="CellsizeLen" matTooltipClass="tooltip-color" matTooltip="{{STInfoData.STScopeLevel}}-{{STInfoData.STScope}}-{{STInfoData.STDetailedScope}}-{{STInfoData.STScopeActivity}}"
+                     *ngFor="let STInfoData of STInfoData" [value]=STInfoData.MasterSTInfoid>{{STInfoData.STScopeLevel}}-{{STInfoData.STScope}}-{{STInfoData.STDetailedScope}}-{{STInfoData.STScopeActivity}}</mat-option>
+                  </mat-select>
+               </mat-form-field>
+               <mat-form-field class="CellsizeLen" *ngIf="editFlag === 1">
+                  <mat-label class="CellsizeLen">Service Transition Scope</mat-label>
+                  <mat-select  class="CellsizeLen" id="ScopeSTLevelMod"  formControlName="Scope_STInfoLevelMod">
+                     <mat-option class="CellsizeLen" matTooltipClass="tooltip-color" matTooltip="{{STInfoData.STScopeLevel}}-{{STInfoData.STScope}}-{{STInfoData.STDetailedScope}}-{{STInfoData.STScopeActivity}}"
+                     *ngFor="let STInfoData of STInfoData" [value]=STInfoData.MasterSTInfoid>{{STInfoData.STScopeLevel}}-{{STInfoData.STScope}}-{{STInfoData.STDetailedScope}}-{{STInfoData.STScopeActivity}}</mat-option>
+                  </mat-select>
+               </mat-form-field>
+            </td>
+            <td style="width: 80%;text-align: left;" *ngIf="SprintScopeForm.controls['Scope_Level'].value==='Others'">
+               <mat-form-field class="CellsizeLen">
+                  <mat-label class="CellsizeLen">Backlog Activity</mat-label>
+                  <input class="CellsizeLen" id="ScopeBacklog" matInput formControlName="Scope_BackLog" >
+               </mat-form-field>
+            </td>
+          </tr>
+   </table>
+       
+    <div class="example-button-row" *ngIf="SprintScopeForm.controls['Scope_Level'].value!=='' && FlagHide=== 'No'">                            
+        <button id="ScopeAdd"class="btn btn-info" type="submit" [disabled]="!SprintScopeForm.valid||editFlag=== 1" (click) ="Add()">ADD </button>   
+        &nbsp;&nbsp;
+        <button id="ScopeUpdate" class="btn btn-info" type="submit" [disabled]="!SprintScopeForm.valid||editFlag=== 0" (click)= "Update()">Update </button>  
+   </div>
+  </form>
+</div>
+
+<div class="row" style="margin-left: -12px;" *ngIf="SprintScopeForm.controls['Scope_Level'].value!==''">
+    <tr>
+        <th class="Cellsize" id="header">Number of Sprints in Scope :  <span>{{dataLength}}</span> </th>                  
+     </tr>  
+     <mat-form-field>
+         <mat-label style="font-size: 11px;" >Search</mat-label>
+           <input class="Cellsize" id="ScopeSearch" matInput (keyup)="applyFilter($event.target.value)">
+     </mat-form-field>
+
+     <table id="ScopeDataTable" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+        <ng-container matColumnDef="EpicName">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                <th class="matHeader">Epic Name</th>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.epicName}}                
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Sprint">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                <th class="matHeader">Sprint</th>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.sprintName}}                
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Level">
+         <mat-header-cell *matHeaderCellDef mat-sort-header>
+             <th class="matHeader">Scope Stream</th>
+         </mat-header-cell>
+         <mat-cell *matCellDef="let element">{{element.Scope_Level}}                
+         </mat-cell>
+     </ng-container>
+
+        <ng-container matColumnDef="AppID" >
+            <mat-header-cell *matHeaderCellDef mat-sort-header >
+                <th class="matHeader">Application ID</th>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element" >{{element.AppId}}                
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="AppName">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                <th class="matHeader">Application Name</th>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element"  >{{element.AppName}}                
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="MVsDescription">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                <th class="matHeader">MVS Description</th>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.Scope_MVS_Description}}                
+            </mat-cell>
+        </ng-container>
+           
+        <ng-container matColumnDef="STScope">
+         <mat-header-cell *matHeaderCellDef mat-sort-header>
+             <th class="matHeader">Service Transition Scope</th>
+         </mat-header-cell>
+         <mat-cell *matCellDef="let element">{{element.STScopeData}}
+         </mat-cell>
+     </ng-container>
+
+     <ng-container matColumnDef="BacklogActivity">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+          <th class="matHeader">Backlog Activity</th>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.Scope_BacklogActivity}}                
+      </mat-cell>
+  </ng-container>
+
+        <ng-container matColumnDef="Delete">
+                <mat-header-cell *matHeaderCellDef>
+                    <th class="matHeader"></th>
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element; let i = index;">                                         
+                        <button id="{{'ScopeDelete'+i}}" class="btn btn-info" id="EngSearch" (click)="onDelete(element)" [hidden]="FlagHide=== 'Yes'">
+                            <em class="fa fa-trash"></em>
+                        </button>          
+                </mat-cell>
+        </ng-container>
+        
+        <mat-header-row class="columnName" *matHeaderRowDef="displayedColumns"></mat-header-row>                        
+        <mat-row class="result-row" *matRowDef="let row; let element; columns:displayedColumns;" (click)="setClickedRow(row,element)" [ngClass]="{ highlight: row == selectedRow }">
+            </mat-row>  
+     </table>
+<mat-paginator class="mat-elevation-z8" [pageSizeOptions]="[5, 1, 10, 20]" showFirstLastButtons></mat-paginator> 
+</div> 

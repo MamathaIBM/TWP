@@ -1,0 +1,47 @@
+table {
+  width: 105%;  
+}
+
+    button {
+        background-color: #1d3649;
+        color: white;
+        font-size: 11px;
+      }
+
+      .fntszacc{
+        font-size:11px;
+        word-wrap: break-word;
+        width:89%
+      }
+
+      .fntsz{
+        font-size:11px;
+        word-wrap: break-word;
+      }
+
+      .fntszDt{
+        font-size:11px;
+        width:74.5%
+      }
+
+      .mat-error{
+       font-size: 11px;
+      }
+
+      .form__error{
+        color:red;
+      }
+
+      .headerrow {  
+        font-weight: bold;
+        background-color: #1d3649;
+        text-align: center;
+        color:white;
+        font-size:11px;
+        width: 93%;
+      }
+
+      input[readonly] {
+        background-color: lightGray;
+        font-size:11px;
+      }

@@ -1,0 +1,83 @@
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+&nbsp;&nbsp;&nbsp;
+
+
+
+<div  class="container" style="text-align:right;width:100%;padding-left: 10%;padding-right: 10%;">  
+
+        <table>
+                    <tr>  
+                            <td>
+                                <div style="text-align:left;" >   
+                                        <div class="headerrowheadpage" style="text-align:left;  font-size:11px;display: inline-flex;">
+                                                Content Type List
+                                        </div>    
+                                </div>  
+                            </td>
+                            <td style="text-align:right;"> 
+                                         <button mat-icon-button type="submit" (click)="createContentType()">
+                                                <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+                                         </button> 
+                            </td> 
+                    </tr>                          
+        </table>   
+</div>
+
+<link href="https://1.www.s81c.com/common/v18/css/grid-fluid.css" rel="stylesheet">      
+&nbsp;&nbsp;&nbsp;
+
+
+
+<div  class="container" style="text-align:right;width:100%;padding-left: 10%;padding-right: 10%;">  
+    
+  <table mat-table [dataSource]="dataSource"   matSort class="mat-elevation-z8" style="width:100%">
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="contentTypeName">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                <th class="matHeader">Content Type Name</th>
+            </mat-header-cell>
+        <mat-cell *matCellDef="let contentType"> {{contentType.contentTypeName}} </mat-cell>
+        </ng-container>
+
+        <!-- Category Column -->
+        <ng-container matColumnDef="contentTypeCategory">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                <th class="matHeader">Content Type Category</th>
+            </mat-header-cell>
+        <mat-cell *matCellDef="let contentType"> {{contentType.contentTypeCategory}} </mat-cell>
+        </ng-container>        
+    
+        <!-- Description -->
+        <ng-container matColumnDef="description">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                <th class="matHeader">Content Type Description</th>
+            </mat-header-cell>
+        <mat-cell  *matCellDef="let contentType" > {{contentType.description}}                               
+        </mat-cell>
+        </ng-container>
+
+        <!-- Operations Column -->
+        <ng-container matColumnDef="contentTypeId">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                <th class="matHeader">Operation</th>
+            </mat-header-cell>
+            <mat-cell  *matCellDef="let contentType" style=" width: 20em;" >                      
+                <button mat-icon-button type="submit"  id="edit_id{{contentType.contentTypeId}}" (click)="onUpdate(contentType)">
+                    <mat-icon aria-label="Example icon-button with a heart icon">edit</mat-icon>
+                </button>                                            
+                <button mat-icon-button type="submit" id="del_id{{contentType.contentTypeId}}" (click)="onDelete(contentType)">
+                    <mat-icon aria-label="Example icon-button with a heart icon">delete_forever</mat-icon>
+                </button>                                                            
+            </mat-cell>        
+        </ng-container>      
+        <mat-header-row class="columnName" *matHeaderRowDef="displayedColumns"></mat-header-row>                
+        <mat-row class="result-row" *matRowDef="let row; let element; columns:displayedColumns;" (click)="setClickedRow(row,element)" [ngClass]="{ highlight: row == selectedRow }">
+            
+        </mat-row>  
+
+  </table>
+
+</div>

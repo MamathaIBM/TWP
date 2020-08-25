@@ -1,0 +1,13 @@
+{"message":"/tnt/userAccessData/sahitya.sanagapati@in.ibm.com","level":"info"}
+{"message":"/tnt/userFunctionalityList/sahitya.sanagapati@in.ibm.com","level":"info"}
+{"message":"/tnt/userTransitionAccessList/sahitya.sanagapati@in.ibm.com","level":"info"}
+{"message":"##################### NEW FUNCTIONALITY STARTED ###################### ","level":"info"}
+{"message":"{\"FUNC_NAME\":\"consentScreen\" ,\"USER_NAME\": \"SAHITYA%20SANAGAPATI\" ,\"USER_ID\": \"4\" ,\"USER_EMAIL\": \"sahitya.sanagapati@in.ibm.com\" ,\"ROUTER_LINK\":\"ConsentFormComponent\" ,\"IP_ADDRESS\":\"::1\" ,\"TIME_STAMP\":\"11:40:02 AM\" ,\"DAY\":\"24-7-2020\" }","level":"info"}
+{"message":"##################### NEW FUNCTIONALITY STARTED ###################### ","level":"info"}
+{"message":"{\"FUNC_NAME\":\"ManageActiveTransitions\" ,\"USER_NAME\": \"SAHITYA%20SANAGAPATI\" ,\"USER_ID\": \"4\" ,\"USER_EMAIL\": \"sahitya.sanagapati@in.ibm.com\" ,\"ROUTER_LINK\":\"ManageActiveTransitionsComponent\" ,\"IP_ADDRESS\":\"::1\" ,\"TIME_STAMP\":\"11:40:07 AM\" ,\"DAY\":\"24-7-2020\" }","level":"info"}
+{"message":"##################### NEW FUNCTIONALITY STARTED ###################### ","level":"info"}
+{"message":"{\"FUNC_NAME\":\"All Transition Accounts\" ,\"USER_NAME\": \"SAHITYA%20SANAGAPATI\" ,\"USER_ID\": \"4\" ,\"USER_EMAIL\": \"sahitya.sanagapati@in.ibm.com\" ,\"ROUTER_LINK\":\"AllTransitionAccountsComponent\" ,\"IP_ADDRESS\":\"::1\" ,\"TIME_STAMP\":\"11:42:46 AM\" ,\"DAY\":\"24-7-2020\" }","level":"info"}
+{"message":"##################### NEW FUNCTIONALITY STARTED ###################### ","level":"info"}
+{"message":"{\"FUNC_NAME\":\"ManageActiveTransitions\" ,\"USER_NAME\": \"SAHITYA%20SANAGAPATI\" ,\"USER_ID\": \"4\" ,\"USER_EMAIL\": \"sahitya.sanagapati@in.ibm.com\" ,\"ROUTER_LINK\":\"ManageActiveTransitionsComponent\" ,\"IP_ADDRESS\":\"::1\" ,\"TIME_STAMP\":\"11:42:47 AM\" ,\"DAY\":\"24-7-2020\" }","level":"info"}
+{"message":"##################### NEW FUNCTIONALITY STARTED ###################### ","level":"info"}
+{"message":"{\"FUNC_NAME\":\"\" ,\"USER_NAME\": \"SAHITYA%20SANAGAPATI\" ,\"USER_ID\": \"4\" ,\"USER_EMAIL\": \"sahitya.sanagapati@in.ibm.com\" ,\"ROUTER_LINK\":\"Reports\" ,\"IP_ADDRESS\":\"::1\" ,\"TIME_STAMP\":\"11:44:51 AM\" ,\"DAY\":\"24-7-2020\" }","level":"info"}

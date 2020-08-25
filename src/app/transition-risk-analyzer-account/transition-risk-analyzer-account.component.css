@@ -1,0 +1,159 @@
+
+.td1{
+  width : 50%;border :1px solid;
+  text-align: center;
+  font-size: 11px; 
+}
+.fontFamilySize{
+  font-family: Arial, Helvetica, sans-serif;    
+  font-size: 11px; 
+}
+
+.formFieldWidth{
+  width: 95%;
+}
+
+.textAlignmentleft{
+  text-align: left;
+}
+mat-cell,th.mat-header-cell{
+  /* border: 2px solid rgb(60, 255, 0); */
+  font-family: Arial, Helvetica, sans-serif;  
+  font-size: 11px;  
+}
+.headertext{
+text-align: center;
+border-style: solid;
+font-size: 11px; 
+font-family: Arial, Helvetica, sans-serif;  
+}
+td.mat-cell{
+  border-bottom-color: transparent;
+}
+.headertext1{
+text-align: left;  
+font-size: 11px; 
+font-weight : bold;
+color: red;
+}
+
+.bgcolor1{
+background-color : #75eaf0;
+width : 30%;
+font-size: 11px; 
+}
+.div3{
+  font-size: 11px; 
+font-weight : bold;
+}
+.table-fonts{
+  font-size: 11px; 
+  font-weight : bold;
+}
+.table1{  
+text-align : center;
+background-color: #ffffb3;
+font-size: 11px; 
+/* font-weight : bold;   */
+border: 1px solid black;
+}
+.table2{  
+text-align : center;  
+font-size: 11px; 
+/* font-weight : bold;   */
+border: 1px solid black;
+ background-color : #75eaf0;
+}
+
+
+  table  {
+    /* width: 100%; */
+    border-collapse: collapse;
+    font-size: 11px; 
+    
+  }
+ 
+  
+  /* .example-container {
+    width: 1110px;
+
+  } */
+  .mat-form-field {
+    width: 70%;
+    font-size: 11px; 
+    margin-left:5px;    
+    text-align: center; 
+  }
+
+  .highlight  {
+    background-color:cornsilk !important;
+    font-weight: bold;
+  
+  } 
+
+ .columnName {
+    color:white;
+    font-weight: bold;
+    background-color: #1d3649;
+    width: 100%;
+    font-size: 11px; 
+  }
+
+  th.headerrow {  
+    font-weight: bold;
+    background-color: #1d3649;
+    text-align: center;
+    color:white;
+    font-size: 11px; 
+    
+  }
+
+  .mat-header-cell {
+    
+    font-weight: bold;
+    color:white;   
+    text-align: center; 
+    font-size: 11px; 
+  }
+  
+   
+  button.btn-info {
+    background-color: #1d3649;
+    color: white;
+    font-size: 11px; 
+  }  
+
+
+  .date-full-width {    
+    width: 100%;
+    font-size: 11px; 
+  }
+.headertext{
+  border-style: solid;
+  font-size: 11px; 
+}
+.mat-option{
+  width: 100%;
+  text-align: center; 
+  font-size: 11px; 
+ }
+.text-width{
+  text-align: center; 
+  font-size: 11px; 
+}
+
+.headingColumnWidth{
+  width: 900px;
+  text-align: left;
+  font-size: 11px;
+}
+
+.RiskIDcolstyles,.RiskExposure,.RiskScore,.RiskLevel,.Tracked{
+  width: 50px;
+}
+.RiskAttributestyles,.PlannedMitigationAction,.Accspecificrisk {
+  width: 150px;
+}
+.RiskImpact,.RiskProbability,.RiskType{
+width: 100px;
+}

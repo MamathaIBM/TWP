@@ -1,0 +1,78 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://1.www.s81c.com/common/v18/css/grid-fluid.css" rel="stylesheet">      
+<div class="row" style="margin-left: -12px;">
+  <button id="DCUpdate" class="btn btn-info" [disabled]="progress>0 " [hidden] ="FlagHide === 'Yes' || this.dataLength === 0" (click)="onUpdate()">
+    <em class="fa fa-save "></em> Update
+  </button>
+</div>
+<br>
+<div class="fntsz" style="margin-left: -12px;" *ngIf="this.dataLength === 0">
+  Please add Contractual Deliverables under Master --> Contractual Deliverables from the drop-down
+</div>  
+<div class="row" style="margin-left: -12px;" *ngIf="this.dataLength !== 0">
+  <mat-progress-bar mode="indeterminate" *ngIf="progress"></mat-progress-bar>
+    <div *ngIf="progress">
+        <h2> Please wait while data loads</h2>
+    </div>
+    <table id="DCDataTable" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+      <ng-container matColumnDef="DeliverableName">                
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <th class="matHeader">Deliverable Name</th>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.DeliverableName}}           
+          </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="DeliverableValues">                
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <th class="matHeader">Deliverable Values</th>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.DeliverableValues}}           
+          </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="ContractDoc_OwnerNM">                
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th class="matHeader">Owner of the Document</th>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.ContractDoc_OwnerNM}}           
+        </mat-cell>
+    </ng-container>
+
+      <ng-container matColumnDef="ContractDeliver_Status">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <th class="matHeader">STATUS</th>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element; let i = index;" >                    
+                  <mat-select id="{{'DCStatus'+i}}" [(value)]="element.ContractDeliver_Status" style="width: 50%" placeholder="Status" [disabled]="FlagHide === 'Yes'" (onSelectionChange)="change($event)" >
+                             <mat-option 
+                                                        *ngFor="let CDStatus of CDStatus" [value]="CDStatus.Categoryvalues">          
+                              {{CDStatus.Categoryvalues}}
+                          </mat-option>
+                  </mat-select>
+          </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="ContractDeliver_Comments">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>
+        <th class="matHeader">Comments</th>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let element; let i = index;" >     
+    <textarea id="{{'DCComments'+i}}" matInput placeholder="" (keyup)="onKey($event,element)" [readonly]="FlagHide === 'Yes'" [value] = "element.ContractDeliver_Comments">                                    
+    <!-- [disabled]="Baselined===0" -->
+    </textarea>   
+</mat-cell>
+</ng-container>
+
+  <mat-header-row class="columnName" *matHeaderRowDef="displayedColumns"></mat-header-row>                                         
+  <!-- <mat-row class="result-row" *matRowDef="let row; let element; columns:displayedColumns;" [ngClass]="{ highlight: row == selectedRow }">
+  </mat-row>  -->
+  <mat-row [ngClass]="{'result-row': row.ContractDeliver_Status == 'Not Started',
+                                                      'result-row-D': row.ContractDeliver_Status == 'Delayed',
+                                                      'result-row-I': row.ContractDeliver_Status == 'In progress' ,
+                                                      'result-row-C': row.ContractDeliver_Status == 'Completed' }" *matRowDef="let row; let element; columns:displayedColumns;">
+                        
+                                </mat-row>
+  </table>
+
+</div>

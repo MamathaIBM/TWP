@@ -1,0 +1,897 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://1.www.s81c.com/common/v18/css/grid-fluid.css" rel="stylesheet">
+<div *ngIf="Flag==='Add'" style="text-align:right;margin-right: 10px;margin-left: 25px;" [hidden]="ViewFlag === 'Yes'">  
+    <table style="width:98%;">
+        <tr><td style="width:60%;text-align:left"> 
+            <button class="btn btn-info" id="RaidBack"
+                (click)="RAIDBack()"><em class="fa fa-arrow-left" aria-hidden="true"></em></button>  
+            &nbsp; &nbsp;                 
+                <mat-radio-group aria-label="Raid Level Radio" model="radiomodule" id="RaidRadio" (change)="onChange($event)">
+                    <mat-radio-button value="OverAll">Over All Level</mat-radio-button>&nbsp;
+                    <mat-radio-button value="Epic">Epic Level</mat-radio-button>&nbsp;
+                    <mat-radio-button value="Sprint">Sprint Level</mat-radio-button>&nbsp;
+                    <mat-radio-button value="App">Scope Level</mat-radio-button>
+                    <!-- <mat-radio-button value="ScopeLevel">Scope Level</mat-radio-button>             -->
+                </mat-radio-group>  
+            </td>
+            <td style="width:60%;text-align:right;"> 
+            <button class="btn btn-info" id="RaidSave"
+            (click)="Save()" [hidden]="flagsavebutton">Save</button>  
+            </td>
+        </tr>           
+    </table>                            
+</div>
+<div *ngIf="Flag==='Update'" style="text-align:right;margin-right: 10px;margin-left: 25px;" [hidden]="ViewFlag === 'Yes'">  
+    <table style="width:98%;">
+        <tr><td style="width:60%;text-align:left"> 
+                <button class="btn btn-info" id="RaidBack"
+                    (click)="RAIDBack()"><em class="fa fa-arrow-left" aria-hidden="true"></em></button>  
+            </td>
+            <td style="width:60%;text-align:right;"> 
+            <button class="btn btn-info" id="RaidSave"
+            (click)="Save()">Update</button> 
+            </td>
+        </tr>    
+    </table>              
+</div>
+
+<form #form="ngForm" [formGroup]="RaidAddUpdateForm">
+   
+<div *ngIf="Flag==='Add'" class="row" style="margin-right: 20px;margin-left: 25px;">
+<!-- </div> -->
+        <table style="table-layout: fixed;">
+            <tr>             
+            <td>
+                <mat-form-field class="fntsz"> 
+                <mat-label class="fntsz">Epic</mat-label>
+                <mat-select class="fntsz" formControlName="Epic" id="Epic">
+                      <mat-option class="fntsz"></mat-option>
+                      <mat-option class="fntsz" *ngFor="let Epic of RaidAddData" [value]=Epic.epicUNID (click)="SprintSelect(Epic.epicUNID)">
+                                    {{Epic.epicName}}
+                      </mat-option>
+                            </mat-select>
+                        </mat-form-field> 
+                        <mat-label class="form__error" *ngIf="!formErrors.Epic" [hidden]="radioSelection === 'OverAll' || radioSelection === ''" > * </mat-label>
+                        <mat-label *ngIf="formErrors.Epic" class="form__error">{{ formErrors.Epic }}
+                        </mat-label>
+                        </td>
+            <td>
+                    <!-- <mat-form-field class="fntsz">
+                            <mat-label class="fntsz">Sprint</mat-label>
+                            <mat-select class="fntsz" formControlName="Sprint" id="Sprint">
+                                <mat-option class="fntsz"></mat-option>
+                                <mat-option class="fntsz" *ngFor="let Sprint of RaidSprintValues" [value]=Sprint.sprintUNID (click)="AppSelect(Sprint.scopelevel)">
+                                    {{Sprint.sprintName}}
+                                </mat-option> 
+                            </mat-select> 
+                        </mat-form-field>
+                        <mat-label class="form__error" *ngIf="!formErrors.Sprint"> * </mat-label>
+                        <mat-label *ngIf="formErrors.Sprint" class="form__error">{{ formErrors.Sprint }}
+                        </mat-label> -->
+
+                        <mat-form-field class="fntsz">
+                            <mat-label class="fntsz">Sprint</mat-label>
+                            
+                            <mat-select class="fntsz" formControlName="Sprint" id="Sprint">
+                                <mat-option class="fntsz"></mat-option>
+                                <mat-optgroup *ngFor="let group of customSprintGroup" [label]="group.scopelevel" [disabled]="group.disabled">
+                                    <mat-option class="fntsz" *ngFor="let Sprint of group.childgroup" [value]=Sprint.sprintUNID (click)="AppSelect(Sprint.scopelevel)">
+                                            {{Sprint.sprintName}}
+                                        </mat-option>
+                                </mat-optgroup>
+                            </mat-select> 
+                        </mat-form-field>
+                        <mat-label class="form__error" *ngIf="!formErrors.Sprint"  [hidden]="radioSelection === 'Epic' || radioSelection === 'OverAll' || radioSelection === ''"> * </mat-label>
+                        <mat-label *ngIf="formErrors.Sprint" class="form__error">{{ formErrors.Sprint }}
+                        </mat-label>
+
+                        <!-- <span>
+                         
+                            <mat-form-field>
+                                <mat-select class="fntsz" formControlName="Sprint" id="Sprint">
+                                  <mat-option>-- None --</mat-option>
+                                  <mat-optgroup *ngFor="let group of customSprintGroup" [label]="group.scopelevel"
+                                                [disabled]="group.disabled">
+                                    <mat-option *ngFor="let pokemon of group.childgroup" [value]="pokemon.sprintUNID">
+                                                                            
+                                      {{pokemon.sprintName}}
+                                    </mat-option>
+                                  </mat-optgroup>
+                                </mat-select>
+                              </mat-form-field>
+                        </span> -->
+
+                        </td>           
+            <td> 
+                <span >
+                    <!-- [hidden]="scopeLevel !== 'AT' && (scopeLevel === 'ST' || scopeLevel === 'OverAll' || scopeLevel === '')" -->
+                    <mat-form-field class="fntsz">
+                        <mat-label class="fntsz"> {{scopeText}} </mat-label>
+                        <mat-select class="fntsz" id="AppName" formControlName="AppID" multiple>
+                            <mat-option class="fntsz" *ngFor="let App of RaidApplData" [value]="App.AppUNID" (click)="updateSTorAPPID(App.AppUNID,App.Scope_UNID )" >
+                            {{App.AppName}}
+                        </mat-option> 
+                        </mat-select> 
+                        </mat-form-field>
+                        <mat-label class="form__error" *ngIf="!formErrors.AppID"  [hidden]="radioSelection === 'Sprint' || radioSelection === 'OverAll' || radioSelection === '' || radioSelection === 'Epic'"> * </mat-label>
+                        <mat-label *ngIf="formErrors.AppID" class="form__error">{{ formErrors.AppID }}
+                        </mat-label>
+                </span>
+                <!-- <span>
+                    <mat-form-field class="fntsz" [hidden]="radioSelection !== 'ScopeLevel'">
+                        <mat-label class="fntsz">Scope Name</mat-label>
+                        <mat-select class="fntsz" id="AppName" formControlName="AppID" multiple>
+                            <mat-option class="fntsz" *ngFor="let App of RaidApplData" [value]="App.AppUNID">
+                            {{App.AppName}}
+                        </mat-option> 
+                        </mat-select> 
+                        </mat-form-field>
+                        <mat-label class="form__error" *ngIf="!formErrors.AppID"> * </mat-label>
+                        <mat-label *ngIf="formErrors.AppID" class="form__error">{{ formErrors.AppID }}
+                        </mat-label>
+                </span> -->
+                    
+            </td>
+            <td>
+                <mat-form-field class="fntsz">
+                                <mat-label class="fntsz">RAID Type</mat-label>
+                            <mat-select class="fntsz" formControlName="Type" id="RaidType" >
+                                <mat-option class="fntsz" ></mat-option>
+                                <mat-option class="fntsz" *ngFor="let Type of RaidType" (onSelectionChange)="RemoveFormvalues()" [value]=Type.Categoryvalues >
+                                    {{Type.Categoryvalues}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-label class="form__error" *ngIf="!formErrors.Type"> * </mat-label>
+                        <mat-label *ngIf="formErrors.Type" class="form__error">{{ formErrors.Type }}
+                        </mat-label>
+            </td>
+            </tr>
+        </table>
+</div>
+<!-- </div> -->
+<div *ngIf="Flag==='Update'||ViewFlag === 'Yes'" class="row" style="margin-right: 20px;margin-left: 25px;">
+        <table style="width:80%;">
+                <tr><td style="width:60%;text-align:left"> 
+                    <button class="btn btn-info" [hidden]="ViewFlag !== 'Yes'" id="RaidBack"
+                        (click)="RAIDBack()"><em class="fa fa-arrow-left" aria-hidden="true"></em></button>  
+                    </td></tr>
+        </table>
+    <div>
+        <input matInput formControlName="EpicUNID" [hidden]="Flag === 'Add'||Flag==='Update'||ViewFlag === 'Yes'">
+        <input matInput formControlName="SprintUNID" [hidden]="Flag === 'Add'||Flag==='Update'||ViewFlag === 'Yes'">
+        <input matInput formControlName="AppUNID" [hidden]="Flag === 'Add'||Flag==='Update'||ViewFlag === 'Yes'">
+        <input matInput formControlName="RaidID" [hidden]="Flag === 'Add'||Flag==='Update'||ViewFlag === 'Yes'">
+    </div>
+    <table style="table-layout: fixed;">
+        <tr>
+            <td>
+                <mat-form-field class="fntsz">
+                <mat-label class="fntsz">Epic</mat-label>
+                <input class="fntsz" matInput formControlName="Epic" id="Epic" [readonly]="Flag === 'Update'">
+                </mat-form-field> 
+            </td>
+            <td>
+                <mat-form-field class="fntsz">
+                    <mat-label class="fntsz">Sprint</mat-label>
+                    <input class="fntsz" matInput formControlName="Sprint" id="Sprint" [readonly]="Flag === 'Update'">
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field class="fntsz">
+                    <mat-label class="fntsz">Application Name</mat-label>
+                    <input class="fntsz" matInput formControlName="AppID" id="AppName" [readonly]="Flag === 'Update'">
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field class="fntsz">
+                    <mat-label class="fntsz">RAID Type</mat-label>
+                    <input class="fntsz" matInput formControlName="Type" id="RaidType" [readonly]="Flag === 'Update'">
+                </mat-form-field>
+            </td>
+        </tr>
+    </table>
+</div>
+<!-- Type = Risk -->
+<div *ngIf="RaidAddUpdateForm.controls['Type'].value==='Risk'" class="row" style="margin-right: 20px;margin-left: 25px;" >
+    <div>
+        <input matInput formControlName="IntegrationID" [hidden]="Flag === 'Add'||Flag==='Update'||ViewFlag === 'Yes'">
+        <input matInput formControlName="CurrentUser" [hidden]="Flag === 'Add'||Flag==='Update'||ViewFlag === 'Yes'">
+    </div>
+   <table>
+        <tr>
+         <strong style="font-size: 11px;">Risk Details : </strong> 
+        </tr>
+        <tr>
+            <td style="width:50%">    
+                <mat-form-field class="fntszacc">
+                <mat-label class="fntszacc">Description</mat-label>
+                <textarea class="fntszacc" matInput rows="0" formControlName="Description" id="Description">
+                </textarea>
+                </mat-form-field>
+                <mat-label class="form__error" *ngIf="!formErrors.Description"> * </mat-label>
+                <mat-label *ngIf="formErrors.Description" class="form__error">{{ formErrors.Description }}
+                </mat-label> 
+            </td>
+            <td style="width:54%">
+                    <mat-form-field class="fntszacc">
+                    <mat-label class="fntszacc">Comments</mat-label>
+                    <textarea class="fntszacc" matInput rows="0" formControlName="Comments" id="Comments" >
+                    </textarea>                       
+                    </mat-form-field>                    
+            </td>
+        </tr>
+   </table>
+        <table style="table-layout: fixed;">
+            <tr>
+                <td>
+                    <mat-form-field class="fntsz">
+                        <mat-label class="fntsz">Owner</mat-label>
+                        <input class="fntsz" #Owner matInput id="Owner" formControlName="Owner" [matAutocomplete]="auto">
+                            <mat-autocomplete class="fntsz" #auto="matAutocomplete">
+                            <mat-option class="fntsz" *ngFor="let option of myJSON" [value]="option.Emp_Name">
+                            <img class="ibm-downsize ibm-circle" src= {{option.photo}} alt="IBM face" style="width:30px;height:30px;background-size: contain;"> {{option.Emp_Name}}
+                        </mat-option>
+                    </mat-autocomplete>
+                    </mat-form-field>
+                    <mat-label class="form__error" *ngIf="!formErrors.Owner"> * </mat-label>
+                    <mat-label *ngIf="formErrors.Owner" class="form__error">{{ formErrors.Owner }}
+                    </mat-label> 
+                    <button id="OwnerSearch" class="btn btn-info" type="button" (click)="getEmployeeName(RaidAddUpdateForm.controls['Owner'].value)"><em class="fa fa-search"></em></button>
+                </td>
+                    <td>
+                        <mat-form-field class="fntsz">
+                            <mat-label class="fntsz">Status</mat-label>
+                            <mat-select class="fntsz" matInput formControlName="Status" id="Status">
+                                <mat-option class="fntsz"></mat-option>
+                                    <mat-option class="fntsz" *ngFor="let stat of RiskStatus" [value]=stat.Categoryvalues (click)="disableDateResolved(stat.Categoryvalues)">
+                                        {{stat.Categoryvalues}}
+                                    </mat-option>
+                                </mat-select> 
+                        </mat-form-field>
+                        <mat-label class="form__error" *ngIf="!formErrors.Status"> * </mat-label>
+                        <mat-label *ngIf="formErrors.Status" class="form__error">{{ formErrors.Status }}
+                        </mat-label>
+                    </td>
+                    <td>
+                        <mat-form-field class="fntszDt">
+                            <mat-label class="fntszDt">Date Raised</mat-label>
+                            <input class="fntszDt" matInput [max]= "maxDate" [matDatepicker]="DateRaised" id="DateRaised" formControlName="DateRaised">
+                                <mat-datepicker-toggle matSuffix [for]="DateRaised"></mat-datepicker-toggle>
+                                <mat-datepicker #DateRaised></mat-datepicker>
+                        </mat-form-field>
+                        <mat-label class="form__error" *ngIf="!formErrors.DateRaised"> * </mat-label>
+                        <mat-label *ngIf="formErrors.DateRaised" class="form__error">{{ formErrors.DateRaised }}
+                        </mat-label>
+                    </td>
+                    <td>
+                        <mat-form-field class="fntsz">
+                        <mat-label class="fntsz">Raised By</mat-label>
+                        <input class="fntsz" matInput formControlName="RaisedBy" id="RaisedBy" >
+                        </mat-form-field>
+                    </td>
+            </tr>
+            <tr>
+                <td>
+                    <mat-form-field class="fntszDt">
+                        <mat-label class="fntszDt">Target Date</mat-label>
+                        <input class="fntszDt" matInput [matDatepicker]="TargetDate" id="TargetDate" formControlName="TargetDate">
+                            <mat-datepicker-toggle matSuffix [for]="TargetDate"></mat-datepicker-toggle>
+                            <mat-datepicker #TargetDate></mat-datepicker>
+                    </mat-form-field>
+                    <mat-label class="form__error" *ngIf="!formErrors.TargetDate"> * </mat-label>
+                    <mat-label *ngIf="formErrors.TargetDate" class="form__error">{{ formErrors.TargetDate }}
+                    </mat-label>
+                </td>
+                <td>
+                    <mat-form-field class="fntszDt">
+                        <mat-label class="fntszDt">Date Resolved</mat-label>
+                        <input class="fntszDt" matInput [max]= "maxDate" [matDatepicker]="Resolved" id="DtResolved" formControlName="Resolved">
+                            <mat-datepicker-toggle matSuffix [for]="Resolved"></mat-datepicker-toggle>
+                            <mat-datepicker #Resolved></mat-datepicker>
+                    </mat-form-field>
+                    <mat-label class="form__error" *ngIf="!formErrors.Resolved"> * </mat-label>
+                    <mat-label *ngIf="formErrors.Resolved" class="form__error">{{ formErrors.Resolved }}
+                    </mat-label>
+                </td>  
+                <td>
+                    <mat-form-field class="fntsz">
+                        <mat-label class="fntsz">Risk Type</mat-label>
+                        <mat-select class="fntsz" formControlName="RiskType" id="Type">
+                        <mat-option class="fntsz"></mat-option>
+                        <mat-option class="fntsz" *ngFor="let RiskType of RiskInternal" [value]=RiskType.Categoryvalues >
+                                    {{RiskType.Categoryvalues}}
+                        </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </td> 
+                <td>
+                    <mat-form-field class="fntsz">
+                      <mat-label class="fntsz">Priority</mat-label>
+                         <mat-select class="fntsz" matInput id="Priority" formControlName="Priority">
+                            <mat-option class="fntsz"></mat-option>
+                            <mat-option class="fntsz" *ngFor="let priority of RiskPriority" [value]=priority.Categoryvalues >
+                                    {{priority.Categoryvalues}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </td>               
+            </tr>
+            <tr>
+                <td>
+                    <mat-form-field class="fntsz">
+                            <mat-label class="fntsz">Risk Impact</mat-label>
+                            <mat-select class="fntsz" formControlName="ImpactConsequences" id="Impact">
+                            <mat-option class="fntsz"></mat-option>
+                             <mat-option class="fntsz" *ngFor="let impact of RiskImpact" [value]=impact.Categoryvalues>
+                                        {{impact.Categoryvalues}}
+                            </mat-option>
+                        </mat-select> 
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field class="fntsz">
+                            <mat-label class="fntsz">Risk Probability</mat-label>
+                            <mat-select class="fntsz" formControlName="Probability" id="Probability">
+                             <mat-option class="fntsz"></mat-option>
+                            <mat-option class="fntsz" *ngFor="let Prob of RiskProb" [value]=Prob.Categoryvalues>
+                             {{Prob.Categoryvalues}}
+                        </mat-option>
+                        </mat-select>
+                 </mat-form-field>                         
+                </td>
+                <td>
+                        <mat-form-field class="fntsz">
+                                <mat-label class="fntsz">Risk Exposure</mat-label>
+                            <mat-select class="fntsz" formControlName="Exposure" id="Exposure">
+                                <mat-option class="fntsz"></mat-option>
+                                <mat-option class="fntsz" *ngFor="let Ex of RiskExposure" [value]=Ex.Categoryvalues >
+                                    {{Ex.Categoryvalues}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                </td>
+                <td>
+                        <mat-form-field class="fntsz">
+                                <mat-label class="fntsz">Reporting Level</mat-label>
+                            <mat-select class="fntsz" formControlName="ReportingLevel" id="ReportingLevel">
+                                <mat-option class="fntsz"></mat-option>
+                                <mat-option class="fntsz" *ngFor="let reportingLevel of ReportingLevel" [value]=reportingLevel.Categoryvalues >
+                                    {{reportingLevel.Categoryvalues}}
+                                </mat-option>
+                            </mat-select> 
+                        </mat-form-field>
+                    </td>
+            </tr>
+            <tr>
+                <td>
+                    <mat-form-field class="fntsz">
+                        <mat-label class="fntsz">Risk Response Plan</mat-label>
+                        <mat-select class="fntsz" formControlName="RiskResponsePlan" id="ResponsePlan">
+                            <mat-option class="fntsz"></mat-option>
+                            <mat-option class="fntsz" *ngFor="let Plan of ResponsePlan" [value]=Plan.Categoryvalues >
+                                {{Plan.Categoryvalues}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field class="fntsz">
+                        <mat-label class="fntsz">Reported To</mat-label>
+                        <input class="fntsz" matInput formControlName="ReportedTo" id="ReportedTo" >
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field class="fntsz">
+                     <mat-label class="fntsz">Containtment Approach</mat-label>
+                    <textarea class="fntsz" matInput formControlName="ContaintmentApproach" id="ContaintmentApproach" >
+                    </textarea>
+                    </mat-form-field>
+                </td>
+            </tr>
+                <mat-divider></mat-divider>
+            <tr>
+                <td>
+                    <mat-form-field class="fntsz">
+                        <mat-label class="fntsz">Date Last Updated</mat-label>
+                        <input class="fntsz" matInput id="DateLastUpdated" formControlName="DateLastUpdated" [readonly]="Flag === 'Add'||Flag==='Update'">
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field class="fntsz">
+                        <mat-label class="fntsz">Last Updated By</mat-label>
+                        <input class="fntsz" matInput id="LastUpdatedBy" formControlName="LastUpdatedBy" [readonly]="Flag === 'Add'||Flag==='Update'">
+                    </mat-form-field>
+                </td>                    
+            </tr>
+            
+        </table>
+</div>       
+<!-- Type=Action -->
+<div *ngIf="RaidAddUpdateForm.controls['Type'].value==='Action'" class="row" style="margin-right: 20px;margin-left: 25px;">
+    <table>
+        <tr>
+            <strong style="font-size: 11px;">Action Details : </strong> 
+        </tr>
+        <tr>
+            <td style="width:50%">    
+                <mat-form-field class="fntszacc">
+                <mat-label class="fntszacc">Description</mat-label>
+                <textarea class="fntszacc" matInput formControlName="Description" id="Description" >
+                    </textarea>
+                </mat-form-field>
+                <mat-label class="form__error" *ngIf="!formErrors.Description"> * </mat-label>
+                <mat-label *ngIf="formErrors.Description" class="form__error">{{ formErrors.Description }}
+                </mat-label>
+            </td>
+                <td style="width:54%">
+                                <mat-form-field class="fntszacc">
+                                <mat-label class="fntszacc">Comments</mat-label>
+                                <textarea class="fntszacc" matInput formControlName="Comments" id="Comments" >
+                                </textarea>                      
+                                </mat-form-field>                    
+                </td>
+            </tr>
+    </table>
+    <table style="table-layout: fixed;">
+            <tr>   
+                <td>
+                    <mat-form-field class="fntsz">
+                           <mat-label class="fntsz">Owner</mat-label>
+                        <input class="fntsz" #Owner matInput id="Owner" formControlName="Owner" [matAutocomplete]="auto">
+                            <mat-autocomplete class="fntsz" #auto="matAutocomplete">
+                            <mat-option class="fntsz" *ngFor="let option of myJSON" [value]="option.Emp_Name">
+                               <img class="ibm-downsize ibm-circle" src= {{option.photo}} alt="IBM face" style="width:30px;height:30px;background-size: contain;"> {{option.Emp_Name}}
+                            </mat-option>
+                            </mat-autocomplete>
+                   </mat-form-field>
+                   <mat-label class="form__error" *ngIf="!formErrors.Owner"> * </mat-label>
+                   <mat-label *ngIf="formErrors.Owner" class="form__error">{{ formErrors.Owner }}
+                   </mat-label> 
+                        <button id="OwnerSearch" class="btn btn-info" type="button" (click)="getEmployeeName(RaidAddUpdateForm.controls['Owner'].value)"><em class="fa fa-search"></em></button> 
+                </td>             
+                <td>
+                    <mat-form-field class="fntsz">
+                            <mat-label class="fntsz">Status</mat-label>
+                        <mat-select class="fntsz" matInput formControlName="Status" id="Status">
+                        <mat-option class="fntsz"></mat-option>
+                            <mat-option class="fntsz" *ngFor="let stat of RiskStatus" [value]=stat.Categoryvalues (click)="disableDateResolved(stat.Categoryvalues)">
+                                {{stat.Categoryvalues}}
+                            </mat-option>
+                        </mat-select>                        
+                    </mat-form-field>
+                    <mat-label class="form__error" *ngIf="!formErrors.Status"> * </mat-label>
+                    <mat-label *ngIf="formErrors.Status" class="form__error">{{ formErrors.Status }}
+                    </mat-label> 
+                </td>
+                <td>
+                    <mat-form-field class="fntszDt">
+                            <mat-label class="fntszDt">Date Raised</mat-label>
+                        <input class="fntszDt" matInput [max]= "maxDate" [matDatepicker]="DateRaised" id="DateRaised" formControlName="DateRaised">
+                            <mat-datepicker-toggle matSuffix [for]="DateRaised"></mat-datepicker-toggle>
+                            <mat-datepicker #DateRaised></mat-datepicker>
+                    </mat-form-field>
+                    <mat-label class="form__error" *ngIf="!formErrors.DateRaised"> * </mat-label>
+                <mat-label *ngIf="formErrors.DateRaised" class="form__error">{{ formErrors.DateRaised }}
+                </mat-label>
+            </td>
+                <td>                  
+                        <mat-form-field class="fntszDt">
+                                <mat-label class="fntszDt">Target Date</mat-label>
+                            <input class="fntszDt" matInput [matDatepicker]="TargetDate" id="TargetDate" formControlName="TargetDate">
+                                <mat-datepicker-toggle matSuffix [for]="TargetDate"></mat-datepicker-toggle>
+                                <mat-datepicker #TargetDate></mat-datepicker>
+                        </mat-form-field>
+                        <mat-label class="form__error" *ngIf="!formErrors.TargetDate"> * </mat-label>
+                        <mat-label *ngIf="formErrors.TargetDate" class="form__error">{{ formErrors.TargetDate }}
+                        </mat-label>
+                </td>
+               
+            </tr>
+            <tr>
+                <td>
+                    <mat-form-field class="fntsz">
+                                <mat-label class="fntsz">Priority</mat-label>
+                                <mat-select class="fntsz" matInput id="Priority" formControlName="Priority">
+                                    <mat-option class="fntsz"></mat-option>
+                                    <mat-option class="fntsz" *ngFor="let priority of RiskPriority" [value]=priority.Categoryvalues >
+                                        {{priority.Categoryvalues}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                </td>
+                <td>
+                        <mat-form-field class="fntsz">
+                            <mat-label class="fntsz">Action Type</mat-label>
+                            <mat-select class="fntsz" formControlName="RiskType" id="Type">
+                                <mat-option class="fntsz"></mat-option>
+                                <mat-option class="fntsz" *ngFor="let RiskType of RiskInternal" [value]=RiskType.Categoryvalues >
+                                    {{RiskType.Categoryvalues}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                </td>
+                <td>
+                            <mat-form-field class="fntsz">
+                                <mat-label class="fntsz">Action Category</mat-label>
+                                <input class="fntsz" matInput placeholder="Action Category" formControlName="Category" id="Category" >
+                            </mat-form-field>
+                </td>   
+                <td>
+                        <mat-form-field class="fntszDt">
+                                <mat-label class="fntszDt">Date Resolved</mat-label>
+                            <input class="fntszDt" matInput [max]= "maxDate" [matDatepicker]="Resolved" id="DtResolved" formControlName="Resolved">
+                                <mat-datepicker-toggle matSuffix [for]="Resolved"></mat-datepicker-toggle>
+                                        <mat-datepicker #Resolved></mat-datepicker>
+                        </mat-form-field> 
+                        <mat-label class="form__error" *ngIf="!formErrors.Resolved"> * </mat-label>
+                        <mat-label *ngIf="formErrors.Resolved" class="form__error">{{ formErrors.Resolved }}
+                        </mat-label>
+                </td>       
+            </tr>
+        <tr>
+            <td>
+                <mat-form-field class="fntsz">
+                        <mat-label class="fntsz">Date Last Updated</mat-label>
+                        <input class="fntsz" matInput placeholder="Date Last Updated" id="DateLastUpdated" formControlName="DateLastUpdated" [readonly]="Flag === 'Add'||Flag==='Update'">
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field class="fntsz">
+                        <mat-label class="fntsz">Last Updated By</mat-label>
+                    <input class="fntsz" matInput placeholder="Last Updated By" id="LastUpdatedBy" formControlName="LastUpdatedBy" [readonly]="Flag === 'Add'||Flag==='Update'">
+                </mat-form-field>
+            </td>                                    
+        </tr>
+    </table>
+</div>
+<!-- Type=Issue -->
+<div *ngIf="RaidAddUpdateForm.controls['Type'].value==='Issue'" class="row" style="margin-right: 20px;margin-left: 25px;" >
+    <table>
+                    <tr>
+                     <strong style="font-size: 11px;">Issue Details : </strong> 
+                    </tr>
+                    <tr>
+                        <td style="width:50%">    
+                            <mat-form-field class="fntszacc">
+                            <mat-label class="fntszacc">Description</mat-label>
+                            <textarea class="fntszacc" matInput formControlName="Description" id="Description" >
+                                </textarea>
+                            </mat-form-field>
+                            <mat-label class="form__error" *ngIf="!formErrors.Description"> * </mat-label>
+                            <mat-label *ngIf="formErrors.Description" class="form__error">{{ formErrors.Description }}
+                            </mat-label> 
+                        </td>
+                        <td style="width:54%">
+                                <mat-form-field class="fntszacc">
+                                <mat-label class="fntszacc">Comments</mat-label>
+                                <textarea class="fntszacc" matInput formControlName="Comments" id="Comments" >
+                                </textarea>                       
+                                </mat-form-field>                    
+                        </td>
+                    </tr>
+    </table>
+    <table style="table-layout: fixed;">
+            <tr>
+                <td>
+                    <mat-form-field class="fntsz">
+                                    <mat-label class="fntsz">Owner</mat-label>
+                                <input class="fntsz" #Owner matInput id="Owner" formControlName="Owner" [matAutocomplete]="auto">
+                                    <mat-autocomplete class="fntsz" #auto="matAutocomplete">
+                                    <mat-option class="fntsz" *ngFor="let option of myJSON" [value]="option.Emp_Name">
+                                       <img class="ibm-downsize ibm-circle" src= {{option.photo}} alt="IBM face" style="width:30px;height:30px;background-size: contain;"> {{option.Emp_Name}}
+                                         </mat-option>
+                                       </mat-autocomplete>
+                                     </mat-form-field>
+                                     <mat-label class="form__error" *ngIf="!formErrors.Owner"> * </mat-label>
+                            <mat-label *ngIf="formErrors.Owner" class="form__error">{{ formErrors.Owner }}
+                        </mat-label>
+                        <button class="btn btn-info" type="button" (click)="getEmployeeName(RaidAddUpdateForm.controls['Owner'].value)"><em class="fa fa-search"></em></button> 
+                </td>    
+                <td>
+                        <mat-form-field class="fntsz">
+                                <mat-label class="fntsz">Status</mat-label>
+                            <mat-select class="fntsz" matInput formControlName="Status" id="Status">
+                                <mat-option class="fntsz"></mat-option>
+                                    <mat-option class="fntsz" *ngFor="let stat of RiskStatus" [value]=stat.Categoryvalues (click)="disableDateResolved(stat.Categoryvalues)">
+                                        {{stat.Categoryvalues}}
+                                    </mat-option>
+                                </mat-select> 
+                            </mat-form-field>  
+                            <mat-label class="form__error" *ngIf="!formErrors.Status"> * </mat-label>
+                            <mat-label *ngIf="formErrors.Status" class="form__error">{{ formErrors.Status }}
+                            </mat-label>          
+                </td>
+                <td>
+                    <mat-form-field class="fntszDt">
+                                <mat-label class="fntszDt">Date Raised</mat-label>
+                                <input class="fntszDt" matInput [max]= "maxDate" [matDatepicker]="DateRaised" id="DateRaised" formControlName="DateRaised">
+                                    <mat-datepicker-toggle matSuffix [for]="DateRaised"></mat-datepicker-toggle>
+                                    <mat-datepicker #DateRaised></mat-datepicker>
+                    </mat-form-field>
+                    <mat-label class="form__error" *ngIf="!formErrors.DateRaised"> * </mat-label>
+                    <mat-label *ngIf="formErrors.DateRaised" class="form__error">{{ formErrors.DateRaised }}
+                    </mat-label>
+                </td> 
+                <td>
+                    <mat-form-field class="fntsz">
+                                <mat-label class="fntsz">Raised By</mat-label>
+                            <input class="fntsz" matInput formControlName="RaisedBy" id="RaisedBy" >
+                        </mat-form-field>
+                </td> 
+            </tr>
+            <tr> 
+                    <td>
+                            <mat-form-field class="fntszDt">
+                                    <mat-label class="fntszDt">Target Date</mat-label>
+                                    <input class="fntszDt" matInput [matDatepicker]="TargetDate" id="TargetDate" formControlName="TargetDate">
+                                        <mat-datepicker-toggle matSuffix [for]="TargetDate"></mat-datepicker-toggle>
+                                        <mat-datepicker #TargetDate></mat-datepicker>
+                                </mat-form-field>
+                                <mat-label class="form__error" *ngIf="!formErrors.TargetDate"> * </mat-label>
+                                <mat-label *ngIf="formErrors.TargetDate" class="form__error">{{ formErrors.TargetDate }}
+                                </mat-label>
+                        </td> 
+                            <td>
+                                <mat-form-field class="fntszDt">
+                                        <mat-label class="fntszDt">Date Resolved</mat-label>
+                                    <input class="fntszDt" matInput [max]= "maxDate" [matDatepicker]="Resolved" id="DtResolved" formControlName="Resolved">
+                                        <mat-datepicker-toggle matSuffix [for]="Resolved"></mat-datepicker-toggle>
+                                        <mat-datepicker #Resolved></mat-datepicker>
+                                </mat-form-field>
+                                <mat-label class="form__error" *ngIf="!formErrors.Resolved"> * </mat-label>
+                                <mat-label *ngIf="formErrors.Resolved" class="form__error">{{ formErrors.Resolved }}
+                                </mat-label>
+                            </td>  
+                            <td>
+                                    <mat-form-field class="fntsz">
+                                            <mat-label class="fntsz">Issue Type</mat-label>
+                                        <mat-select class="fntsz" formControlName="RiskType" id="Type">
+                                            <mat-option class="fntsz"></mat-option>
+                                            <mat-option class="fntsz" *ngFor="let RiskType of RiskInternal" [value]=RiskType.Categoryvalues >
+                                                {{RiskType.Categoryvalues}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                            </td>  
+                            <td>
+                                    <mat-form-field class="fntsz">
+                                            <mat-label class="fntsz">Priority</mat-label>
+                                        <mat-select class="fntsz" matInput id="Priority" formControlName="Priority">
+                                            <mat-option class="fntsz"></mat-option>
+                                            <mat-option class="fntsz" *ngFor="let priority of RiskPriority" [value]=priority.Categoryvalues >
+                                                {{priority.Categoryvalues}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </td>                          
+                        </tr>
+                        <tr>
+                            <td>
+                                        <mat-form-field class="fntsz">
+                                                <mat-label class="fntsz">Impact</mat-label>
+                                            <mat-select class="fntsz" formControlName="ImpactConsequences" id="Impact">
+                                                <mat-option class="fntsz"></mat-option>
+                                                <mat-option class="fntsz" *ngFor="let impact of RiskImpact" [value]=impact.Categoryvalues>
+                                                    {{impact.Categoryvalues}}
+                                                </mat-option> 
+                                            </mat-select> 
+                                        </mat-form-field>                    
+                            </td>
+                            <td>
+                                    <mat-form-field class="fntsz">
+                                            <mat-label class="fntsz">Reported To</mat-label>
+                                        <input class="fntsz" matInput formControlName="ReportedTo" id="ReportedTo" >
+                                    </mat-form-field>
+                            </td>
+                            <td> 
+                                    <mat-form-field class="fntszDt">
+                                            <mat-label class="fntszDt">Date Of Escalation</mat-label>
+                                        <input class="fntszDt" matInput [matDatepicker]="DateOfEscalation" id="DateOfEscalation" formControlName="DateOfEscalation">
+                                            <mat-datepicker-toggle matSuffix [for]="DateOfEscalation"></mat-datepicker-toggle>
+                                            <mat-datepicker #DateOfEscalation></mat-datepicker>
+                                    </mat-form-field>
+                            </td>
+                                <td>
+                                    <mat-form-field class="fntsz">
+                                        <mat-label class="fntsz">Show Stopper</mat-label>
+                                        <mat-select class="fntsz" formControlName="ShowStopper" id="ShowStopper">
+                                            <mat-option class="fntsz"></mat-option>
+                                            <mat-option  class="fntsz" *ngFor="let showstop of RaidShowstopper" [value]=showstop.Categoryvalues>
+                                                {{showstop.Categoryvalues}}
+                                            </mat-option> 
+                                        </mat-select> 
+                                    </mat-form-field>
+                                </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <mat-form-field class="fntsz">
+                                  <mat-label class="fntsz">Source</mat-label>
+                                  <input class="fntsz" matInput formControlName="Source" id="Source" >
+                                </mat-form-field>
+                            </td>                        
+                             <td>
+                                <mat-form-field class="fntsz">
+                                            <mat-label class="fntsz">Date Last Updated</mat-label>
+                                            <input class="fntsz" matInput id="DateLastUpdated" formControlName="DateLastUpdated" [readonly]="Flag === 'Add'||Flag==='Update'">
+                                </mat-form-field>
+                            </td>
+                            <td>
+                                <mat-form-field class="fntsz">
+                                        <mat-label class="fntsz">Last Updated By</mat-label>
+                                    <input class="fntsz" matInput id="LastUpdatedBy" formControlName="LastUpdatedBy" [readonly]="Flag === 'Add'||Flag==='Update'">
+                                </mat-form-field>
+                            </td>   
+                        </tr>
+    </table>
+</div>
+<!-- Type=Dependency -->
+<div *ngIf="RaidAddUpdateForm.controls['Type'].value==='Dependency'" class="row" style="margin-right: 20px;margin-left: 25px;" >
+    <table>
+                    <tr>
+                     <strong style="font-size: 11px;">Dependency Details : </strong> 
+                    </tr>
+                    <tr>
+                        <td style="width:50%">    
+                            <mat-form-field class="fntszacc">
+                            <mat-label class="fntszacc">Description</mat-label>
+                            <textarea class="fntszacc" matInput formControlName="Description" id="Description" >
+                                </textarea>
+                            </mat-form-field>
+                            <mat-label class="form__error" *ngIf="!formErrors.Description"> * </mat-label>
+                            <mat-label *ngIf="formErrors.Description" class="form__error">{{ formErrors.Description }}
+                            </mat-label>
+                        </td>
+                        <td style="width:54%">
+                                <mat-form-field class="fntszacc">
+                                <mat-label class="fntszacc">Comments</mat-label>
+                                <textarea class="fntszacc" matInput formControlName="Comments" id="Comments" >
+                                    </textarea>                     
+                                </mat-form-field>                    
+                        </td>
+                    </tr>
+    </table>
+    <table style="table-layout: fixed;">                
+                    <tr>
+                        <td> 
+                                    <mat-form-field class="fntsz">
+                                        <mat-label class="fntsz">Owner</mat-label>
+                                        <input class="fntsz" #Owner matInput id="Owner" formControlName="Owner" [matAutocomplete]="auto">
+                                            <mat-autocomplete class="fntsz" #auto="matAutocomplete">
+                                            <mat-option class="fntsz" *ngFor="let option of myJSON" [value]="option.Emp_Name">
+                                               <img class="ibm-downsize ibm-circle" src= {{option.photo}} alt="IBM face" style="width:30px;height:30px;background-size: contain;"> {{option.Emp_Name}}
+                                                 </mat-option>
+                                               </mat-autocomplete>
+                                             </mat-form-field>
+                                             <mat-label class="form__error" *ngIf="!formErrors.Owner"> * </mat-label>
+                                             <mat-label *ngIf="formErrors.Owner" class="form__error">{{ formErrors.Owner }}
+                                             </mat-label>
+                                        <button class="btn btn-info" type="button" (click)="getEmployeeName(RaidAddUpdateForm.controls['Owner'].value)"><em class="fa fa-search"></em></button> 
+                        </td>    
+                        <td>
+                            <mat-form-field class="fntsz">
+                                    <mat-label class="fntsz">Status</mat-label>
+                                <mat-select class="fntsz" matInput formControlName="Status" id="Status">
+                                    <mat-option class="fntsz"></mat-option>
+                                        <mat-option class="fntsz" *ngFor="let stat of RiskStatus" [value]=stat.Categoryvalues (click)="disableDateResolved(stat.Categoryvalues)">
+                                            {{stat.Categoryvalues}}
+                                        </mat-option>
+                                    </mat-select> 
+                            </mat-form-field>
+                            <mat-label class="form__error" *ngIf="!formErrors.Status"> * </mat-label>
+                            <mat-label *ngIf="formErrors.Status" class="form__error">{{ formErrors.Status }}
+                            </mat-label>
+                        </td>              
+                        <td>
+                            <mat-form-field class="fntszDt">
+                                            <mat-label class="fntszDt">Date Raised</mat-label>
+                                        <input class="fntszDt" matInput [max]= "maxDate" [matDatepicker]="DateRaised" id="DateRaised" formControlName="DateRaised">
+                                            <mat-datepicker-toggle matSuffix [for]="DateRaised"></mat-datepicker-toggle>
+                                            <mat-datepicker #DateRaised></mat-datepicker>
+                            </mat-form-field>
+                            <mat-label class="form__error" *ngIf="!formErrors.DateRaised"> * </mat-label>
+                            <mat-label *ngIf="formErrors.DateRaised" class="form__error">{{ formErrors.DateRaised }}
+                            </mat-label>
+                        </td>
+                        <td>
+                                <mat-form-field class="fntsz">
+                                        <mat-label class="fntsz">Raised By</mat-label>
+                                    <input class="fntsz" matInput formControlName="RaisedBy" id="RaisedBy" >
+                                </mat-form-field>
+                        </td>
+                    </tr>
+                    <tr>
+                            <td>                  
+                                    <mat-form-field class="fntszDt">
+                                            <mat-label class="fntszDt">Target Date</mat-label>
+                                        <input class="fntszDt" matInput [matDatepicker]="TargetDate" id="TargetDate" formControlName="TargetDate">
+                                            <mat-datepicker-toggle matSuffix [for]="TargetDate"></mat-datepicker-toggle>
+                                            <mat-datepicker #TargetDate></mat-datepicker>
+                                    </mat-form-field>
+                                    <mat-label class="form__error" *ngIf="!formErrors.TargetDate"> * </mat-label>
+                                    <mat-label *ngIf="formErrors.TargetDate" class="form__error">{{ formErrors.TargetDate }}
+                                    </mat-label>
+                                </td>   
+                                    <td>
+                                        <mat-form-field class="fntszDt">
+                                                <mat-label class="fntszDt">Date Resolved</mat-label>
+                                            <input class="fntszDt" matInput [max]= "maxDate" [matDatepicker]="Resolved" id="DtResolved" formControlName="Resolved">
+                                                <mat-datepicker-toggle matSuffix [for]="Resolved"></mat-datepicker-toggle>
+                                                <mat-datepicker #Resolved></mat-datepicker>
+                                        </mat-form-field>
+                                        <mat-label class="form__error" *ngIf="!formErrors.Resolved"> * </mat-label>
+                                        <mat-label *ngIf="formErrors.Resolved" class="form__error">{{ formErrors.Resolved }}
+                                        </mat-label>
+                                    </td>
+                                    <td>
+                                            <mat-form-field class="fntsz">
+                                                    <mat-label class="fntsz">Dependency Type</mat-label>
+                                                <mat-select class="fntsz" formControlName="RiskType" id="Type">
+                                                    <mat-option class="fntsz"></mat-option>
+                                                    <mat-option class="fntsz" *ngFor="let RiskType of RiskInternal" [value]=RiskType.Categoryvalues >
+                                                        {{RiskType.Categoryvalues}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                    </td> 
+                                    <td>
+                                            <mat-form-field class="fntsz">
+                                                    <mat-label class="fntsz">Priority</mat-label>
+                                                <mat-select class="fntsz" matInput id="Priority" formControlName="Priority">
+                                                    <mat-option class="fntsz"></mat-option>
+                                                    <mat-option class="fntsz" *ngFor="let priority of RiskPriority" [value]=priority.Categoryvalues >
+                                                        {{priority.Categoryvalues}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </td>                        
+                    </tr>
+                    <tr>
+                            <td>
+                                    <mat-form-field class="fntsz">
+                                            <mat-label class="fntsz">Impact</mat-label>
+                                        <mat-select class="fntsz" formControlName="ImpactConsequences" id="Impact">
+                                            <mat-option class="fntsz"></mat-option>
+                                            <mat-option class="fntsz" *ngFor="let impact of RiskImpact" [value]=impact.Categoryvalues>
+                                                {{impact.Categoryvalues}}
+                                            </mat-option>
+                                        </mat-select> 
+                                    </mat-form-field>
+                            </td>    
+                            <td>
+                                    <mat-form-field class="fntsz">
+                                            <mat-label class="fntsz">Dependency Owner</mat-label>
+                                        <input class="fntsz" matInput formControlName="DependencyOwner" id="DependencyOwner" >
+                                    </mat-form-field>
+                                </td>  
+                                <td>
+                                        <mat-form-field class="fntsz">
+                                                <mat-label class="fntsz">Actions To Resolve</mat-label>
+                                            <input class="fntsz" matInput formControlName="ActionsToResolve" id="ActionsToResolve" >
+                                        </mat-form-field>
+                                    </td>  
+                                    <td>
+                                            <mat-form-field class="fntsz">
+                                                    <mat-label class="fntsz">Reported To</mat-label>
+                                                <input class="fntsz" matInput formControlName="ReportedTo" id="ReportedTo" >
+                                            </mat-form-field>
+                        </td> 
+                    </tr>
+                    <tr>    
+                    <td>
+                        <mat-form-field class="fntsz">
+                                <mat-label class="fntsz">Date Last Updated</mat-label>
+                                <input class="fntsz" matInput id="DateLastUpdated" formControlName="DateLastUpdated" [readonly]="Flag === 'Add'||Flag==='Update'">
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field class="fntsz">
+                                <mat-label class="fntsz">Last Updated By</mat-label>
+                            <input class="fntsz" matInput id="LastUpdatedBy" formControlName="LastUpdatedBy" [readonly]="Flag === 'Add'||Flag==='Update'">
+                        </mat-form-field>
+                    </td>                                    
+                </tr>
+    </table>
+</div>
+</form>

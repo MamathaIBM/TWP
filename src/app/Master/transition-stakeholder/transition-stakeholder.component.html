@@ -1,0 +1,107 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://1.www.s81c.com/common/v18/css/grid-fluid.css" rel="stylesheet">
+<br>
+<div class="row" *ngIf="FlagHide=== 'No'" style="margin-left: -12px;">
+    <form #form="ngForm" [formGroup]="stakeholderUpdateeForm" (ngSubmit)="onSubmit()" autocomplete="off">
+        <table id="StakeFormTable" style="width:900px">
+            <tr style="width:900px">
+                <td>
+                    <mat-form-field style="width:300px;font-size:11px;">
+                        <mat-label class="fntsz">Resource Name</mat-label>
+                        <input class="fntsz" id="StakeName" #ResourceName matInput (keypress)="valuechange($event.target.value)" formControlName="ResourceName" [matAutocomplete]="auto">
+                        <mat-autocomplete class="fntsz" #auto="matAutocomplete">
+                            <mat-option class="fntsz" (onSelectionChange)="getEmail(option.email)" *ngFor="let option of myJSON" [value]="option.Emp_Name">
+                                <img class="fntsz" class="ibm-downsize ibm-circle" src={{option.photo}} alt="IBM face" style="width:30px;height:30px;background-size: contain;"> {{option.Emp_Name}}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                    <button id="StakeSearchName" class="btn btn-info" type="button" (click)="getEmployeeName(stakeholderUpdateeForm.controls['ResourceName'].value)"><em class="fa fa-search"></em></button>
+                    &nbsp;&nbsp;
+                </td>
+                <td>
+                    <mat-form-field style="width:300px;font-size:11px;">
+                        <mat-label class="fntsz">Intranet ID</mat-label>
+                        <input class="fntsz" id="StakeIntranet" matInput placeholder="" formControlName="EmailId" style="background-color: lightGray;" [readonly]="!editable">
+                    </mat-form-field>
+                    &nbsp;&nbsp;
+                </td>
+                <td>
+                    <mat-form-field style="width:200px;font-size:11px;">
+                         <mat-label class="fntsz">Role</mat-label>
+                        <mat-select class="fntsz" id="StakeRole" placeholder="Role" formControlName="Role" multiple>
+                            <mat-option class="fntsz" (onSelectionChange)="getRoleID($event,TeamRole.ROLE_ID)" *ngFor="let TeamRole of TeamRole" [value]=TeamRole.ROLE_NAME>
+                                {{TeamRole.ROLE_NAME}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    &nbsp;&nbsp;
+                </td>
+            </tr>
+        </table>
+        <div class="example-button-row">
+            <!-- <button mat-raised-button color="primary" type="submit" [disabled]="!stakeholderUpdateeForm.valid  "  >Update </button>                               -->
+            <button id="StakeAdd" class="btn btn-info" type="submit" [disabled]="!stakeholderUpdateeForm.valid || editFlag === 1  " (click)="Add()">ADD </button>
+            &nbsp;&nbsp;
+            <button id="StakeUpdate" class="btn btn-info" type="submit" [disabled]="!stakeholderUpdateeForm.valid || editFlag === 0 " (click)="Update()">Update </button>
+        </div>
+
+    </form>
+
+</div>
+<br>
+<div class="row" style="margin-left: -12px;font-size:11px">
+    <!-- <div class="col-md-12"> -->
+    <tr>
+        <th id="header">Available Stakeholders : <span>{{dataLength}}</span> </th>
+    </tr>
+    <mat-form-field class="fntsz">
+        <mat-label class="fntsz"><em class="fa fa-search" aria-hidden="true"></em></mat-label><input class="fntsz" id="Stakesearch" matInput (keyup)="applyFilter($event.target.value)">
+    </mat-form-field>
+
+    <table id="StakeDataTable" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+        <ng-container matColumnDef="ResourceName">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                <th class="matHeader">Resource Name</th>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.ResourceName}}
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="EmailId">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                <th class="matHeader">EmailId</th>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.EmailId}}
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Role">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                <th class="matHeader">Role</th>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.Role}}
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Delete">
+            <mat-header-cell *matHeaderCellDef>
+                <th class="matHeader"></th>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element; let i = index;">
+                 <button class="btn btn-info"  id="{{'StakeDelete'+i}}" [hidden]="FlagHide=== 'Yes'" (click)="onDelete(element)">
+                    <em class="fa fa-trash"></em>
+                </button>
+
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row class="columnName" *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <!-- <mat-row class="result-row" *matRowDef="let row; let element; columns:displayedColumns; let i = index" (click)="setClickedRow(i,element)" [ngClass]="{'highlight': i == selectedRow}">
+                            </mat-row> -->
+        <mat-row class="result-row" *matRowDef="let row; let element; columns:displayedColumns;" (click)="setClickedRow(row,element)" [ngClass]="{ highlight: row == selectedRow }">
+        </mat-row>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 1, 10, 20]" showFirstLastButtons (click)="setClickedRow(0,element)"></mat-paginator>
+    <!-- </div> -->
+</div>

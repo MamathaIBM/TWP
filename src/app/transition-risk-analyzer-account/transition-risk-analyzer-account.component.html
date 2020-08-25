@@ -1,0 +1,248 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://1.www.s81c.com/common/v18/css/grid-fluid.css" rel="stylesheet">
+<br>
+<div style="margin-left: -12px;font-size:11px;">    
+         <strong> Transition Risk Report : </strong><button id="TRAExportExcel" (click)="TRAExportExcel()"><em class="fa fa-file-excel-o" style="font-size:15px;color: green"></em></button>
+            <br><br>
+        <div class="div3" style="font-size:11px;"> Legend </div>
+                <table style="width : 80%">
+                    <tr>
+                        <td class="table1 table-fonts" style="width : 10%;font-size:11px;"> INPUT FOR RISK IMPACT </td>
+                        <td class="table1 table-fonts" style="width : 10%;font-size:11px;">INPUT FOR RISK PROBABILITY</td>
+                        <td style="width:5%;font-size:11px;"></td>
+                        <td colspan="2" style="width : 20%;font-size:11px;" class="table1 table-fonts">Overall Transition Risk Scoring Range</td>
+                    </tr>
+                    <tr>
+                        <td class="table1" style="width : 10%;font-size:11px;">1 - Low Risk Impact </td>
+                        <td class="table1" style="width : 10%;font-size:11px;">
+                            1 - Low Risk Probability
+                        </td>
+                        <td style="width:5%;font-size:11px;">
+                        </td>
+                        <td class="table2" style="width : 10%;font-size:11px;">Low
+                        </td>
+                        <td class="table2" style="width : 10%;font-size:11px;">Score
+                            <= 35 % </td>
+                    </tr>
+                    <tr>
+                        <td class="table1" style="width : 10%;font-size:11px;">
+                            2 - Medium Risk Impact </td>
+                                <td class="table1" style="width : 10%;font-size:11px;">
+                                    2 - Medium Risk Probability
+                                </td>
+                                <td style="width:5%;font-size:11px;">
+                                </td>
+                                <td class="table2" style="width : 10%;font-size:11px;">Medium
+                                </td>
+                                <td class="table2" style="width : 10%;font-size:11px;">Score > 35 % &
+                                    <= 65 % </td>
+                    </tr>
+                    <tr>
+                        <td class="table1" style="width : 10%;font-size:11px;">
+                            3 - High Risk Impact
+                        </td>
+                        <td class="table1" style="width : 10%;font-size:11px;">
+                            3 - High Risk Probability
+                        </td>
+                        <td style="width:5%;font-size:11px;">
+                        </td>
+                        <td class="table2" style="width : 10%;font-size:11px;">High
+                        </td>
+                        <td class="table2" style="width : 10%;font-size:11px;">Score > 65 %
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table1" style="width : 10%;font-size:11px;">NA - Not Applicable</td>
+                        <td class="table1" style="width : 10%;font-size:11px;">NA - Not Applicable</td>
+                    </tr>
+                </table>
+                <br>
+                <div>
+
+                 <p class="headertext1" style="font-size:11px;">  **Atleast one Risk Attribute for each category to be filled to complete theTransition Risk Analysis Record.** </p>
+                        <table>
+                              <tr>
+                                  <td style="width: 24%;font-size:11px;" class="td1 bgcolor1">Overall Transition Risk RAG Status</td>
+                                  <td style="width: 20%;font-size:11px;" class="td1" [ngClass]="{'result-row-red' : Overall_calculation_percent > 0.65 ,
+                                               'result-row-BS' : Overall_calculation_percent > 0.35 && Overall_calculation_percent < 0.65,
+                                               'result-row-OT' : Overall_calculation_percent <= 0.35 }" > {{Overall_calculation | number : '1.2' }} - {{Overall_calculation_percent | percent : '0.2' }}  </td>
+                                  <td style="width: 56%;font-size:11px;">  
+                                    &nbsp;                                  
+                                    <button id="Save_update" class="btn btn-info" [disabled]="progress>0 || dataLength === 0 || FlagHide === 'Yes' " (click)="Save_Update()">
+                                    <i class="fa fa-save "></i> Update</button>
+                                &nbsp;
+                                <button id="Add_Account_Specific_Risk" class="btn btn-info" [disabled]="progress>0 || FlagHide === 'Yes' || dataLength === 0 || addButtonFlag !==1 " (click)="openDialog()">Add Account Specific Risk</button>
+                                    &nbsp;
+                                    <button id="FS_Analysis" class="btn btn-info" [disabled]="progress>0 || dataLength === 0 || FlagHide === 'Yes'  || addButtonFlag !==1 "    (click)="Finalize_and_Submit_Analysis()">Finalize and Submit Analysis</button>
+                                        <!-- <button id="Export_Transition_Risk_Calculator" class="btn btn-info" (click)="ExportReport()">
+                                                Export Transition Risk Calculator  
+                                        </button> -->
+                                  </td>
+                              </tr>
+                          </table>
+                </div>
+<br>
+<div style="font-size:11px;"> <strong>SOURCE : {{SOURCE}} </strong> <br></div>
+
+<div class="row mat-elevation-z8 " style="margin-left: -12px;font-size:11px;">  
+  <table id="AppSerDataTable" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+                      <ng-container matColumnDef="Risk_ID">                                               
+                        <th class="RiskIDcolstyles" mat-header-cell *matHeaderCellDef>Risk ID</th>
+                      <td mat-cell *matCellDef="let element"
+                                    [ngClass]= "{'headingColumnWidth': element.flag === '1',                      
+                                    'RiskIDcolstyles': element.flag !== '1'}">
+                        <div class="headingColumnWidth"  [hidden]="element.flag !== 1" ><strong>{{element.Risk_ID}}</strong></div>
+                        <div class="RiskIDcolstyles fontFamilySize textAlignmentleft"   [hidden]="element.flag === 1" > {{element.Risk_ID}}</div>                                           
+                      </td>
+                       </ng-container>
+                      <!-- <div class="fontFamilySize textAlignmentleft"  [hidden]="element.flag !== 1" ><strong>{{element.Risk_ID}}</strong></div>
+                      <div class="fontFamilySize textAlignmentleft"   [hidden]="element.flag === 1" > {{element.Risk_ID}}</div>                                            -->
+                   
+                      <ng-container matColumnDef="Risk_Attribute">
+                          <th class="RiskAttributestyles" mat-header-cell *matHeaderCellDef>Risk Attribute</th>                          
+                          <td class="RiskAttributestyles" mat-cell *matCellDef="let element"  [hidden]="element.flag === 1">  
+                            <div class="text-width RiskAttributestyles">
+                                    <mat-form-field class="formFieldWidth">
+                                            <textarea  matInput 
+                                            class="fontFamilySize"
+                                            Rows="7" 
+                                            [disabled]="true"                                            
+                                            [value] = "element.Risk_Attribute">                                    
+                                            </textarea>
+                                        </mat-form-field>                                
+                            </div>                
+                          </td>
+                      </ng-container>
+                      
+                      <ng-container matColumnDef="Planned_Mitigation_Action">
+                          <th class="PlannedMitigationAction"  mat-header-cell *matHeaderCellDef>Planned Mitigation Action</th>                          
+                          <td mat-cell class="PlannedMitigationAction text-width" [hidden]="element.flag === 1" 
+                                       *matCellDef="let element">  
+                                    <mat-form-field class="formFieldWidth">
+                                            <textarea  matInput 
+                                            class="fontFamilySize"
+                                            Rows="7" 
+                                            [disabled]="true"                                           
+                                            [value] = "element.Planned_Mitigation_Action" >                                    
+                                            </textarea>
+                                        </mat-form-field>                                    
+                          </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="Acc_specific_risk">
+                        <th class="Accspecificrisk" mat-header-cell *matHeaderCellDef>Account Specific Risk Attribute</th>                        
+                        <td class="Accspecificrisk text-width" mat-cell [hidden]="element.flag === 1"  
+                            *matCellDef="let element; let i = index;">
+                                <mat-form-field class="formFieldWidth">
+                                        <textarea id="{{'Acc_specific_risk_id'+i}}" matInput 
+                                        class="fontFamilySize" 
+                                        Rows="7" 
+                                        [readonly]="FlagHide === 'Yes'"
+                                        (keyup)="textUpdate1('yes')"
+                                        [disabled]="element.RiskLog_Flag === 1"
+                                        (mouseout)="textUpdate($event,i,'Acc_specific_risk')"      
+                                        [value] = "element.Acc_specific_risk" >                                    
+                                        </textarea>
+                                    </mat-form-field>
+                        </td>     
+                    </ng-container>
+
+                    <ng-container matColumnDef="Risk_Impact">
+                        <th class="RiskImpact"  mat-header-cell *matHeaderCellDef>Risk Impact</th>
+                        <td class="RiskImpact"  mat-cell  [hidden]="element.flag === 1"
+                            *matCellDef="let element; let i = index;">
+                            <mat-form-field>
+                                <mat-select [ngClass]="{'result-row-OT':element.Risk_Impact === '1',
+                                                        'result-row-BS':element.Risk_Impact ==='2',
+                                                        'result-row-red' : element.Risk_Impact === '3'}" 
+                                            id="{{'Risk_Impact_id'+i}}" [(value)]="element.Risk_Impact"   
+                                            [disabled]="FlagHide === 'Yes'">
+
+                                <mat-option [disabled]="element.RiskLog_Flag === 1" 
+                                            (onSelectionChange)="change($event,element,i,'Risk_Impact')" 
+                                            *ngFor="let RiskValue of RiskValues" 
+                                            [value]="RiskValue.Categoryvalues">          
+                                            {{RiskValue.Categoryvalues}}
+                                        </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Risk_Probability">
+                        <th class="RiskProbability" mat-header-cell *matHeaderCellDef>Risk Probability</th>
+                        <td class="RiskProbability" mat-cell [hidden]="element.flag === 1" *matCellDef="let element; let i = index;">
+                             <mat-form-field>
+                                <mat-select  [ngClass]="{'result-row-OT':element.Risk_Probability === '1',
+                                'result-row-BS':element.Risk_Probability === '2',
+                                'result-row-red' : element.Risk_Probability === '3'}" id="{{'Risk_Probability_id'+i}}" [(value)]="element.Risk_Probability" 
+                                 [disabled]="FlagHide === 'Yes'">
+                                        <mat-option [disabled]="element.RiskLog_Flag === 1"  (onSelectionChange)="change($event,element,i,'Risk_Probability')" 
+                                        *ngFor="let RiskValue of RiskValues" [value]="RiskValue.Categoryvalues">          
+                                            {{RiskValue.Categoryvalues}} 
+                                        </mat-option>
+                                </mat-select>
+                                        </mat-form-field>
+                                       
+                                </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Risk_Exposure">
+                        <th class="RiskExposure" mat-header-cell *matHeaderCellDef>Risk Exposure</th>                        
+                        <td class="RiskExposure" mat-cell [hidden]="element.flag === 1" *matCellDef="let element"  > 
+                              <div class="text-width RiskExposure">{{element.Risk_Exposure}}</div>  
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="Risk_Score">
+                        <th class="RiskScore" mat-header-cell *matHeaderCellDef>Risk Score </th>                        
+                        <td class="RiskScore" mat-cell [hidden]="element.flag === 1" *matCellDef="let element"> 
+                                <div class="text-width RiskScore">
+                            {{ (element.Risk_Score !== 'NA' ? (element.Risk_Score | number :'1.2') : element.Risk_Score) }}               
+                        </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Risk_Level">
+                        <th class="RiskLevel" mat-header-cell *matHeaderCellDef>Risk Level </th>                        
+                        <td class="RiskLevel" mat-cell [hidden]="element.flag === 1" *matCellDef="let element">  
+                                    <div [ngClass]="{'result-row-OT':(element.Risk_Level === 1),
+                                    'result-row-BS':(element.Risk_Level === 2),
+                                    'result-row-red' : element.Risk_Level === 3}"
+                                     style="text-align: center;width: 60%;font-size:11px;">{{element.Risk_Level}}</div>         
+                        </td>
+                    </ng-container>
+              
+                    <ng-container matColumnDef="Risk_Type">
+                        <th class="RiskType" mat-header-cell *matHeaderCellDef>Risk Type </th>   
+                                <td class="RiskType" mat-cell [hidden]="element.flag === 1"  *matCellDef="let element; let i = index;">
+                                        <mat-form-field style="width: 60%;">
+                                <mat-select id="{{'Risk_Type_id'+i}}" [(value)]="element.Risk_Type"  [disabled]="FlagHide === 'Yes'">
+                                        <mat-option [disabled]="element.RiskLog_Flag === 1"  (onSelectionChange)="updatei($event,element,i,'Risk_Type')" 
+                                        *ngFor="let RiskType of RiskTypes" [value]="RiskType.Categoryvalues">          
+                                            {{RiskType.Categoryvalues}}
+                                        </mat-option>
+                                </mat-select>
+                                        </mat-form-field>
+                                </td>
+                    </ng-container>
+                    
+                    <ng-container matColumnDef="Tracked">
+                        <th class="Tracked" mat-header-cell *matHeaderCellDef>
+                            Tracked in Risk Log </th>                        
+                        <td class="Tracked" mat-cell [hidden]="element.flag === 1" *matCellDef="let element"  > 
+                              <div class="text-width Tracked">    
+                                  {{ (element.RiskLog_Flag === 0 ? "No" : (element.RiskLog_Flag === "" ? "No" : "Yes" ) )}}     </div>  
+                        </td>
+                    </ng-container>
+
+                        <mat-header-row class="columnName" *matHeaderRowDef="displayedColumns"></mat-header-row>              
+                      <mat-row  [ngClass]="{'result-row-C': row.flag === 1 }" *matRowDef="let row; let element; 
+                      columns:displayedColumns;" 
+                      >
+                </mat-row> 
+                  </table> 
+                  
+</div>
+<br>
+<br>

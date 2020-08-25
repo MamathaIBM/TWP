@@ -1,0 +1,22 @@
+.example-header-image {
+  background-image: url("../../assets/powerpoint-logo.png");   
+  background-size: cover;
+}
+.fntsz{
+  font-size:11px;
+  word-wrap: break-word;
+}
+button {
+background-color: #1D3649;
+color: white;
+font-size:11px;
+} 
+.example-card {
+max-width: 250px;
+font-size:11px;
+}
+.example-card:hover {
+max-width: 250px;
+font-size:11px;
+transform: scale(1.1);
+}

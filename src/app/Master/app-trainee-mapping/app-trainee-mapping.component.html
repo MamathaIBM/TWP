@@ -1,0 +1,335 @@
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <!--
+    <div class="headerrow" style="margin-left: -12px;font-size:11px;margin-right: 120px" >
+        Select Applications & Trainee  
+    </div>
+    -->
+
+    
+        <table class="container" style="width: 100%;">
+
+                <tr style="text-align: left;">
+                    <td style="text-align: left;display: inline-flex;" class="headerrowheadpage"> Select Applications & Trainee </td>
+                    <td style="text-align: right;">
+                                <div style="font-size:11px;" *ngIf="userAccessProfileService.getViewFlag()!='Yes'">
+                                    <button mat-icon-button type="button" (click)="map()">Map by select</button>
+                                    &nbsp;
+                                    <button mat-icon-button type="button" (click)="mapAll()">Map All</button>
+                                </div>    
+                                <div style="font-size:11px;" *ngIf="userAccessProfileService.getViewFlag()=='Yes'">
+                                    <button mat-icon-button type="button" (click)="map()">View by select</button>
+                                    &nbsp;
+                                    <button mat-icon-button type="button" (click)="mapAll()">View All</button>
+                                </div>  
+                    </td>
+                </tr>
+                
+                <tr style="text-align: left;">
+                    <td style="text-align: left;">
+                        <div  *ngIf="userAccessProfileService.getViewFlag()!='Yes'" style="font-size:11px;" >
+                                <br>
+                                Excel upload? Before upload, get your excel template prepopulated with APP & Trainee names. Click  <a id="getExcelTemplate_id" (click)="getExcelTemplate()" ><i  class="blueColor">here</i></a>
+                                <br>
+                                Upload your excel with FTE information. Click <a id="gotoUploadTemplateScreen_id"  (click)="gotoUploadTemplateScreen()"> <i class="blueColor">here</i></a>
+                        </div>
+                    </td>
+                    <td style="text-align: right;"></td>
+                </tr>
+        </table>
+
+
+
+    <br>
+
+    
+    
+
+    <div id="wrapper" style="width: 100%;">
+          
+            <div id="left"> 
+
+                    <form [formGroup]="appFilterForm">     
+                        
+    
+                          <table  style="width: 95%;">
+                              <tr style="text-align: left;">
+                                    <td  style="font-size:11px;" colspan="2"><label>Applications - search criteria</label></td>                                    
+                              </tr>
+                              <tr style="text-align: left;"> 
+                                    <td style="text-align: left;"> 
+                                        <mat-form-field>
+                                            <input matInput placeholder="By name"  id="appName_id"  formControlName="appName" required>
+                                        </mat-form-field> 
+                                    </td>
+                                    <td style="text-align: right;">
+                                        <mat-form-field>
+                                        <mat-select placeholder="By mapped(Y/N)?"  id="status_id" formControlName="mapped" required>
+                                                <mat-option *ngFor="let map of maps" [value]="map.id">
+                                                    {{map.param}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field> 
+                                    </td>
+                             </tr> 
+                             <tr> 
+                                    <td style="text-align: left;"> 
+                                        <mat-form-field>
+                                        <mat-select placeholder="By epics"  id="epic_id" formControlName="epic" multiple>
+                                                    <mat-option *ngFor="let epic of epics" [value]="epic.id">
+                                                        {{epic.param}}
+                                                    </mat-option>
+                                                </mat-select>
+                                         </mat-form-field> 
+                                    </td>
+                                    <td style="text-align: right;">
+                                        <mat-form-field>
+                                        <mat-select placeholder="By sprints"  id="sprint_id" formControlName="sprint" multiple>
+                                                <mat-option *ngFor="let sprint of sprints" [value]="sprint.id">
+                                                    {{sprint.param}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field> 
+                                    </td>
+                             </tr> 
+                             <tr>
+                                    <td>
+                                        <button mat-icon-button type="button" (click)="searchApp()">
+                                                Search<mat-icon >search</mat-icon> 
+                                        </button> 
+                                        <button mat-icon-button type="button" (click)="getAllApp()">
+                                                All<mat-icon >search</mat-icon>
+                                        </button> 
+                                    </td> 
+                              </tr>                            
+                          </table>                         
+                        </form>
+                  <div *ngIf="appDataLoaded | async; let appDataLoaded; else loading"> 
+    
+                      <form [formGroup]="appTraineeFilterForm"   >
+                          <ng-container formArrayName="appArray" >
+                              
+                          <table mat-table [dataSource]="dataSource" style="width: 95%;">
+    
+                                  <!--- Note that these columns can be defined in any order.
+                                        The actual rendered columns are set as a property on the row definition" -->
+                                
+                                  <!-- Epic Column -->
+                                  
+                                  <ng-container matColumnDef="epicName">
+                                      <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                          <th class="matHeader">Epic</th>
+                                      </mat-header-cell>
+                                    <mat-cell *matCellDef="let application"   >  
+                                        <div style="font-size:11px;" *ngIf="application.newEpic== true" class="newEpicColor" >
+                                            {{application.epicName}}
+                                            <mat-checkbox class="checkBoxStyle" (change)="onEpicChange($event, application)"  [checked]="checked_value" [formControlName]="application.epicControlCounter" value='0'  ></mat-checkbox>                                               
+                                        </div>           
+                                        <div style="font-size:11px;" *ngIf="application.newEpic==false" class="disabledColor">  
+                                            {{application.epicName}}              
+                                        </div>
+                                    </mat-cell>
+                                  </ng-container>
+                                
+                              
+                                  <!-- Sprint Column -->
+                                  <ng-container matColumnDef="sprintName">
+                                      <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                          <th class="matHeader">Sprint</th>
+                                        </mat-header-cell>
+                                      <mat-cell *matCellDef="let application"   style=" width: 15em;" >  
+                                                 
+                                          <div style="font-size:11px;" *ngIf="application.newSprint== true"  class="newSprintColor">
+                                              {{application.sprintName}}
+                                              <mat-checkbox class="example-margin"  (change)="onSprintChange($event, application)"  [checked]="checked_value" [formControlName]="application.sprintControlCounter"  value='0' ></mat-checkbox>                                                                 
+                                          </div>           
+                                          <div style="font-size:11px;" *ngIf="application.newSprint==false" class="disabledColor">  
+                                              {{application.sprintName}}              
+                                          </div>       
+                                          
+                                          
+                                      </mat-cell>
+                                    </ng-container>
+                              
+                              
+                              
+                                  <!-- App Column -->
+                                  <ng-container matColumnDef="applicationName">
+                                      <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                          <th class="matHeader">Application</th>
+                                        </mat-header-cell>
+                                      <mat-cell *matCellDef="let application"   style=" width: 15em;" > 
+                                                                                                
+                                          <div style="font-size:11px;" class="newAppColor" matTooltip="{{application.trainees}}" [matTooltipClass]="'wpd-tool-tip'" *ngIf="application.fte!==0"  (click)="openApplicationMap(application.applicationId,application.traineeIds)">                                                          
+                                                  {{application.applicationName}}{{"("+application.traineeCount+","+application.fte +")"}}                                                 
+                                          </div>  
+                                          <div  style="font-size:11px;" class="fntsz" *ngIf="application.fte===0">
+                                                  {{application.applicationName}}
+                                          </div>
+                                      </mat-cell>
+                                    </ng-container>
+                              
+                                    <!-- Operations Column -->
+                                    <ng-container matColumnDef="applicationId">
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                            <th class="matHeader">
+                                                Select<br>
+                                                <mat-checkbox class="checkBoxStyle" id="id_checkbox_overall"  (change)="onCheckAll($event)"  ></mat-checkbox>                                                
+                                            </th>
+                                          </mat-header-cell>
+                                      <mat-cell *matCellDef="let application"    >                       
+                                          <div >
+                                                  <mat-checkbox class="example-margin"  (change)="onChange($event)" [checked]="checked_value" [formControlName]="application.appControlCounter"  value='1' ></mat-checkbox>                                                                          
+                                         </div>           
+                                      </mat-cell>        
+                              
+                                  </ng-container>      
+                                
+                                  <mat-header-row class="columnName" *matHeaderRowDef="displayedColumns"></mat-header-row>     
+                                             
+                              
+                                  <mat-row class="result-row" *matRowDef="let row; let element; columns:displayedColumns;" (click)="setClickedRow(row,element)" [ngClass]="{ highlight: row == selectedRow }">
+                                  </mat-row>
+                          </table>
+                          
+                          </ng-container>
+                      
+                      </form>  
+                  </div>
+
+            </div>
+            <div id="right" >
+
+                    <form [formGroup]="traineeFilterForm"   > 
+                            <table>
+                                    <tr>                                                                      
+                                          <td  style="font-size:11px;" colspan="2"><label>Trainees - search criteria</label></td>  
+                                    </tr>                                
+                                    <tr> 
+                                          <td> 
+                                              <mat-form-field>
+                                                  <input matInput placeholder="By trainee name"  id="traineeName_id"  formControlName="traineeName" >
+                                              </mat-form-field> 
+                                          </td>
+                                          <td style="text-align: right;">
+                                              <mat-form-field>
+                                                  <input matInput placeholder="By email"  id="email_id" formControlName="traineeEmail" >                                                  
+                                              </mat-form-field> 
+                                          </td>
+                                   </tr> 
+                                   <tr> 
+                                          <td> 
+                                              <mat-form-field>
+                                                  <input matInput placeholder="By skill"  id="skill_id" formControlName="traineeSkill" >  
+                                               </mat-form-field> 
+                                          </td>
+                                   </tr> 
+                                   <tr>
+                                          <td>
+                                              <button mat-icon-button type="button" (click)="searchTrainee()">
+                                                      Search <mat-icon >search</mat-icon> 
+                                              </button> 
+                                              <button mat-icon-button type="button" (click)="getAllTrainee()">
+                                                      All<mat-icon >search</mat-icon> 
+                                              </button> 
+                                          </td> 
+                                          
+                                    </tr>                            
+                                </table>            
+                    </form>
+                    <div *ngIf="traineeDataLoaded | async; let traineeDataLoaded; else traineeLoading"> 
+                    <form [formGroup]="traineeListForm"   >
+                            <ng-container formArrayName="traineeArray" >
+
+                                <table mat-table [dataSource]="dataSourceTrainee"  >
+
+                                        <!--- Note that these columns can be defined in any order.
+                                            The actual rendered columns are set as a property on the row definition" -->
+                        
+                                        <!-- Name Column -->
+                                        
+                                        <ng-container matColumnDef="traineeName">
+                                            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                                <th class="matHeader">Name</th>
+                                            </mat-header-cell>
+                                            <mat-cell *matCellDef="let trainee"   >                                                                                                                                                
+                                                <div class='blueColor' style="font-size:11px;" matTooltip="{{trainee.apps}}" [matTooltipClass]="'wpd-tool-tip'" *ngIf="trainee.appCount!==0"  (click)="openTraineeMap(trainee.traineeId,trainee.appIds)">                                                          
+                                                    {{trainee.traineeName}}{{"("+trainee.appCount+","+trainee.fte+")"}}                                                 
+                                                </div>  
+                                                <div style="font-size:11px;" *ngIf="trainee.appCount===0">
+                                                    {{trainee.traineeName}}
+                                                </div>
+
+                                            </mat-cell>
+                                        </ng-container>
+                                    
+                                    
+                                        <!-- Email Column -->
+                                        <ng-container matColumnDef="traineeEmail">
+                                                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                                    <th class="matHeader" style="width:450px !important">Email</th>
+                                                </mat-header-cell>
+                                                <mat-cell *matCellDef="let trainee" style="width:450px !important"  >  
+                                                    {{trainee.traineeEmail}}                                                        
+                                                </mat-cell>
+                                            </ng-container>
+                                    
+                                    
+                                    
+                                        <!-- Skill Column -->
+                                        <ng-container matColumnDef="traineeSkill">
+                                                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                                    <th class="matHeader">Skill</th>
+                                                </mat-header-cell>
+                                                <mat-cell *matCellDef="let trainee"   >  
+                                                    {{trainee.traineeSkill}}                                                        
+                                                </mat-cell>
+                                            </ng-container>
+                                    
+                                        <!-- Operations Column -->
+                                        <ng-container matColumnDef="traineeId">
+                                            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                                <th class="matHeader" style="width:fit-content;">
+                                                    Select<br>
+                                                    <mat-checkbox class="checkBoxStyle" id="id_checkbox_trainee_overall"  (change)="onCheckAllTrainees($event)"  ></mat-checkbox>                                                
+                                                </th>
+                                                </mat-header-cell>
+                                            <mat-cell *matCellDef="let trainee" style="width:fit-content;">                       
+                                                <div >
+                                                        <mat-checkbox class="example-margin"  (change)="onChangeTrainee($event)" [checked]="checked_value" [formControlName]="trainee.counter"  value='1' ></mat-checkbox>              
+                                                </div>           
+                                            </mat-cell>        
+                                    
+                                        </ng-container>      
+                                    
+                                        <mat-header-row class="columnName" *matHeaderRowDef="displayedColumnsTrainee"></mat-header-row>     
+                                                
+                                    
+                                        <mat-row class="result-row" *matRowDef="let row; let element; columns:displayedColumnsTrainee;" (click)="setClickedRow(row,element)" [ngClass]="{ highlight: row == selectedRow }">
+                                        </mat-row>
+                                </table>
+                            </ng-container>
+                    </form> 
+            </div>
+    
+        
+            </div>
+     
+      </div>  
+       
+    <ng-template #loading>
+        <div class="blueColor">
+            Fetching apps...
+        </div>            
+            <mat-spinner></mat-spinner>  
+    </ng-template>
+
+    <ng-template #traineeLoading>
+            <div class="blueColor">
+            Fetching trainees ...
+            </div>
+            <mat-spinner></mat-spinner>  
+    </ng-template>

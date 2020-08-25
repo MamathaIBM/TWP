@@ -1,0 +1,171 @@
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://1.www.s81c.com/common/v18/css/grid-fluid.css" rel="stylesheet">    
+&nbsp;&nbsp;&nbsp;
+
+  <!--
+
+        Health & Readiness Indicator Category List for Your Transition
+    <div *ngIf="thereAreMoreToAdopt==='Y'"  >
+            <div *ngIf="userAccessProfileService.getViewFlag()=='No'"  style="font-size:11px;"> 
+            Adopt 
+            <button mat-icon-button type="button" id="save_id" (click)="save()">
+                   <mat-icon >save</mat-icon> 
+            </button> 
+            the standard & OR
+            <button mat-icon-button type="submit" id="create_id" (click)="createNew()">
+                    <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+            </button>   
+         </div>
+    </div>    
+
+    <div *ngIf="thereAreMoreToAdopt==='N'" > 
+                <div *ngIf="userAccessProfileService.getViewFlag()=='No'"  >  
+                        Create New    
+                        <button mat-icon-button type="submit" id="create_new_id" (click)="createNew()">
+                                <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+                        </button> 
+                </div>
+    </div>  
+    -->
+
+    
+          <table class="container" style="width: 80%;">
+              <tr style="text-align: left;">
+                        <td class="headerrowheadpage" style="text-align: left;display: inline-flex;">Health & Readiness Indicator Category List for Your Transition</td>
+                        <td style="text-align: right;">  
+                              <div *ngIf="userAccessProfileService.getViewFlag()=='No'"  >  
+                              
+                                    <div *ngIf="thereAreMoreToAdopt==='Y'"  >                            
+                                                <label class="fntsz">Adopt</label> 
+                                                <button mat-icon-button type="button" id="save_id" (click)="save()">
+                                                      <mat-icon >check</mat-icon> 
+                                                </button>   
+                                                <button mat-icon-button type="submit" id="create_id" (click)="createNew()">
+                                                    <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+                                                </button>                           
+                                    </div>       
+                                    <div *ngIf="thereAreMoreToAdopt==='N'"  >                              
+                                        <button mat-icon-button type="submit" id="create_id" (click)="createNew()">
+                                              <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+                                        </button>                           
+                                    </div>       
+
+                              </div>
+                        </td>
+              </tr>
+          </table>
+                
+                 &nbsp;&nbsp;&nbsp;
+
+          <table class="container" mat-table [dataSource]="dataSource"   matSort style="width: 80%;" >
+
+          <!--- Note that these columns can be defined in any order.
+                The actual rendered columns are set as a property on the row definition" -->
+        
+          <!-- Parameter Name -->
+          <ng-container matColumnDef="parameterName">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>
+                  <th class="matHeader">Parameter <br> Name</th>
+                </mat-header-cell>
+            <mat-cell *matCellDef="let parameter"> {{parameter.parameterName}} </mat-cell>
+          </ng-container>
+
+        
+          <!-- Description -->
+          <ng-container matColumnDef="description">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>
+                  <th class="matHeader">Description</th>
+              </mat-header-cell>
+            <mat-cell  *matCellDef="let parameter" > {{parameter.description}}                               
+            </mat-cell>
+          </ng-container>
+
+      
+          <!--  Measured Against -->
+          <ng-container matColumnDef="resourceTypeMeasured">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>
+                  <th class="matHeader">Measured <br> Against</th>
+                </mat-header-cell>
+            <mat-cell *matCellDef="let parameter"> {{parameter.resourceTypeMeasured}} </mat-cell>
+          </ng-container>
+
+          <!-- Evaluation Technique -->
+          <ng-container matColumnDef="evalTechniqueManual">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>
+                      <th class="matHeader">Eval <br> Technique</th>
+                      </mat-header-cell>
+                  <mat-cell *matCellDef="let parameter"> {{parameter.evalTechniqueManual}} </mat-cell>
+          </ng-container>
+
+        
+
+          <!--Eval Expression -->
+          <ng-container matColumnDef="evaluationExpression">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>
+                  <th class="matHeader">Eval Expression</th>
+              </mat-header-cell>
+            <mat-cell  *matCellDef="let parameter" > {{parameter.evaluationExpression}}                               
+            </mat-cell>
+          </ng-container> 
+
+
+            
+            
+            <!-- Operations Column -->
+            <ng-container matColumnDef="parameterId">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                    <th class="matHeader">Operation</th>
+                </mat-header-cell>
+              <mat-cell  *matCellDef="let parameter; let rowIndex = index" style=" width: 20em;" > 
+                  
+
+                  <div *ngIf="parameter.adoptedField==='N'">       
+                              <mat-checkbox class="example-margin" (change)="onCheck($event)"  id="check{{rowIndex}}" value="{{rowIndex}}"  [disabled]="userAccessProfileService.getViewFlag()=='Yes'"  ></mat-checkbox>                                                                
+                  </div>        
+                  <div *ngIf="parameter.adoptedField==='Y' || parameter.adoptedField==='NA'"> 
+                              <div *ngIf="userAccessProfileService.getViewFlag()=='No'" >  
+                                      <button mat-icon-button type="submit" id="del{{rowIndex}}" (click)="onDelete(parameter)">
+                                              <mat-icon aria-label="Example icon-button with a heart icon">delete_forever</mat-icon>
+                                      </button>    
+                                      <button mat-icon-button type="submit" id="upd{{rowIndex}}" (click)="onUpdate(parameter)">
+                                              <mat-icon aria-label="Example icon-button with a heart icon">edit</mat-icon>
+                                      </button>
+                              </div>    
+                              <div *ngIf="userAccessProfileService.getViewFlag()=='Yes'" >
+                                              <button mat-icon-button type="submit" id="view{{rowIndex}}" (click)="onUpdate(parameter)">
+                                                              View Parameter
+                                              </button>   
+                              </div> 
+                              
+                  </div> 
+                  <div *ngIf="parameter.adoptionCompleted==='N' && parameter.adoptedField==='Y'">            
+                          <button mat-icon-button type="submit" (click)="showReadinessQuestionListForAdoption(parameter)">
+                                      <div *ngIf="userAccessProfileService.getViewFlag()=='No'" style="font-size:11px;">
+                                                      <mat-icon aria-label="">check</mat-icon>Adopt Questions &nbsp;&nbsp;&nbsp;&nbsp;
+                                      </div>
+                                      <div *ngIf="userAccessProfileService.getViewFlag()=='Yes'" style="font-size:11px;">
+                                                      View Qs. To Be Adopted
+                                      </div>                                 
+                          </button> 
+                  </div>  
+                  <div *ngIf="parameter.adoptionCompleted==='Y' || parameter.adoptionCompleted==='NA'">            
+                          <button mat-icon-button type="submit" (click)="showReadinessQuestionCustomList(parameter)">
+                                      <div *ngIf="userAccessProfileService.getViewFlag()=='No'" style="font-size:11px;">                                        
+                                              <mat-icon aria-label="">edit</mat-icon>Add/Edit Questions
+                                      </div>
+                                      <div *ngIf="userAccessProfileService.getViewFlag()=='Yes'" style="font-size:11px;">
+                                                      View Questions
+                                      </div>                                
+                          </button> 
+                  </div>                                                                                                              
+              </mat-cell>        
+          </ng-container>      
+          <mat-header-row class="columnName" *matHeaderRowDef="displayedColumns"></mat-header-row>                
+          
+          <mat-row class="result-row" *matRowDef="let row; let element; columns:displayedColumns;"  [ngClass]="{ highlight: row == selectedRow }">
+              </mat-row>  
+
+
+          </table>
+     

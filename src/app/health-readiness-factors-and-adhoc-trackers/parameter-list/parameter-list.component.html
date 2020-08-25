@@ -1,0 +1,111 @@
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+&nbsp;&nbsp;&nbsp;
+<div class="container" style="text-align:left;width:80%" >
+
+    <table style="text-align:center;width: 100%;">
+            <tr>  
+                <td>
+                    <div style="text-align:left;" >   
+                            <div class="headerrowheadpage" style="text-align:left;  font-size:11px;display: inline-flex;">
+                                    Health & Readiness Criteria > Parameter List
+                            </div>    
+                    </div>  
+                </td>
+                <td style="text-align:right;"> 
+                        <button mat-icon-button type="submit" (click)="createNew()">
+                                <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+                        </button> 
+                </td> 
+        </tr>                          
+    </table>   
+</div>
+
+<link href="https://1.www.s81c.com/common/v18/css/grid-fluid.css" rel="stylesheet">      
+&nbsp;&nbsp;&nbsp;
+
+
+<div  class="container" style="text-align:right;width:80%"> 
+
+  <table mat-table [dataSource]="dataSource"  matSort  style="width:100%" >
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+  
+    <!-- Parameter Name -->
+    <ng-container matColumnDef="parameterName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th class="matHeader">Parameter <br> Name</th>
+          </mat-header-cell>
+      <mat-cell *matCellDef="let parameter"> {{parameter.parameterName}} </mat-cell>
+    </ng-container>
+
+  
+    <!-- Description -->
+    <ng-container matColumnDef="description">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th class="matHeader">Description</th>
+        </mat-header-cell>
+      <mat-cell  *matCellDef="let parameter" > {{parameter.description}}                               
+      </mat-cell>
+    </ng-container>
+
+ 
+    <!--  Measured Against -->
+    <ng-container matColumnDef="resourceTypeMeasured">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th class="matHeader">Measured Against</th>
+          </mat-header-cell>
+      <mat-cell *matCellDef="let parameter"> {{parameter.resourceTypeMeasured}} </mat-cell>
+    </ng-container>
+
+    <!-- Evaluation Technique -->
+    <ng-container matColumnDef="evalTechniqueManual">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                <th class="matHeader">Eval Technique</th>
+                </mat-header-cell>
+            <mat-cell *matCellDef="let parameter"> {{parameter.evalTechniqueManual}} </mat-cell>
+    </ng-container>
+
+  
+    
+    <!--Eval Expression -->
+    <ng-container matColumnDef="evaluationExpression">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th class="matHeader">Eval Expression</th>
+        </mat-header-cell>
+      <mat-cell  *matCellDef="let parameter" > {{parameter.evaluationExpression}}                               
+      </mat-cell>
+    </ng-container> 
+
+
+      
+      
+      <!-- Operations Column -->
+      <ng-container matColumnDef="parameterId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <th class="matHeader">Operation</th>
+          </mat-header-cell>
+        <mat-cell  *matCellDef="let parameter; let rowIndex = index" style=" width: 20em;" > 
+            
+            <button mat-icon-button type="button" id="delete_id{{rowIndex}}" (click)="onDelete(parameter)">
+                <mat-icon aria-label="Example icon-button with a heart icon">delete_forever</mat-icon>
+            </button>            
+            <button mat-icon-button type="button" id="update_id{{rowIndex}}" (click)="onUpdate(parameter)">
+                <mat-icon aria-label="Example icon-button with a heart icon">edit</mat-icon>
+            </button>  
+            <button mat-icon-button type="button" id="settings_id{{rowIndex}}" (click)="showReadinessQuestionGlobalList(parameter)">
+                    <mat-icon >edit</mat-icon>Add/Edit Criteria
+            </button>  
+        </mat-cell>        
+    </ng-container>      
+    <mat-header-row class="columnName" *matHeaderRowDef="displayedColumns"></mat-header-row>                
+
+    <mat-row class="result-row" *matRowDef="let row; let element; columns:displayedColumns;"  [ngClass]="{ highlight: row == selectedRow }">
+        </mat-row>  
+
+
+  </table>
+
+</div>

@@ -1,0 +1,128 @@
+
+nav.nav-center ul {
+  text-align: center;
+  background-color:paleturquoise;
+}
+nav.nav-center ul li {
+  display: inline;
+  float: none;
+}
+nav.nav-center ul li a {
+  display: inline-block;
+}
+
+table {
+  width: 100%;
+}
+
+
+.mat-table {
+  overflow-x: scroll;  
+}
+
+
+
+
+.highlight  {
+  background-color:cornsilk !important;
+  font-weight: bold;
+} 
+
+.columnName {
+  color:white;
+  font-weight: bold;
+  background-color: #1d3649;
+  text-align: center;
+}
+.line {  
+  font-weight: bold;
+  background-color: #1d3649;
+  text-align: center;
+  color:white;
+  height: 2px;
+  font-size:11px;
+}
+
+
+
+.matHeader {
+  display:flex !important;
+  font-weight: bold;
+  color:white;    
+  font-size:11px;
+}
+
+
+.mat-cell{
+  display:flex !important;
+  font-size:11px;
+
+}
+
+
+
+.headerrow {  
+  font-weight: bold;
+  background-color: #1d3649;
+  text-align: center;
+  color:white;
+  font-size:11px;
+}
+
+.headerrow_table {  
+  font-weight: bold;
+  background-color: grey;
+  text-align: center;
+  color:white;
+  font-size:11px;
+}
+
+.headerrowheadpage{
+  color:white;
+  font-weight: bold;
+  background-color: #1d3649;
+  font-size:11px;
+}  
+
+.mat-elevation-z8 {
+  width: 1000px;
+}
+
+
+.mat-form-field {
+  font-size: 11px;
+} 
+
+button {
+  background-color: #1d3649;
+  color: white;
+  font-size: 11px;
+}
+
+button.btn-info {
+  background-color: #1d3649;
+  color: white;
+} 
+
+.fntszacc{
+  font-size:11px;
+  word-wrap: break-word;
+  width:89%
+}
+
+.fntsz{
+  font-size:11px;
+  word-wrap: break-word;
+}
+
+.fntszDt{
+  font-size:11px;
+  width:75%
+}
+
+.mat-error{
+ font-size: 11px;
+}    
+.blueColor {
+  color:blue;   
+}

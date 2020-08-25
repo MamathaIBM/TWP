@@ -1,0 +1,78 @@
+<!--
+
+      <div class="headerrow" style="margin-left: -12px;font-size:11px;margin-right: 120px" >
+            Application vs Trainee Map - Upload             
+      </div>
+
+-->
+
+<table class="container" style="width: 80%;">
+      <tr style="text-align: left;">
+            <td class="headerrowheadpage" style="display: inline-flex;text-align: left;">Application vs Trainee Map - Upload</td>
+            <td style="text-align: right;">            
+                  <button mat-icon-button type="button" id="validate_id"  [disabled]="userAccessProfileService.getViewFlag()=='Yes'"  (click)="validate()" style="font-size: 11px;">Validate</button>
+                  <button mat-icon-button type="button" id="upload_id" [disabled]="validateResult==false" mat-raised-button color="primary" class="form_main_button" (click)="onSubmit()" style="font-size: 11px;">Upload</button>                             </td>
+      </tr>
+</table>
+
+
+&nbsp;&nbsp;&nbsp;
+<div style="height: 3.5px;"></div> 
+
+
+<form [formGroup]="appTraineeMapUploadForm"   >    
+      <table class="container" style="width: 80%;"  >
+            <tr style="font-size: 11px;">
+                  <td class ="functionality-table-td-single">
+                        <label id="lbl">Upload file</label>
+                  </td>
+                  <td class ="functionality-table-td-single">
+                        <input type='file' id="file_id" style="font-size: 11px;" (change)="fileChanged($event)">
+                  </td>    
+            </tr>      
+      </table>
+
+<!--
+
+      <div class ="headerrow" style="text-align:center;margin-left: -12px;font-size:11px;margin-right: 120px">                        
+            <button type="button" id="validate_id" mat-raised-button color="primary" class="form_main_button" [disabled]="userAccessProfileService.getViewFlag()=='Yes'"  (click)="validate()" style="font-size: 11px;">Validate</button>
+            <button type="button" id="upload_id" [disabled]="validateResult==false" mat-raised-button color="primary" class="form_main_button" (click)="onSubmit()" style="font-size: 11px;">Upload</button>                                               
+      </div> 
+-->
+</form>
+
+<br>
+<br>
+      <table class="container" style="width:80%">
+            <tr style="text-align: left;">
+                  <td style="text-align:left;" colspan="2">
+                        <div *ngIf="(validateResult == true)">
+                              <div class="greenColor" style="font-size:12px;">
+                                {{validationResult}}
+                              </div>  
+                        </div>
+                        <div *ngIf="(validateResult == false)">
+                                    <div class="redColor" style="font-size:12px;">
+                                      {{validationResult}}
+                                    </div>  
+                        </div>
+                  </td>  
+            </tr>
+      
+      </table>
+      
+      <table class="container" style="width:80%" *ngFor="let error of errorList;let i = index;">
+                  <tr style="text-align: left;">
+                        <td style="text-align: left;font-size: 11px;">{{error}}</td>
+                  </tr>
+            
+      </table>
+      <!--
+      <div ng-repeat="error in errorList">
+                  <p>
+                     <span>{{error}}</span>
+                  </p>
+      </div>
+      -->
+
+

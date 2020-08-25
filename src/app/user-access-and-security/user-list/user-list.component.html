@@ -1,0 +1,142 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+<!--
+&nbsp;&nbsp;&nbsp;
+
+
+<div class="headerrow" style="margin-right: 20px;margin-left: 10px;" >
+    User List          <button id="create_id" mat-icon-button type="submit" (click)="createNew()">
+        <mat-icon >person_add</mat-icon>
+        </button> 
+
+</div>
+-->
+
+<link href="https://1.www.s81c.com/common/v18/css/grid-fluid.css" rel="stylesheet">      
+&nbsp;&nbsp;&nbsp;
+<div style="height: 3.5px;"></div> 
+
+
+<div  class="container" style="text-align:right;width:120%;padding-left: 10%;padding-right: 10%;">  
+  <form [formGroup]="userListForm">                             
+      <table style="width: 100%;">
+          <tr style="text-align: left;">  
+                <td style="text-align: left;">
+                    <div style="text-align:left;" >   
+
+                            <div class="headerrowheadpage" style="text-align:left;  font-size:11px;display: inline-flex;">
+                                    User > User list
+                            </div>    
+                    </div>  
+                </td>
+                <td style="text-align:right;">
+                      
+
+                      <mat-form-field>
+                          <input matInput placeholder="Search by name"  id="userName_id"  formControlName="userName" >
+                      </mat-form-field> 
+                      <button mat-icon-button type="button" (click)="searchUser()">
+                              <mat-icon >search</mat-icon> 
+                      </button>                       
+                      <button id="create_id" mat-icon-button type="submit" (click)="createNew()">
+                          <mat-icon >person_add</mat-icon>
+                      </button> 
+                      <br>       
+                      <div  style="vertical-align: middle;" >
+                          <button class="button" type="button" (click)="getAllUsers()" style="height: 30px;width: 40px;vertical-align: middle;">
+                                  <div style="vertical-align: middle;text-align: center;">
+                                           All
+                                  </div>
+                          </button> 
+                      </div>   
+                </td> 
+        </tr>                          
+      </table>                         
+  </form>
+  <table mat-table [dataSource]="dataSource"  matSort style="width: 100%" >
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+  
+    <!-- Name Column -->
+    <ng-container matColumnDef="userName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th class="matHeader">Name</th>
+          </mat-header-cell>
+      <mat-cell *matCellDef="let user"    > {{user.userName}} </mat-cell>
+    </ng-container>
+  
+    <!-- Email Column -->
+    <ng-container matColumnDef="userEmail">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th class="matHeader">Email</th>
+          </mat-header-cell>
+      <mat-cell *matCellDef="let user"  > {{user.userEmail}}                               
+      </mat-cell>
+    </ng-container>
+
+
+      
+    <!-- Country Column -->
+    <ng-container matColumnDef="userCountry">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th class="matHeader">Country</th>
+          </mat-header-cell>
+        <mat-cell *matCellDef="let user"  > {{user.userCountry}}                               
+        </mat-cell>
+      </ng-container>
+      
+    <!-- Org Column -->
+    <ng-container matColumnDef="userOrg">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th class="matHeader">Org</th>
+          </mat-header-cell>
+        <mat-cell *matCellDef="let user" > {{user.userOrg}}                               
+        </mat-cell>
+      </ng-container>
+      
+      
+    <!-- City Location Column -->
+    <ng-container matColumnDef="userCity">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th class="matHeader">Loc</th>
+          </mat-header-cell>
+        <mat-cell *matCellDef="let user"  > {{user.userCity}}                               
+        </mat-cell>
+      </ng-container> 
+
+    <!-- Comments Column -->
+    <ng-container matColumnDef="userComments">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th class="matHeader">Comments</th>
+          </mat-header-cell>
+        <mat-cell *matCellDef="let user"  > {{user.userComments}}                               
+        </mat-cell>
+      </ng-container>    
+
+
+      <!-- Operations Column -->
+      <ng-container matColumnDef="userId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <th class="matHeader">Operations</th>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let user; let rowIndex = index"  > 
+                   
+                <button mat-icon-button id="settings_id{{rowIndex}}" type="submit" (click)="gotoUserRole(user)">
+                     Roles<mat-icon aria-label="">settings</mat-icon>
+                </button>  
+                      
+                <button mat-icon-button type="submit" id="update_id{{rowIndex}}" (click)="onUpdate(user)">
+                      <mat-icon aria-label="Example icon-button with a heart icon">edit</mat-icon>
+                </button>                          
+            </mat-cell>        
+
+    </ng-container>      
+  
+    <mat-header-row class="columnName" *matHeaderRowDef="displayedColumns"></mat-header-row>  
+    <mat-row class="result-row" *matRowDef="let row; let element; columns:displayedColumns;" (click)="setClickedRow(row,element)" [ngClass]="{ highlight: row == selectedRow }">
+        </mat-row> 
+  </table>
+</div>
+  

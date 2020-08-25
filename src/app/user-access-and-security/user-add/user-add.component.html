@@ -1,0 +1,104 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+<!--
+&nbsp;&nbsp;&nbsp;
+<div class="headerrow" style="margin-right: 20px;margin-left: 10px;" >
+    User Create        
+</div>
+-->
+<link href="https://1.www.s81c.com/common/v18/css/grid-fluid.css" rel="stylesheet">      
+&nbsp;&nbsp;&nbsp;
+
+
+
+<form [formGroup]="userAddForm" >
+
+
+  <div  class="container" style="text-align:right;width:100%;padding-left: 15%;padding-right: 15%;">   
+        <table style="width:100%;">
+                <tr>     
+                      <td >        
+                            <div style="text-align:left;" >           
+                                    <div class="headerrowheadpage" style="text-align:left;  font-size:11px;width:35%">
+                                            User > User add
+                                    </div>    
+                            </div>  
+                      </td>
+                      <td>     <div style="text-align:right;" >                                  
+                                  <button type="button" id="submit_id" mat-raised-button color="primary" class="form_main_button" (click)="onSubmit()" >Submit</button>
+                                  <button type="button" id="cancel_id" mat-raised-button color="primary" class="form_main_button" (click)="cancel()">Cancel</button>                                                                    
+                                </div>                                  
+                      </td>
+                </tr>      
+        </table> 
+  <table class="user-table" style="width:100%;">
+    <tr>
+      <td class ="user-table-td" style="text-align:left;">
+        <mat-form-field class="text-input-width">
+              <input class="fntsz" matInput placeholder="Name"  id="userName_id" formControlName="userName" required>
+          </mat-form-field>
+      </td>
+      <td class ="user-table-td">
+        <mat-form-field class="text-input-width">
+              <input class="fntsz"  matInput placeholder="Email"  id="userEmail_id"  formControlName="userEmail" required>
+          </mat-form-field>
+      </td>
+  </tr>
+  <tr>
+    <td class ="user-table-td" style="text-align:left;">
+      <mat-form-field class="text-input-width">
+        <mat-select class="fntsz"  placeholder="Country"  id="userCountry_id" formControlName="userCountry">
+          <mat-option *ngFor="let country of countries" [value]="country.value">
+            {{country.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </td>
+    <td class ="user-table-td">
+
+
+      <mat-form-field class="text-input-width">
+          <mat-select class="fntsz"  placeholder="Transition Org" id="userOrg_id" formControlName="userOrg" multiple>
+            <mat-option *ngFor="let org of orgs" [value]="org.id" >
+              {{org.param}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </td>
+  </tr>  
+  <tr>
+      <td class ="user-table-td" style="text-align:left;">
+        <mat-form-field class="text-input-width">
+              <input class="fntsz"  matInput placeholder="City/Location"  id="userCity_id"  formControlName="userCity">
+          </mat-form-field>
+      </td> 
+      <td class ="user-table-td">    
+        <mat-form-field class="text-input-width">
+              <textarea class="fntsz"  matInput placeholder="Place a note .."  id="userComments_id"  formControlName="userComments"></textarea>
+            </mat-form-field>
+          </td>        
+    </tr>  
+    
+<!--
+
+    <tr class ="headerrow">
+      <td style="text-align:center;" colspan="2">
+          <button type="button" id="submit_id" mat-raised-button color="primary" class="form_main_button" (click)="onSubmit()" >Submit</button>
+          <button type="button" id="cancel_id" mat-raised-button color="primary" class="form_main_button" (click)="cancel()">Cancel</button>
+      </td>      
+    </tr>   
+-->
+
+
+</table>
+</div>
+</form>
+
+    
+  
+
+
+
+

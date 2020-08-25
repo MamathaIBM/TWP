@@ -1,0 +1,203 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://1.www.s81c.com/common/v18/css/grid-fluid.css" rel="stylesheet">
+<br>
+<div class="row" *ngIf="FlagHide=== 'No'" style="margin-left: -12px;">
+    <form #form="ngForm" [formGroup]="traineeForm" (ngSubmit)="onSubmit()" autocomplete="off">
+      <table id="TraineeFormTable">
+          <div style="display: none;">
+              <tr>
+              <td>
+                  <mat-form-field class="example-full-width">
+                      <input id="TraineeIntegration" matInput placeholder="Integration ID" formControlName="Trainee_IntegrationID" [readonly]="!editable" [hidden]=true>
+                  </mat-form-field> 
+              </td>
+              <td>
+                  <mat-form-field class="example-full-width">
+                      <input id="TraineeCreated" matInput placeholder="Created By" formControlName="CREATED_BY" [readonly]="!editable" [hidden]=true>
+                  </mat-form-field> 
+              </td>
+              <td>
+                  <mat-form-field class="example-full-width">
+                      <input id="TraineeModified" matInput placeholder="Modified By" formControlName="LAST_UPDATED_BY" [readonly]="!editable" [hidden]=true>
+                  </mat-form-field>
+              </td>
+              <td>
+                  <mat-form-field class="example-full-width">
+                      <input id="TraineeSNO" matInput placeholder="Unique ID" formControlName="Trainee_SNO" [readonly]="!editable" [hidden]=true>
+                  </mat-form-field>
+              </td>
+              </tr>
+          </div>
+          <br>
+          <tr>
+              <td>               
+                <mat-form-field class="fntszTrName" style="width:30%">
+                    <mat-label class="fntszTrName">Trainee Name</mat-label>
+                    <input class="fntszTrName" id="TraineeTName" #Trainee_Name matInput (keypress)="valuechange($event.target.value)" formControlName="Trainee_Name" [matAutocomplete]="auto">
+                    <mat-autocomplete class="fntszTrName" #auto="matAutocomplete">
+                      <mat-option class="fntszTrName" (onSelectionChange)="getEmail(option.email)" *ngFor="let option of myJSON" [value]="option.Emp_Name">
+                            <img class="ibm-downsize ibm-circle" src= {{option.photo}} alt="IBM face" style="width:30px;height:30px;background-size: contain;"> {{option.Emp_Name}}
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+                  <button id="TraineeNameSearch" class="btn btn-info" type="button" (click)="getEmployeeName(traineeForm.controls['Trainee_Name'].value)"><em class="fa fa-search"></em></button> 
+                  &nbsp;&nbsp;
+                  <mat-form-field class="fntszTrName" style="width:30%">
+                    <mat-label class="fntszTrName">Trainee Email</mat-label>
+                    <input class="fntszTrName" id="TraineeEmail" matInput style="background-color: lightgray ;" formControlName="Trainee_email" [readonly]="!editable">
+                </mat-form-field>                  
+              &nbsp;&nbsp;
+                <mat-form-field class="fntsz">
+                        <mat-label class="fntsz">Trainee Role</mat-label>
+                        <mat-select class="fntsz" id="TraineeRole" formControlName="Trainee_Role" multiple>                              
+                            <mat-option class="fntsz" *ngFor="let TrRoles of TrRoles" [value]=TrRoles.Categoryvalues>
+                              {{TrRoles.Categoryvalues}}
+                            </mat-option>
+                        </mat-select>
+                </mat-form-field>
+                &nbsp;&nbsp;
+                <mat-form-field class="fntsz">
+                        <mat-label class="fntsz">On Boarding Date</mat-label>
+                    <input class="fntsz" id="TraineeBoardDate" matInput [matDatepicker]="Trainee_OnBoardDate" formControlName="Trainee_OnBoardDate">
+                     <mat-datepicker-toggle class="fntsz" matSuffix [for]="Trainee_OnBoardDate"></mat-datepicker-toggle>
+                    <mat-datepicker class="fntsz" #Trainee_OnBoardDate></mat-datepicker>                
+                </mat-form-field>
+                &nbsp;&nbsp;
+                <mat-form-field class="fntsz">
+                    <mat-label class="fntsz">Skills</mat-label>
+                    <mat-select class="fntsz" id="TraineeSkills" formControlName="Trainee_Skills" multiple>                                           
+                        <mat-option *ngFor="let TrSkills of TrSkills" [value]=TrSkills.Categoryvalues>
+                          {{TrSkills.Categoryvalues}}
+                        </mat-option>
+                    </mat-select>
+            </mat-form-field>
+            &nbsp;&nbsp;
+                <mat-form-field class="fntsz">
+                    <mat-label class="fntsz">Travelling</mat-label>
+                    <mat-select class="fntsz" id="TraineeTravel" (selectionChange)="HideOtherT(value)" formControlName="Trainee_Travel">   
+                        <mat-option class="fntsz">--</mat-option>                          
+                        <mat-option class="fntsz" *ngFor="let Trtravel of Trtravel" [value]=Trtravel.Categoryvalues>
+                          {{Trtravel.Categoryvalues}}
+                        </mat-option>
+                    </mat-select>
+            </mat-form-field>
+            &nbsp;&nbsp;
+            <mat-form-field class="fntsz" [hidden]=boolan>
+                    <mat-label class="fntsz">Is valid Visa?</mat-label>
+                <mat-select class="fntsz" id="TraineeVisa" formControlName="Trainee_Visa">   
+                    <mat-option class="fntsz">--</mat-option>                          
+                    <mat-option class="fntsz" *ngFor="let Trtravelvisa of Trtravel" [value]=Trtravelvisa.Categoryvalues>
+                      {{Trtravelvisa.Categoryvalues}}
+                    </mat-option>
+                </mat-select>
+        </mat-form-field>
+            </td>   
+            </tr>
+      </table>      
+      <div class="example-button-row">               
+            <button id="TraineeAdd" class="btn btn-info" type="button" [disabled]="!traineeForm.valid||editFlag=== 1||progress>0" (click) ="Add()">ADD </button>   
+            &nbsp;
+            <button id="TraineeUpdate" class="btn btn-info" type="button" [disabled]="!traineeForm.valid||editFlag=== 0||progress>0"  (click)= "Update()">Update </button>
+       </div>  
+       <br>    
+        </form>
+      </div>
+      <mat-progress-bar mode="indeterminate" *ngIf="progress"></mat-progress-bar>
+      <div *ngIf="progress" style="font-size:11px">
+        <h3> Please wait while validate & upload data from excel</h3>
+      </div>
+      <div class="row" style="margin-left: -12px;font-size:11px">
+         <div [hidden]="progress>0">
+              <tr>
+                 <th style="font-size:11px" id="header">Available Trainee List :  <span>{{dataLength}}</span> </th>                  
+              </tr>  
+              <mat-form-field class="fntsz">
+                    <mat-label class="fntsz"><em class="fa fa-search" aria-hidden="true"></em></mat-label><input class="fntsz" id="TraineeSearch" matInput (keyup)="applyFilter($event.target.value)">
+              </mat-form-field>              
+              <table id="TraineeExportTable" style="width: 40%;font-size:11px" *ngIf="FlagHide=== 'No'">                 
+                 <tr>
+                     <th style="font-size:11px"> Browse & Upload:</th>
+                     <td> <input class="fntsz" id="TraineeBrowse" #file type='file' (change)="fileChanged($event)"></td> 
+                     <th style="font-size:11px">Sample .csv:</th>    
+                     <td><button id="TraineeExportExl" (click)="exportAsXLSX()"><em class="fa fa-file-excel-o" style="font-size:15px;color: green"></em></button></td>             
+                 </tr> 
+               </table>                             
+             <table id="TraineeMaxNote" style="width: 70%" *ngIf="FlagHide=== 'No'">  
+               <tr><mat-label style="font-size: 11px; color:red;">Note: Max.Limit for import will be upto 150 trianees.</mat-label></tr> 
+            </table> 
+                              <table id="TraineeDataTable" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+                                    
+                                                                      <ng-container matColumnDef="Trainee_Name">
+                                                                        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass'" style="display:flex !important;">
+                                                                              <th class="matHeader">Trainee Name</th>
+                                                                          </mat-header-cell>
+                                                                          <mat-cell *matCellDef="let element" [ngClass]="'customWidthClass'" style="display:flex !important;">{{element.Trainee_Name}}</mat-cell>
+                                                                      </ng-container>
+                                    
+                                                                      <ng-container matColumnDef="Trainee_email">
+                                                                          <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass'" style="display:flex !important;">
+                                                                              <th class="matHeader">Trainee Email</th>
+                                                                          </mat-header-cell>
+                                                                          <mat-cell *matCellDef="let element" [ngClass]="'customWidthClass'" style="display:flex !important;">{{element.Trainee_email}}</mat-cell>
+                                                                      </ng-container>
+                                    
+                                                                      <ng-container matColumnDef="Trainee_Role">
+                                                                          <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthlessClass'" style="display:flex !important">
+                                                                              <th class="matHeader">Trainee Role(s)</th>
+                                                                          </mat-header-cell>
+                                                                          <mat-cell *matCellDef="let element" [ngClass]="'customWidthlessClass'" style="display:flex !important;">{{element.Trainee_Role}}              
+                                                                          </mat-cell>
+                                                                      </ng-container>
+                                    
+                                                                      <ng-container matColumnDef="Trainee_OnBoardDate">
+                                                                          <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthlessClass'" style="display:flex !important;">
+                                                                              <th class="matHeader">OnBoarding Date</th>
+                                                                          </mat-header-cell>
+                                                                          <mat-cell *matCellDef="let element" [ngClass]="'customWidthlessClass'" style="display:flex !important;">{{element.Trainee_OnBoardDate | date : 'yyyy-MM-dd'}}                
+                                                                          </mat-cell>
+                                                                      </ng-container>                                 
+                            
+                                                                      <ng-container matColumnDef="Trainee_Skills">
+                                                                          <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthlessClass'" style="display:flex !important;">
+                                                                              <th class="matHeader">Trainee Skills</th>
+                                                                          </mat-header-cell>
+                                                                          <mat-cell *matCellDef="let element" [ngClass]="'customWidthlessClass'" style="display:flex !important;">{{element.Trainee_Skills}}                
+                                                                          </mat-cell>
+                                                                      </ng-container>
+
+                                                                      <ng-container matColumnDef="Trainee_Travel">
+                                                                            <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthlessClass'" style="display:flex !important;">
+                                                                                <th class="matHeader">Travelling?</th>
+                                                                            </mat-header-cell>
+                                                                            <mat-cell *matCellDef="let element" [ngClass]="'customWidthlessClass'" style="display:flex !important;">{{element.Trainee_Travel}}                
+                                                                            </mat-cell>
+                                                                        </ng-container>
+
+                                                                        <ng-container matColumnDef="Trainee_Visa">
+                                                                                <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthlessClass'" style="display:flex !important;">
+                                                                                    <th class="matHeader">Is Valid Visa?</th>
+                                                                                </mat-header-cell>
+                                                                                <mat-cell *matCellDef="let element" [ngClass]="'customWidthlessClass'" style="display:flex !important;">{{element.Trainee_Visa}}                
+                                                                                </mat-cell>
+                                                                            </ng-container>
+                                    
+                                                                      <ng-container matColumnDef="Delete">
+                                                                              <mat-header-cell *matHeaderCellDef>
+                                                                                  <th class="matHeader"></th>
+                                                                              </mat-header-cell>
+                                                                              <mat-cell *matCellDef="let element; let i = index;">                                         
+                                                                                      <button  id="{{'TraineeDelete'+i}}" class="btn btn-info" (click)="onDelete(element)" [hidden]="FlagHide=== 'Yes'" >
+                                                                                          <em class="fa fa-trash"></em>
+                                                                                      </button>          
+                                                                              </mat-cell>
+                                                                      </ng-container>
+                                    
+                                                                      <mat-header-row class="columnName" *matHeaderRowDef="displayedColumns"></mat-header-row>                
+                                                                    
+                                                                      <mat-row class="result-row" *matRowDef="let row; let element; columns:displayedColumns;" (click)="setClickedRow(row,element)" [ngClass]="{ highlight: row == selectedRow }">
+                                                                          </mat-row>  
+                                                                  </table>  
+                                                                <!-- </div> -->
+                                                               
+                                                                  <mat-paginator [hidden]="progress>0" class="mat-elevation-z8" [pageSizeOptions]="[5, 1, 10, 20]" showFirstLastButtons (click)="setClickedRow(0,element)"></mat-paginator>
+                                                                </div>

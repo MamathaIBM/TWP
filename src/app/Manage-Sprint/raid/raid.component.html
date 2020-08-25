@@ -1,0 +1,133 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://1.www.s81c.com/common/v18/css/grid-fluid.css" rel="stylesheet">      
+<div style="margin-left: -12px;"> 
+    <br>                    
+    <div class="example-button-row" [hidden]="ViewFlag === 'Yes'">
+        <table style="width: 100%">
+            <tr>
+                <td>
+        <button class="btn btn-info" type="submit" id="RaidAdd" (click) ="Add()" >ADD </button>  </td>
+            &nbsp;&nbsp;   
+                <td style="font-size:11px;text-align: right;">
+                    <strong>Select Type: &nbsp;</strong>
+                    <mat-radio-group class="radio-group" >
+                        <mat-radio-button  class="radio-button" value="Internal" (click)="selectTypeRadioButton('Internal')" >
+                           <span class="fntsz" >Internal</span> </mat-radio-button> &nbsp;
+                        <mat-radio-button  class="radio-button" value="External" (click)="selectTypeRadioButton('External')" >
+                            <span class="fntsz">External</span></mat-radio-button> &nbsp;
+                        <mat-radio-button class="radio-button" value="Both" (click)="selectTypeRadioButton('Both')"> 
+                            <span class="fntsz">Both</span> </mat-radio-button>
+                    </mat-radio-group> &nbsp;&nbsp;&nbsp;
+                    <strong>Export to Excel: 
+                    <button [disabled]="excelIcon"  matTooltip ="Select Risk / Issue / Dependency / Action Type" (click)="RAIDexportAsXLSX()">
+                    <em class="fa fa-file-excel-o" style="font-size:15px;color: green"></em></button>
+                </strong>
+                </td>             
+            </tr> 
+        </table>
+    </div>
+</div>    
+<br>
+<div style="margin-left: -12px;">   
+<!-- <form #form="ngForm" [formGroup]="raidUpdateeForm" (ngSubmit)="onSubmit()"> -->
+        <form #form="ngForm" [formGroup]="raidUpdateeForm" >
+<table mat-table   [dataSource]="dataSource" matSort class="mat-elevation-z8">
+    <ng-container matColumnDef="Level">
+        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass'" style="display:flex !important;">
+            <th class="matHeader">Level</th>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'customWidthClass'" style="display:flex !important;">
+            {{element.epicName}}  {{element.sprintName}}  {{element.AppName}}</mat-cell>
+    </ng-container> 
+    
+    <ng-container matColumnDef="Type">
+        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthlessClass'" style="display:flex !important;">
+            <th class="matHeader">Type</th>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'customWidthlessClass'" style="display:flex !important;">{{element.Type}}                
+        </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="Description">
+        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass'" style="display:flex !important;">
+            <th class="matHeader">Description</th>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'customWidthClass'" style="display:flex !important;">{{element.Description}}                
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Status">
+        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthlessClass'" style="display:flex !important;">
+            <th class="matHeader">Status</th>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'customWidthlessClass'" style="display:flex !important;">{{element.Status}}                
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="TargetDate">
+        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthlessdtClass'" style="display:flex !important;">
+            <th class="matHeader">Target Date mm/dd/yyyy</th>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'customWidthlessdtClass'" style="display:flex !important;">{{element.TargetDate   | date : 'MM/dd/yyyy' }}                
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Owner">
+        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthlessClass'" style="display:flex !important;">
+            <th class="matHeader">Owner</th>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'customWidthlessClass'" style="display:flex !important;">{{element.Owner}}                
+        </mat-cell>   
+    </ng-container>
+
+    <ng-container matColumnDef="Priority">
+        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthlessClass'" style="display:flex !important;">
+            <th class="matHeader">Priority</th>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'customWidthlessClass'" style="display:flex !important;">{{element.Priority}}                
+        </mat-cell>   
+    </ng-container>
+    <ng-container matColumnDef="Edit">
+        <mat-header-cell *matHeaderCellDef [ngClass]="'customWidthlessbutClass'" style="display:flex !important;">
+            <th class="matHeader"></th>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element; let i = index;" [ngClass]="'customWidthlessbutClass'" style="display:flex !important;">                                                     
+            <button  id="{{'RAIDUpdate'+i}}" class="btn btn-info" [hidden]="ViewFlag === 'Yes'" (click)="Update(element)">
+            <em class="fa fa-pencil-square-o" aria-hidden="true"></em></button>                   
+        </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="Delete">
+        <mat-header-cell *matHeaderCellDef [ngClass]="'customWidthlessbutClass'" style="display:flex !important;">
+            <th class="matHeader"></th>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element; let i = index;" [ngClass]="'customWidthlessbutClass'" style="display:flex !important;">                                                          
+            <button  id="{{'RdDelete'+i}}" class="btn btn-info" [hidden]="ViewFlag === 'Yes' || element.Status === 'Closed'" (click)="onDelete(element)">
+            <em class="fa fa-trash" aria-hidden="true"></em></button>                   
+        </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="View">
+        <mat-header-cell *matHeaderCellDef [ngClass]="'customWidthlessbutClass'" style="display:flex !important;">
+            <th class="matHeader"></th>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element; let i = index;" [ngClass]="'customWidthlessbutClass'" style="display:flex !important;">                                                     
+            <button  id="{{'RAIDView'+i}}" class="btn btn-info" [hidden]="ViewFlag !== 'Yes'" (click)="View(element)">
+            <em class="fa fa-eye" aria-hidden="true"></em></button>                   
+        </mat-cell>
+    </ng-container>
+<div [hidden]>
+    <ng-container matColumnDef="RaidID">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th class="matHeader" >RaidID</th>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element"  >{{element.RaidID}}                
+        </mat-cell>   
+    </ng-container>
+</div>
+
+    <mat-header-row class="columnName" *matHeaderRowDef="displayedColumns"></mat-header-row>                
+     <mat-row class="result-row"   *matRowDef="let row; let element; columns:displayedColumns;"  [ngClass]="{ highlight: row == selectedRow }"></mat-row>                  
+  
+</table> 
+</form>
+<mat-paginator class="mat-elevation-z8" [pageSizeOptions]="[20, 1, 5, 10]" showFirstLastButtons></mat-paginator>
+</div>

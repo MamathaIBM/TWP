@@ -1,0 +1,172 @@
+<!-- <app-navigation></app-navigation> -->
+<app-menu-top></app-menu-top>
+<div class="row">
+    <app-menu-left></app-menu-left>
+</div>
+<br>
+<div class="container">
+    <div class="row" style="margin-right: 15px;margin-left: 150px;">
+        <div class="col-md-12" style="font-size:11px;">
+            <label>Fetch Account Profile Data from Solution Engagements based on below criteria:</label>
+            <br>
+            <form #form="ngForm" [formGroup]="NewExecutionForm" (ngSubmit)="onSubmit()" autocomplete="off">
+                <mat-form-field>
+                    <mat-label class="fntsz">Account Name</mat-label>
+                    <input class="fntsz" id="NewExeAccountName" (keyup)="Keyup()" matInput
+                        formControlName="AccountName">
+                </mat-form-field>
+                &nbsp;
+                <mat-form-field class="fntsz">
+                    <mat-label class="fntsz">Owning TTS Organization</mat-label>
+                    <mat-select class="fntsz" (selectionChange)="HideOtherV()" formControlName="selectedSolOWnTTS">
+                        <mat-option class="fntsz"></mat-option>
+                        <mat-option class="fntsz" *ngFor="let SolOwnTTS of SolOwnTTS" [value]=SolOwnTTS>
+                            {{SolOwnTTS}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                &nbsp;
+                <mat-form-field class="fntsz">
+                    <mat-label class="fntsz">Sector</mat-label>
+                    <mat-select panelClass="alt" id="NewExeSector" formControlName="selectedSolSector"
+                        (selectionChange)="valuechange()">
+                        <mat-option class="fntsz"></mat-option>
+                        <mat-option class="fntsz" *ngFor="let SolSector of SolSector" [value]=SolSector.Categoryvalues>
+                            {{SolSector.Categoryvalues}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                &nbsp;
+                <mat-form-field class="fntsz">
+                    <mat-label class="fntsz">Industry</mat-label>
+                    <mat-select class="fntsz" id="NewExeIndustry" (selectionChange)="HideOtherV()"
+                        matTooltipClass="tooltip-color"
+                        matTooltip="Options for Industry will appear only after selection of Sector"
+                        formControlName="Industry">
+                        <mat-option class="fntsz"></mat-option>
+                        <mat-option class="fntsz" *ngFor="let Industry of Industry" [value]=Industry.Categoryvalues>
+                            {{Industry.Categoryvalues}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                &nbsp;
+                <mat-form-field class="fntsz">
+                    <mat-label class="fntsz">Solution Year</mat-label>
+                    <mat-select class="fntsz" id="NewExeSolYear" (selectionChange)="HideOtherV()"
+                        formControlName="selectedSolYear">
+                        <mat-option class="fntsz"></mat-option>
+                        <mat-option class="fntsz" *ngFor="let SolYear of SolYear" [value]=SolYear.Categoryvalues>
+                            {{SolYear.Categoryvalues}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                &nbsp;
+                <mat-form-field class="fntsz">
+                    <mat-label class="fntsz">Siebel No.</mat-label>
+                    <input class="fntsz" id="NewExeSiebelNo" (keyup)="Keyup()" matInput
+                        formControlName="selectedSolSieNo">
+                </mat-form-field>
+                &nbsp;
+                <button id="NewExeSearch" class="btn btn-info" id="EngSearch" (click)="clickMe()"><em
+                        class="fa fa-search"></em></button>
+                <button id="NewExeReset" class="btn btn-info" id="Engreset" (click)="ResetMe()"><em
+                        class="fa fa-eraser"></em></button>
+            </form>
+
+        </div>
+    </div>
+
+
+    <div class="row" style="margin-right: 15px;margin-left: 150px;">
+        <div class="col-md-8" style="font-size:11px;">
+
+            <br>
+            <tr>
+                <td style="text-align:right;">
+                    <button id="CreateTransitionButton" class="btn btn-info"
+                        matTooltip="Please Select one Document to create Transition."
+                        [matTooltipPosition]="position.value" matTooltipClass="tooltip-color"
+                        (click)="CreateTransition()">
+                        New Transition Profile
+                    </button>
+
+                </td>
+            </tr>
+            <tr>
+                <th id="header" style="font-size:11px;">Engagement Records: <span>{{dataLength}}</span> Items</th>
+            </tr>
+            <!-- <br> -->
+            <table id="NewExePopulateTable" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+                <ng-container matColumnDef="ClientName">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClasswid'">
+                        <th class="matHeader">Account</th>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element" [ngClass]="'customWidthClasswid'">{{element.ClientName}}
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Sector">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClasswidYear'">
+                        <th class="matHeader">Sector</th>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element" [ngClass]="'customWidthClasswidYear'">{{element.Sector}}
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Industry">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClasswidYear'">
+                        <th class="matHeader">Industry</th>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element" [ngClass]="'customWidthClasswidYear'">{{element.Industry}}
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="SiebelNo">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass'">
+                        <th class="matHeader">Siebel No</th>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element" [ngClass]="'customWidthClass'">{{element.SiebelNo}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="OwningTTS">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass'">
+                        <th class="matHeader">Owning TTS Org</th>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element" [ngClass]="'customWidthClass'">{{element.OwningTTS}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="SolMonth">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass'">
+                        <th class="matHeader">Sol Month</th>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element" [ngClass]="'customWidthClass'">{{element.SolMonth}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Solyear">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass'">
+                        <th class="matHeader">Sol Year</th>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element" [ngClass]="'customWidthClass'">{{element.Solyear}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="AMSTCV">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass'">
+                        <th class="matHeader">TCV</th>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element" [ngClass]="'customWidthClass'">{{element.AMSTCV}}</mat-cell>
+                </ng-container>
+
+                <mat-header-row class="columnName" *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+                <mat-row class="result-row" [matTooltip]="element.flag!=null ? 'Execution Record has been created for this Solution.' : ''" *matRowDef="let row; let element; columns:displayedColumns;"
+                    (click)="setClickedRow(row,element)" [ngClass]="{ highlight: row == selectedRow, highltCreated: element.flag!=null}">
+                </mat-row>
+            </table>
+
+            <mat-paginator [pageSizeOptions]="[10, 5, 15, 20]" showFirstLastButtons (click)="setClickedRow(0,element)">
+
+            </mat-paginator>
+
+        </div>
+    </div>
+</div>

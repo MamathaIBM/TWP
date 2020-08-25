@@ -1,0 +1,110 @@
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+&nbsp;&nbsp;&nbsp;
+
+<!--
+<div class="headerrow" style="margin-left: -12px;font-size:11px;margin-right: 120px" >
+    Readiness Criteria Create for {{parameterName}}
+</div>
+
+-->
+
+                           
+
+                                
+                                                <table class="container" style="width: 80%;">
+                                                                                                                      
+                                                                        <tr style="text-align: left;">
+                                                                                <td style="text-align: left;display: inline-flex;" class="headerrowheadpage">Readiness Question Edit for {{parameterName}}</td>
+                                                                                <td style="text-align: right;">
+                                                                                                <div *ngIf="userAccessProfileService.getViewFlag()=='No'" >    
+                                                                                                        <button type="button" id="id_submit" mat-raised-button color="primary" class="form_main_button" (click)="onSubmit()" >Submit</button>
+                                                                                                        <button type="button" id="id_cancel" mat-raised-button color="primary" class="form_main_button" (click)="cancel()">Cancel</button>
+                                                                                                </div>
+                                                                                                <div *ngIf="userAccessProfileService.getViewFlag()=='Yes'" > 
+                                                                                                        <button type="button" id="id_back" mat-raised-button color="primary" class="form_main_button" (click)="showReadinessQuestionCustomList(parameter)" >Back</button>                                    
+                                                                                                </div>
+                                                                                </td>
+
+                                                                        </tr>
+                                                                
+                                                </table>    
+
+                                
+
+  
+                                                   
+                        
+
+<link href="https://1.www.s81c.com/common/v18/css/grid-fluid.css" rel="stylesheet">      
+&nbsp;&nbsp;&nbsp;
+<form [formGroup]="readinessQuestionDesignEditForm" >
+
+
+
+  <table class="container" style="width: 80%;" >
+
+        <tr style="text-align: left;">
+                <td class ="readinessQuestion-table-td" >
+                    <mat-label class="form__error" > * </mat-label>
+                    <mat-form-field class="text-input-width">                    
+                        <input class="fntsz" matInput placeholder="Question"  id="readinessQuestion_id"  formControlName="readinessQuestion" >
+                    </mat-form-field>
+                </td> 
+                <td style="text-align: right;" >
+                                <mat-form-field class="text-input-width">                              
+                                                <mat-select class="fntsz"  placeholder="Data Type"  id="readinessQuestionDataType_id" formControlName="readinessQuestionDataType">
+                                                        <mat-option *ngFor="let dataType of dataTypes" [value]="dataType.id">
+                                                               {{dataType.param}}
+                                                        </mat-option>
+                                                </mat-select>
+                                </mat-form-field>
+                </td>            
+        </tr> 
+    
+        <tr style="text-align: left;">
+            <td class ="readinessQuestion-table-td">                            
+
+                    <mat-label class="form__error" > * </mat-label>
+                    <mat-form-field class="text-input-width">                               
+                        <mat-select class="fntsz" placeholder="Field Type" id="readinessQuestionAnswerFieldType_id" formControlName="readinessQuestionAnswerFieldType" >
+                                <mat-option *ngFor="let fieldType of fieldTypes" [value]="fieldType.id">
+                                    {{fieldType.param}}
+                                </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+            </td>  
+            <td style="text-align: right;" >
+                   <mat-form-field class="text-input-width">
+                           <input class="fntsz" matInput placeholder="Answer Set"  id="readinessQuestionAnswerSet_id" formControlName="readinessQuestionAnswerSet" >
+                    </mat-form-field>
+                </td> 
+        </tr> 
+  
+</table>
+
+<!--
+
+<div class ="headerrow"  style="margin-left: -12px;font-size:11px;margin-right: 120px">
+
+        <div *ngIf="userAccessProfileService.getViewFlag()=='No'" >      
+                <button type="button" id="id_submit" mat-raised-button color="primary" class="form_main_button" (click)="onSubmit()" >Submit</button>
+                <button type="button" id="id_cancel" mat-raised-button color="primary" class="form_main_button" (click)="cancel()">Cancel</button>
+        </div>
+        <div *ngIf="userAccessProfileService.getViewFlag()=='Yes'" >      
+                    <button type="button" id="id_back" mat-raised-button color="primary" class="form_main_button" (click)="showReadinessQuestionCustomList(parameter)" >Back</button>                                    
+        </div>
+
+</div>   
+
+-->
+</form>
+
+
+
+    
+  
+
+
+
+

@@ -1,0 +1,141 @@
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+&nbsp;&nbsp;&nbsp;
+
+
+<!--
+<div style="text-align: center; margin-right: -15px;margin-left: -150px;">
+
+
+        <div class="headerrow" style="display: inline-flex;" >    
+          
+              <button mat-icon-button type="button" id="id_back" (click)="back()">
+                      Back  <mat-icon ></mat-icon> 
+              </button>
+              <div *ngIf="userAccessProfileService.getViewFlag()=='Yes'" >
+                        Health & Readiness Criteria List for {{parameterName}}
+              </div>   
+              <div *ngIf="userAccessProfileService.getViewFlag()=='No'" >
+                    <button mat-icon-button type="button" id="id_save" (click)="save()">
+                            Adopt  <mat-icon >save</mat-icon> Health & Readiness Criteria List for {{parameterName}}
+                    </button>
+                </div>          
+        </div>
+
+
+      -->
+
+
+
+                       
+                    <table class="container" style="width: 80%;">
+
+                            <tr style="text-align: left;">
+                                  <td class="headerrowheadpage" style="text-align: left;display: inline-flex;">Health & Readiness Criteria List for {{parameterName}}</td>
+                                  <td style="text-align: right;">
+
+                                      <div *ngIf="userAccessProfileService.getViewFlag()=='No'" >
+                                          
+                                          <button matTooltip="Adopt" mat-icon-button type="button" id="id_save" (click)="save()">
+                                                <mat-icon >check</mat-icon>
+                                          </button>
+                                          <button mat-icon-button type="button" id="id_back" (click)="back()">
+                                              <mat-icon >arrow_back</mat-icon>
+                                          </button>
+                                      </div> 
+                                      <div *ngIf="userAccessProfileService.getViewFlag()!='No'" >
+                                          <button mat-icon-button type="button" id="id_back" (click)="back()">
+                                              <mat-icon >arrow_back</mat-icon>
+                                          </button>
+                                      </div>                                       
+
+                                  </td>
+                            </tr>
+
+                    </table>
+            
+
+
+
+
+
+<!--
+
+<div class="container" style="margin-right: 15px;margin-left: 150px;">
+    <router-outlet></router-outlet>
+</div>
+-->
+
+
+<link href="https://1.www.s81c.com/common/v18/css/grid-fluid.css" rel="stylesheet">      
+&nbsp;&nbsp;&nbsp;
+
+
+
+
+    
+        <table class="container" mat-table [dataSource]="dataSource"   matSort style="width: 80%;" >
+
+          <!--- Note that these columns can be defined in any order.
+                The actual rendered columns are set as a property on the row definition" -->
+        
+
+
+        
+          <!-- Readiness Question Column -->
+          <ng-container matColumnDef="readinessQuestion">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>
+                  <th class="matHeader">Readiness Question</th>
+              </mat-header-cell>
+            <mat-cell  *matCellDef="let readinessQuestion" > {{readinessQuestion.readinessQuestion}}                               
+            </mat-cell>
+          </ng-container>
+
+      
+            <!-- Field Type -->
+            <ng-container matColumnDef="readinessQuestionAnswerFieldType">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>
+                  <th class="matHeader">Field Type</th>
+                </mat-header-cell>
+            <mat-cell *matCellDef="let readinessQuestion"> {{readinessQuestion.readinessQuestionAnswerFieldType}} </mat-cell>
+          </ng-container>
+
+        
+          
+          <!--Data Type -->
+          <ng-container matColumnDef="readinessQuestionDataType">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>
+                  <th class="matHeader">Data<br>Type</th>
+              </mat-header-cell>
+            <mat-cell  *matCellDef="let readinessQuestion" > {{readinessQuestion.readinessQuestionDataType}}                               
+            </mat-cell>
+          </ng-container> 
+
+          <!-- Answer Set -->
+          <ng-container matColumnDef="readinessQuestionAnswerSet">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>
+                  <th class="matHeader">Answer<br>Set</th>
+              </mat-header-cell>
+              <mat-cell  *matCellDef="let readinessQuestion"> {{readinessQuestion.readinessQuestionAnswerSet}}                               
+              </mat-cell>
+            </ng-container>
+
+            
+
+            <!-- Operations Column -->
+            <ng-container matColumnDef="readinessQuestionId">              
+                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                    <th class="matHeader">Operation<br><mat-checkbox disabled="{{view_flag}}" class="checkBoxStyle" id="id_overall_checkbox" (change)="onCheckAll($event)"></mat-checkbox>  </th>
+                </mat-header-cell>
+                <mat-cell  *matCellDef="let readinessQuestion; let rowIndex = index " style=" width: 20em;" > 
+                    <mat-checkbox  disabled="{{view_flag}}" class="example-margin" id="id_checkbox{{readinessQuestion.readinessQuestionId}}"  (change)="onCheck($event)"  [checked]="checked_value" value="{{rowIndex}}" ></mat-checkbox>                                                            
+                </mat-cell>        
+          </ng-container>      
+
+
+          <mat-header-row class="columnName" *matHeaderRowDef="displayedColumns"></mat-header-row>                
+          <mat-row class="result-row" *matRowDef="let row; let element; columns:displayedColumns;"  [ngClass]="{ highlight: row == selectedRow }">
+              </mat-row>  
+
+        </table>

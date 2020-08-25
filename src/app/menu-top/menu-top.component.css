@@ -1,0 +1,125 @@
+.page-sidebar-menu > li {
+        
+  display: block;
+  /* background-color: yellowgreen;   */
+  margin: 0;
+      margin-top: 0px;
+      margin-right: 0px;
+      margin-bottom: 0px;
+      margin-left: 0px;
+  padding: 0;
+      padding-top: 0px;
+      padding-right: 0px;
+      padding-bottom: 0px;
+      padding-left: 0px;
+  border: 0px;
+      border-top-color: currentcolor;
+      border-top-style: none;
+      border-top-width: 0px;
+      border-right-color: currentcolor;
+      border-right-style: none;
+      border-right-width: 0px;
+      border-bottom-color: currentcolor;
+      border-bottom-style: none;
+      border-bottom-width: 0px;
+      border-left-color: currentcolor;
+      border-left-style: none;
+      border-left-width: 0px;
+      border-image-outset: 0;
+      border-image-repeat: stretch;
+      border-image-slice: 100%;
+      border-image-source: none;
+      border-image-width: 1;
+
+}
+
+.page-sidebar-menu > .nav-list > p > a > i {  
+  font-size: 11px;      
+  text-shadow: none; 
+  color:white !important;
+}
+
+.page-sidebar-menu > .nav-list > p > a {  
+  font-size:11px;     
+   text-shadow: none;
+  color:white !important;
+
+}
+
+.col-0{
+  margin-left: -15px;
+}
+
+.page-header-fixed .page-container {
+  margin-top: 100px;
+}
+
+.activeClass{
+  width: 236px;
+  height: 50px;
+  background: #ffa573;
+  position: relative;
+}
+.activeClass:after {
+  position: absolute;
+  right: -10px;
+  top: 0;
+  content: "";
+  width: 0; 
+  height: 0; 
+  border-top: 25px solid transparent;
+  border-bottom: 25px solid transparent;
+  border-left: 12px solid #ffa573;
+}
+
+.speech-bubble { 
+  position: relative; 
+  background: #ffa573; 
+  border-radius: .4em; 
+   width: 50px; 
+ height: 50px; 
+} 
+.speech-bubble:after { 
+ content: ''; 
+ position: absolute; 
+ bottom: 0; 
+ left: 50%; 
+ width: 0; 
+ height: 0; 
+ border: 10px solid transparent; 
+ border-top-color: #ffa573; 
+ border-bottom: 0; 
+ margin-left: -10px; 
+ margin-bottom: -8px; 
+}
+
+.page-sidebar.navbar-collapse {
+  padding: 0;
+  max-height: 700px !important;
+  height: 700px;
+}
+
+.page-sidebar {
+  background-color: #1d3242;
+  position: absolute;
+  height: 700px;
+  width: 236px;
+}
+
+.navbar-collapse.collapse {
+  
+  height: 700px !important;
+  
+}
+
+.navbar-collapse {
+  border-top: 0;
+  box-shadow: black;
+}
+
+/* body {
+
+  font-family: 'Open Sans', sans-serif;
+  font-size:11px;
+ 
+}  */

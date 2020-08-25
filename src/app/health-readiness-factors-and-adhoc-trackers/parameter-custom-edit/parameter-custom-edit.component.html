@@ -1,0 +1,207 @@
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+&nbsp;&nbsp;&nbsp;
+
+
+
+
+
+        <div  *ngIf="userAccessProfileService.getViewFlag()=='No'" >                   
+                <table class="container" style="width: 100%;">
+                        <tr>
+                                <td style="text-align: left;" class="headerrowheadpage">Parameter Edit</td>
+                                <td style="text-align: right;">
+                                        <button id="create_id" type="button" mat-raised-button color="primary" class="form_main_button" (click)="update()" >Submit</button>
+                                        <button id="cancel_id" type="button" mat-raised-button color="primary" class="form_main_button" (click)="cancel()">Cancel</button>
+                                </td>
+                        </tr>
+                </table>
+
+        </div>
+        <div   *ngIf="userAccessProfileService.getViewFlag()=='Yes'" >      
+                <table class="container" style="width: 100%;">
+                                <tr>
+                                        <td style="text-align: left;" class="headerrowheadpage">Transition Parameter View </td>
+                                        <td style="text-align: right;">                                                
+                                                <button id="cancel_id" type="button" mat-raised-button color="primary" class="form_main_button" (click)="cancel()">Cancel</button>
+                                        </td>
+                                </tr>
+                </table>  
+        </div>
+
+        
+
+<link href="https://1.www.s81c.com/common/v18/css/grid-fluid.css" rel="stylesheet">      
+&nbsp;&nbsp;&nbsp;
+<form [formGroup]="parameterEditForm" >
+
+<div >
+
+  <table class="container" style="width: 100%;"  >
+
+    <tr style="text-align: left;">
+            <td class ="parameter-table-td" >
+                <mat-label class="form__error" > * </mat-label>
+                <mat-form-field>                    
+                    <input matInput class="fntsz" placeholder="Parameter Name"    [disabled]="userAccessProfileService.getViewFlag()=='Yes'" id="parameterName_id" formControlName="parameterName" >
+                </mat-form-field>
+            </td> 
+            <td class ="parameter-table-td" >
+                    <mat-form-field>
+                        <input matInput class="fntsz" placeholder="Description"     [disabled]="userAccessProfileService.getViewFlag()=='Yes'" id="description_id" formControlName="description" >
+                    </mat-form-field>
+            </td>            
+    </tr> 
+    <tr style="text-align: left;">
+            <td class ="parameter-table-td">
+                   <mat-label class="form__error" > * </mat-label>            
+                    <mat-form-field>                                                            
+                            <mat-select class="fntsz" placeholder="Measure Against"   [disabled]="userAccessProfileService.getViewFlag()=='Yes'" id="resourceTypeMeasured_id" formControlName="resourceTypeMeasured" >
+                                    <mat-option *ngFor="let resourceType of resourceTypes" [value]="resourceType.id">
+                                           {{resourceType.param}}
+                                    </mat-option>
+                            </mat-select>
+                    </mat-form-field>
+            </td>          
+
+            <td class ="parameter-table-td"> 
+                              
+                    <mat-form-field>                                   
+                            <mat-select class="fntsz" placeholder="Evaluation Technique Manual (Y/N)?"   [disabled]="userAccessProfileService.getViewFlag()=='Yes'" id="evalTechniqueManual_id" formControlName="evalTechniqueManual">
+                                    <mat-option *ngFor="let YN of yn" [value]="YN.id">
+                                           {{YN.param}}
+                                    </mat-option>
+                            </mat-select>
+                    </mat-form-field>                
+            </td>   
+    </tr> 
+    <tr style="text-align: left;">
+            <td class ="parameter-table-td" >
+                    <mat-form-field>                    
+                            <textarea class="fntsz" matInput placeholder="Evaluation Expression"     [disabled]="userAccessProfileService.getViewFlag()=='Yes'" id="evaluationExpression_id" formControlName="evaluationExpression" ></textarea>                
+                    </mat-form-field>
+            </td>
+    </tr>  
+    <tr class="fntsz" style="text-align: left;">
+            RAG - Red
+    </tr>
+
+    <tr style="text-align: left;">  
+            <td class ="parameter-table-td">            
+                    <mat-form-field>                                   
+                            <mat-select placeholder="Operator 1"   [disabled]="userAccessProfileService.getViewFlag()=='Yes'" id="RAG_R_operation_1_id" formControlName="RAG_R_operation_1">
+                                    <mat-option *ngFor="let operatorType of operatorTypes" [value]="operatorType.id">
+                                           {{operatorType.param}}
+                                    </mat-option>
+                            </mat-select>
+                    </mat-form-field>
+            </td>  
+            <td class ="parameter-table-td" >
+                    <mat-form-field>            
+                            <input matInput placeholder="Cutoff Value Low"     [disabled]="userAccessProfileService.getViewFlag()=='Yes'" id="RAG_R_cutoff_value_low_id" formControlName="RAG_R_cutoff_value_low" >                
+                    </mat-form-field>
+            </td>
+            <td class ="parameter-table-td" style="text-align: right;">            
+                    <mat-form-field>                                   
+                            <mat-select placeholder="Operator 2"   [disabled]="userAccessProfileService.getViewFlag()=='Yes'" id="RAG_R_operation_2_id" formControlName="RAG_R_operation_2">
+                                    <mat-option *ngFor="let operatorType of operatorTypes" [value]="operatorType.id">
+                                           {{operatorType.param}}
+                                    </mat-option>
+                            </mat-select>
+                    </mat-form-field>
+            </td>  
+            <td class ="parameter-table-td" style="text-align: right;">
+                    <mat-form-field>            
+                            <input matInput placeholder="Cutoff Value High"     [disabled]="userAccessProfileService.getViewFlag()=='Yes'" id="RAG_R_cutoff_value_high_id" formControlName="RAG_R_cutoff_value_high" >                
+                    </mat-form-field>
+            </td>
+    </tr> 
+    <tr class="fntsz" style="text-align: left;">
+            RAG - Amber
+    </tr>
+    <tr style="text-align: left;">  
+            <td class ="parameter-table-td">            
+                    <mat-form-field>                                   
+                            <mat-select placeholder="Operator 1"   [disabled]="userAccessProfileService.getViewFlag()=='Yes'" id="RAG_A_operation_1_id" formControlName="RAG_A_operation_1">
+                                    <mat-option *ngFor="let operatorType of operatorTypes" [value]="operatorType.id">
+                                           {{operatorType.param}}
+                                    </mat-option>
+                            </mat-select>
+                    </mat-form-field>
+            </td>  
+            <td class ="parameter-table-td" >
+                    <mat-form-field>            
+                            <input matInput placeholder="Cutoff Value Low"     [disabled]="userAccessProfileService.getViewFlag()=='Yes'"  id="RAG_A_cutoff_value_low_id" formControlName="RAG_A_cutoff_value_low" >                
+                    </mat-form-field>
+            </td>
+            <td class ="parameter-table-td" style="text-align: right;">            
+                    <mat-form-field>                                   
+                            <mat-select placeholder="Operator 2"   [disabled]="userAccessProfileService.getViewFlag()=='Yes'" id="RAG_A_operation_2_id" formControlName="RAG_A_operation_2">
+                                    <mat-option *ngFor="let operatorType of operatorTypes" [value]="operatorType.id">
+                                           {{operatorType.param}}
+                                    </mat-option>
+                            </mat-select>
+                    </mat-form-field>
+            </td>  
+            <td class ="parameter-table-td" style="text-align: right;">
+                    <mat-form-field>            
+                            <input matInput placeholder="Cutoff Value High"     [disabled]="userAccessProfileService.getViewFlag()=='Yes'" id="RAG_A_cutoff_value_high_id" formControlName="RAG_A_cutoff_value_high" >                
+                    </mat-form-field>
+            </td>            
+    </tr> 
+    <tr class="fntsz" style="text-align: left;">
+            RAG - Greeen
+    </tr>
+    <tr style="text-align: left;">  
+            <td class ="parameter-table-td">            
+                    <mat-form-field>                                   
+                            <mat-select placeholder="Operator 1"   [disabled]="userAccessProfileService.getViewFlag()=='Yes'"  id="RAG_G_operation_1_id" formControlName="RAG_G_operation_1">
+                                    <mat-option *ngFor="let operatorType of operatorTypes" [value]="operatorType.id">
+                                           {{operatorType.param}}
+                                    </mat-option>
+                            </mat-select>
+                    </mat-form-field>
+            </td>  
+            <td class ="parameter-table-td" >
+                    <mat-form-field>            
+                            <input matInput placeholder="Cutoff Value Low"     [disabled]="userAccessProfileService.getViewFlag()=='Yes'" id="RAG_G_cutoff_value_low_id" formControlName="RAG_G_cutoff_value_low" >                
+                    </mat-form-field>
+            </td>
+            <td class ="parameter-table-td" style="text-align: right;">            
+                    <mat-form-field>                                   
+                            <mat-select placeholder="Operator 2"   [disabled]="userAccessProfileService.getViewFlag()=='Yes'" id="RAG_G_operation_2_id" formControlName="RAG_G_operation_2">
+                                    <mat-option *ngFor="let operatorType of operatorTypes" [value]="operatorType.id">
+                                           {{operatorType.param}}
+                                    </mat-option>
+                            </mat-select>
+                    </mat-form-field>
+            </td>  
+            <td class ="parameter-table-td" style="text-align: right;" >
+                    <mat-form-field>            
+                            <input matInput placeholder="Cutoff Value High"     [disabled]="userAccessProfileService.getViewFlag()=='Yes'" id="RAG_G_cutoff_value_high_id" formControlName="RAG_G_cutoff_value_high" >                
+                    </mat-form-field>
+            </td>            
+    </tr> 
+ 
+</table>
+</div>
+
+<!--
+
+        <div class="headerrow" style="margin-left: -12px;font-size:11px;margin-right: 120px" >
+                        <button id="create_id" type="button" mat-raised-button color="primary" class="form_main_button" (click)="create()" >Submit</button>
+                        <button id="cancel_id" type="button" mat-raised-button color="primary" class="form_main_button" (click)="cancel()">Cancel</button>
+        </div>
+
+-->
+
+</form>
+
+
+
+    
+  
+
+
+
+

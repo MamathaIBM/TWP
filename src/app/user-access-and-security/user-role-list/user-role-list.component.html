@@ -1,0 +1,77 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+&nbsp;&nbsp;&nbsp;
+
+
+
+<link href="https://1.www.s81c.com/common/v18/css/grid-fluid.css" rel="stylesheet">      
+&nbsp;&nbsp;&nbsp;
+<div style="height: 3.5px;"></div> 
+
+
+
+<form [formGroup]="userRoleListForm" >
+
+
+<div  class="container" style="text-align:right;width:80%;padding-left: 10%;padding-right: 10%;">  
+    <table>
+        <tr style="text-align:left;">  
+             <td style="text-align:left;">
+                  <div style="text-align:left;" >   
+
+                          <div class="headerrowheadpage" style="text-align:left;  font-size:11px;display: inline-flex;">                                  
+                                  User > Role List for User ---> {{userName}} 
+                          </div>    
+                  </div>  
+              </td>
+              <td style="text-align:right;"> 
+                  <button mat-icon-button type="button" id="role_id"  (click)="gotoUserRoleAdd(userId)">
+                      <mat-icon >add</mat-icon>
+                  </button>
+              </td> 
+       </tr>                          
+    </table>  
+  <table mat-table [dataSource]="dataSource" >
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+  
+    <!-- Name Column -->
+    <ng-container matColumnDef="userRoleName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        <th class="matHeader">Name</th>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let userRole" > {{userRole.roleName}} </mat-cell>
+    </ng-container>
+  
+
+    <!-- Skill Column -->
+    <ng-container matColumnDef="userRoleDescription">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        <th class="matHeader">Description</th>
+      </mat-header-cell>
+        <mat-cell *matCellDef="let userRole"   > {{userRole.roleDescription}}                               
+        </mat-cell>
+      </ng-container>
+
+      <!-- Operations Column -->
+      <ng-container matColumnDef="userRoleId">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th class="matHeader">Operations</th>
+          </mat-header-cell>
+      <mat-cell *matCellDef="let userRole; let rowIndex = index"  >                             
+          <button mat-icon-button type="submit" id="del_id{{rowIndex}}" (click)="onDelete(userRole)">
+              <mat-icon aria-label="Example icon-button with a heart icon">delete_forever</mat-icon>
+          </button>            
+            
+      </mat-cell>        
+
+  </ng-container>      
+     
+  
+    <mat-header-row class="columnName" *matHeaderRowDef="displayedColumns"></mat-header-row>  
+    <mat-row class="result-row" *matRowDef="let row; let element; columns:displayedColumns;" (click)="setClickedRow(row,element)" [ngClass]="{ highlight: row == selectedRow }">
+        </mat-row> 
+  </table>
+</div>
+  </form>

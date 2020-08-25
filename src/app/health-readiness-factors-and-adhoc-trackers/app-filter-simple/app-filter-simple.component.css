@@ -1,0 +1,158 @@
+
+nav.nav-center ul {
+    text-align: center;
+    background-color:paleturquoise;
+  }
+  nav.nav-center ul li {
+    display: inline;
+    float: none;
+  }
+  nav.nav-center ul li a {
+    display: inline-block;
+  }
+  
+  table {
+    width: 100%;
+  }
+  .fontsze{
+    font-size: 11px;
+  }
+
+  .highlight  {
+    background-color:cornsilk !important;
+    font-weight: bold;
+  } 
+  
+  .columnName {
+    color:white;
+    font-weight: bold;
+    background-color: #1d3649;
+    text-align: center;
+  }
+  
+
+  .headerrow {  
+    font-weight: bold;
+    background-color: #1d3649;
+    text-align: center;
+    color:white;
+    font-size:11px;
+    font-size:11px;
+  }
+  
+  .headerrowheadpage{
+    color:white;
+    font-weight: bold;
+    background-color: #1d3649;
+    font-size:11px;
+  }
+  
+  .matHeader {
+    font-weight: bold;
+    color:white;    
+    font-size:11px;
+  }
+  
+  
+  .mat-cell{
+    display:flex !important;
+    font-size:11px;
+  
+  }
+  
+  .mat-row {
+    min-height: 10px !important;
+    font-size:11px;
+  }
+  
+  
+  .mat-elevation-z8 {
+    width: 1000px;
+  }
+  /* th.mat-sort-header {
+    color:white;
+  } */
+  
+  .mat-form-field {
+    font-size:11px;
+  } 
+  
+  ::ng-deep .mat-form-field-label {
+    /*change color of label*/
+    font-size:11px;
+  }
+
+  button {
+    background-color: #1d3649;
+    color: white;
+    font-size: 11px;
+  }
+  button.btn-info {
+    background-color: #1d3649;
+    color: white;
+  } 
+  
+  .fntszacc{
+    font-size:11px;
+    word-wrap: break-word;
+    width:89%
+  }
+  
+  .fntsz{
+    font-size:11px;
+    word-wrap: break-word;
+  }
+  
+  .fntszDt{
+    font-size:11px;
+    width:75%
+  }
+  
+  .mat-error{
+   font-size: 11px;
+  }   
+  .mat-cell:nth-child(1),
+  .mat-header-cell:nth-child(1) {
+      flex: 0 0 20%;
+  }
+  .mat-cell:nth-child(2),
+  .mat-header-cell:nth-child(2) {
+      flex: 0 0 20%;
+  }
+  .mat-cell:nth-child(3),
+  .mat-header-cell:nth-child(3) {
+      flex: 0 0 35%;
+  }
+ 
+  .mat-cell:nth-child(4),
+  .mat-header-cell:nth-child(4) {
+      flex: 0 0 15%;
+  }  
+
+
+
+.disabledColor {
+  color:grey;  
+}
+
+.newEpicColor {
+     background-color:#1d3649; 
+     color:white; 
+}
+
+
+.newSprintColor {
+     background-color:paleturquoise;  
+}
+
+::ng-deep .mat-checkbox.checkBoxStyle .mat-checkbox-frame {
+  border-color: white;
+  background-color:#1d3649
+}
+
+::ng-deep .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background, .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+  margin-top: 1px;
+  margin-left: 1px;
+  width: 18px;
+  height: 18px;
+}

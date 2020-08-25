@@ -1,0 +1,22 @@
+
+
+    <mat-dialog-content [formGroup]="report_medium">
+      <div class="headerrow" >
+          <p>Please select a report medium type</p>
+      </div>
+      <div mat-dialog-content>
+          <mat-form-field>
+            <mat-select class="fntsz" placeholder="Select"  id="report_medium_id" formControlName="reportMedium" required>
+                <mat-option *ngFor="let reportMediumType of reportMediumTypes" [value]="reportMediumType.id">
+                      {{reportMediumType.param}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+          <br>
+          <br>        
+      </div>    
+    </mat-dialog-content>
+    <div mat-dialog-actions>
+        <button mat-button (click)="view()"> View </button>
+        <button mat-button (click)="onNoClick()">Close </button>   
+    </div>

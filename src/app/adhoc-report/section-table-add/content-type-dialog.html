@@ -1,0 +1,84 @@
+<mat-dialog-content [formGroup]="form">
+    <div class="headerrow" >
+        <p>Select your dataset </p>  {{data.reportName}}
+    </div>
+    <div mat-dialog-content>
+      
+          <mat-form-field>
+            <mat-select style="font-size: 11px;" placeholder="Select content type"  id="content_type_id"  (selectionChange)="getContentData($event.value)" formControlName="contentType">
+                <mat-option *ngFor="let contentType of contentTypes" [value]="contentType.contentTypeId">
+                    {{contentType.contentTypeName}}
+                </mat-option>
+            </mat-select>             
+          </mat-form-field>  
+          <mat-label style="color: red;" > * </mat-label>
+          <button mat-button (click)="transfer()"  [disabled]="disableValue==false"> Transfer the data </button>  <button mat-button (click)="close()"> Close/Cancel </button>          
+    </div>
+
+
+</mat-dialog-content>
+
+    <div style="font-size: 11px;">
+
+        <div class="headerrowheadpage" style="text-align:left;  font-size:11px;display: inline-flex;">
+                        All Rows<mat-checkbox class="checkBoxStyle2" id="all_row" (change)="onCheckAllRow($event)" ></mat-checkbox>
+                        &nbsp;
+                        All Cols<mat-checkbox class="checkBoxStyle2" id="all_col" (change)="onCheckAllColumn($event)" ></mat-checkbox>
+        </div>
+            <br>
+            <br>
+            <mat-dialog-content [formGroup]="dataForm" >           
+                    <div formArrayName="checkbox_array" style="max-height: 200px;">
+                            {{errorMessage}}
+                            <table mat-table  [dataSource]="dataSource"  matSort class="mat-elevation-z8"  >
+
+                                <!--- Note that these columns can be defined in any order.
+                                        The actual rendered columns are set as a property on the row definition" -->
+                                    
+                                        
+                                <ng-container *ngFor="let disCol of displayedColumns; let colIndex = index" matColumnDef="{{disCol}}"  >          
+                                            <mat-header-cell *matHeaderCellDef class="matHeader"  >                                                
+                                                    <th class="matHeader" style="width:150px !important;text-align: left;font-size: 11px;">
+
+                                                                <div *ngIf="colIndex==0" style="text-align: left;font-size:11px;" >  
+                                                                        
+                                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;{{recordKeyValue[disCol]}} <br>
+                                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;<mat-checkbox class="checkBoxStyle" id="col{{disCol}}" (change)="onColCheck($event, colIndex)" [formControlName]="colIndex" [checked]="checked_value" ></mat-checkbox>
+                                                                </div>  
+                                                                <div *ngIf="colIndex!=0" style="text-align: left;">                                                                                                  
+                                                                    <div style="font-size:11px;word-wrap:break-word;text-align: left;width:150px !important;" *ngIf="(recordKeyValue[disCol]).length > 20" >      
+                                                                                {{recordKeyValue[disCol].substring(0,16)}}...   
+                                                                                <br>   
+                                                                                <mat-checkbox class="checkBoxStyle" id="col{{disCol}}" (change)="onColCheck($event, colIndex)"  [formControlName]="colIndex" [checked]="checked_value"  ></mat-checkbox>     
+                                                                    </div>
+                                                                    <div  style="font-size:11px;word-wrap: break-word;text-align:left;width:150px !important;" *ngIf="(recordKeyValue[disCol]).length <= 20" >      
+                                                                                    {{recordKeyValue[disCol]}}
+                                                                                    <br>   
+                                                                                    <mat-checkbox class="checkBoxStyle" id="col{{disCol}}" (change)="onColCheck($event, colIndex)"   [formControlName]="colIndex" [checked]="checked_value"  ></mat-checkbox>
+                                                                    </div>                                                                                                                                                                  
+                                                                </div>    
+
+                                                    
+                                                    </th>
+                                            </mat-header-cell>                                                       
+                                            <mat-cell *matCellDef="let element; let rowIndex = index" style="width:100px !important;text-align: left;font-size: 11px;" >                                 
+                                                        <div *ngIf="colIndex==0" style="text-align: left;font-size:11px" >  
+                                                                    <mat-checkbox  id="row{{rowIndex}}" (change)="onRowCheck($event, rowIndex)"  [formControlName]="rowIndex+displayedColumns.length" [checked]="checked_value"></mat-checkbox>                                                                                        
+                                                                    &nbsp; &nbsp; &nbsp;
+                                                                    {{element[disCol]}}  
+                                                        </div>  
+                                                        <div *ngIf="colIndex!=0" style="text-align: left;font-size:11px">      
+                                                                    {{element[disCol]}}                                                             
+                                                        </div>       
+                                            </mat-cell>                  
+                                </ng-container>
+                            
+                                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                                
+                            
+                            </table>
+                    </div>      
+            </mat-dialog-content> 
+    </div>
+

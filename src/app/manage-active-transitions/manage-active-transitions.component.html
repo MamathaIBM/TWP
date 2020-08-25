@@ -1,0 +1,73 @@
+<!-- <app-navigation></app-navigation> -->
+<app-menu-top></app-menu-top>
+<div class="row">
+    <app-menu-left></app-menu-left>
+</div>
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+<br>
+<div class="container">        
+        <div class="row" style="margin-right: 15px;margin-left: 150px;">
+            <div class="col-md-12" style="font-size:11px;">              
+                <tr>
+                  <th id="header">Active Transitions:  <span>{{dataLength}}</span> Items</th>                  
+                </tr>               
+                <mat-form-field class="txtar">
+                        <mat-label class="txtar"><em class="fa fa-search" aria-hidden="true"></em></mat-label><input class="txtar" id="ActiveTransSearch" matInput (keyup)="applyFilter($event.target.value)">
+                </mat-form-field>
+                <br>
+                <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+                    <ng-container matColumnDef="ClientName">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClasswid'">
+                        <th class="matHeader">Account Name</th>
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let element" [ngClass]="'customWidthClasswid'">{{element.ClientName}}</mat-cell>
+                    </ng-container> 
+
+                    <ng-container matColumnDef="IntegrationID">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass'">
+                        <th class="matHeader">Integration ID</th>
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let element" [ngClass]="'customWidthClass'">{{element.IntegrationID}}</mat-cell>
+                    </ng-container> 
+                                
+                    <ng-container matColumnDef="SiebelOppNo">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass'">
+                        <th class="matHeader">Siebel No</th>
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let element" [ngClass]="'customWidthClass'">{{element.SiebelOppNo}}</mat-cell>
+                    </ng-container> 
+
+                    <ng-container matColumnDef="Sector">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass'">
+                        <th class="matHeader">Sector</th>
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let element" [ngClass]="'customWidthClass'">{{element.Sector}}</mat-cell>
+                    </ng-container> 
+                    
+                    <ng-container matColumnDef="Industry">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass'">
+                        <th class="matHeader">Industry</th>
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let element" [ngClass]="'customWidthClass'">{{element.Industry}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Edit">
+                        <mat-header-cell *matHeaderCellDef [ngClass]="'customWidthClass'">
+                            <th class="matHeader"></th>
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let element; let i = index;" [ngClass]="'customWidthClass'">                                                     
+                                <button  id="{{'ActiveTransEdit'+i}}" class="btn btn-info" (click)="EditCreateTransition(element)">
+                                    <em class="fa fa-pencil-square-o" aria-hidden="true"></em></button>                   
+                        </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row class="columnName" *matHeaderRowDef="displayedColumns"></mat-header-row>                
+                    <mat-row class="result-row" *matRowDef="let row; let element; columns:displayedColumns;" (click)="setClickedRow(row,element)" [ngClass]="{ highlight: row == selectedRow }">
+                    </mat-row>
+                </table> 
+             
+                <mat-paginator [pageSizeOptions]="[10, 5, 15, 20]" showFirstLastButtons style="font-size:11px;" (click)="setClickedRow(0,element)"></mat-paginator>
+              
+          </div> 
+        </div>             
+</div>

@@ -1,0 +1,78 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link href="//1.www.s81c.com/common/v18/css/www.css" rel="stylesheet"/>
+ <div class="container-fluid" style="background-color: #1d3649;">
+            <div class="row" style="background-color: #1d3649;">                
+                    <div class="col-0" *ngIf = " url !==  '/' " >                
+                    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+                    
+                              <div class="page-sidebar navbar-collapse collapse" id="leftmenu">
+                                  <br>
+                                                <div class="page-sidebar-menu">
+                                                        
+                                                    <nav class="nav-list">
+                                                      <p *ngIf="this.menuname !== 'NewExecutionComponent'"><a routerLink="/NewExecutionComponent" class="nav-link" 
+                                                                id="NewExecutionComponent" name="NewExecutionComponent"
+                                                                routerLinkActive="activeClass"		   
+                                                                (click)="goTo('NewExecutionComponent')">
+                                                                <span style="text-align:right;"><em class="ibm-document-link" style="width:3em;height:3em;"></em>
+                                                                &nbsp;&nbsp; New Transition Execution</span>	  					
+                                                        </a></p>
+                                                        <p *ngIf="this.menuname === 'NewExecutionComponent'"><a routerLink="/transition-Main" class="nav-link" 
+                                                                id="NewExecutionComponent" name="NewExecutionComponent"
+                                                                routerLinkActive="activeClass"		   
+                                                                (click)="goTo('NewExecutionComponent')">
+                                                                <span style="text-align:right;"><em class="ibm-document-link" style="width:3em;height:3em;"></em>
+                                                                &nbsp;&nbsp; New Transition Execution</span>	  					
+                                                        </a></p>                        
+                                                        <p *ngIf="this.menuname !== 'AllTransitionAccountsComponent'"><a routerLink="/AllTransitionAccountsComponent" class="nav-link" 
+                                                                id="AllTransitionAccountsComponent" name="AllTransitionAccountsComponent"
+                                                                routerLinkActive="activeClass"		   
+                                                                (click)="goTo('AllTransitionAccountsComponent')">
+                                                                <span style="text-align:center"><em class="ibm-folder-link"></em>
+                                                                &nbsp;&nbsp; All Transition Accounts</span>	  					
+                                                        </a></p>
+                                                        <p *ngIf="this.menuname === 'AllTransitionAccountsComponent'"><a routerLink="/transition-Main" class="nav-link" 
+                                                                id="AllTransitionAccountsComponent" name="AllTransitionAccountsComponent"
+                                                                routerLinkActive="activeClass"		   
+                                                                (click)="goTo('AllTransitionAccountsComponent')">
+                                                                <span style="text-align:center"><em class="ibm-folder-link"></em>
+                                                                &nbsp;&nbsp; All Transition Accounts</span>	  					
+                                                        </a></p>
+                                                       
+                                                      <p *ngIf="this.menuname !== 'ManageActiveTransitionsComponent'"><a routerLink="/ManageActiveTransitionsComponent" class="nav-link" 
+                                                                id="ManageActiveTransitionsComponent" name="ManageActiveTransitionsComponent"
+                                                                routerLinkActive="activeClass"	   
+                                                                (click)="goTo('ManageActiveTransitionsComponent')">
+                                                                <span style="text-align:center"><em class="ibm-cart-link"></em>
+                                                                &nbsp;&nbsp; Manage Active Transitions</span>	  					
+                                                        </a></p>     
+                                                        <p *ngIf="this.menuname === 'ManageActiveTransitionsComponent'"><a routerLink="/transition-Main" class="nav-link" 
+                                                                id="ManageActiveTransitionsComponent" name="ManageActiveTransitionsComponent"
+                                                                routerLinkActive="activeClass"	   
+                                                                (click)="goTo('ManageActiveTransitionsComponent')">
+                                                                <span style="text-align:center"><em class="ibm-cart-link"></em>
+                                                                &nbsp;&nbsp; Manage Active Transitions</span>	  					
+                                                        </a></p>
+                                                        <p><a routerLink="/Reports" class="nav-link" 
+                                                                id="Report-home" name="Report-home"
+                                                                routerLinkActive="activeClass"		   
+                                                                (click)="goTo('Reports')">
+                                                                <span style="text-align:center"><em class="ibm-task-link"></em>
+                                                                &nbsp;&nbsp; Reports</span>	  					
+                                                        </a></p> 
+
+                                                        <p><a routerLink="/admin-home" class="nav-link" 
+                                                                id="admin-home" name="admin-home"
+                                                                routerLinkActive="activeClass"		   
+                                                                (click)="goTo('admin-home')">
+                                                                <span style="text-align:center"><em class="ibm-task-link"></em>
+                                                                &nbsp;&nbsp; Admin Home</span>	  					
+                                                        </a></p>                                
+                                                       
+                                                    </nav>
+                                                
+                                                </div>
+                    </div>
+            </div>
+            </div>
+</div>

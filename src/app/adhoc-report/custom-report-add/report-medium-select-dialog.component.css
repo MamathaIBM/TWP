@@ -1,0 +1,30 @@
+.headerrow {  
+  font-weight: bold;
+  background-color: #1d3649;
+  text-align: center;
+  color:white;
+}
+
+/*
+::ng-deep .mat-dialog-container {
+  overflow-y: hidden !important;
+}
+*/
+
+
+.mat-table {
+  overflow-x: scroll;
+}
+button {
+  background-color: #1d3649;
+  color: white;
+  font-size: 11px;
+}
+
+button.btn-info {
+  background-color: #1d3649;
+  color: white;
+} 
+
+
+

@@ -1,0 +1,344 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> &nbsp;&nbsp;&nbsp;
+<link href="https://1.www.s81c.com/common/v18/css/grid-fluid.css" rel="stylesheet"> &nbsp;&nbsp;&nbsp;
+
+<div class="row" style="margin-left: -12px;">
+
+   <table style="width: 300px;" id="ScopeRadio">
+      <tr>
+         <td> <mat-label class="Cellsize" style="font-weight: bold;">Scope Stream : </mat-label></td>
+         <td>
+            <mat-radio-group class="example-radio-group" id="SLPFFormRadio" (change)="OnchangeRadio($event)">
+              <mat-radio-button class="example-radio-button" id="{{'SLPFForm'+Scope_Level.Categoryvalues}}" [value]="Scope_Level.Categoryvalues" *ngFor="let Scope_Level of Scope_Level">
+                  {{Scope_Level.Categoryvalues}}</mat-radio-button>            
+            </mat-radio-group>
+         </td>
+      </tr>
+   </table> 
+        
+        <table class="fntSize" style="width :100%" id="SLPFTable" [hidden]="RadioFlag === false">
+            <tr>
+                <td class="noborder" style="width: 25%;">
+            <mat-form-field class="example-full-width">
+                  <mat-label  class="fntSize"> Select Epic</mat-label>
+                <mat-select class="fntSize" id="SLPEpic" [(value)]="selectedEPIC">
+                  <mat-option class="fntSize" [value]="null"></mat-option>
+                  <mat-option class="fntSize" (click)="loadSprintKeywords(epName)"
+                              *ngFor="let epName of epicKeywords" [value]="epName.epicUNID" >          
+                      {{epName.epicName}}
+                  </mat-option>
+                </mat-select>    
+              </mat-form-field>
+            </td>
+            <td class="noborder" [hidden] ="dataLength !== 0"></td>
+            <td class="noborder" [hidden] ="dataLength !== 0"></td>
+            <td class="noborder" [hidden] ="dataLength === 0">Planned Start Date : {{estartdate}}</td>
+            <td class="noborder" [hidden] ="dataLength === 0">Planned End Date : {{eenddate}}</td>
+            <td class="noborder" [hidden] ="dataLength === 0">RePlanned Start Date : {{erstartdate}}</td>
+            <td class="noborder" [hidden] ="dataLength === 0">RePlanned End Date : {{erenddate}}</td>
+            <td class="noborder" [hidden] ="dataLength === 0">Acutal Start Date : {{eastartdate}}</td>
+            <td class="noborder" [hidden] ="dataLength === 0">Actual End Date : {{eaenddate}}</td>
+             
+             
+            &nbsp;&nbsp;&nbsp;
+            </tr>
+            <tr>
+                <td class="noborder" style="width: 25%;">
+               <mat-form-field class="example-full-width">
+                     <mat-label  class="fntSize"> Select Sprint</mat-label>
+                <mat-select class="fntSize" id="SLPSprint" [(value)]="selectedSprint">
+                  <mat-option class="fntSize" [value]="null"></mat-option>
+                  <mat-option class="fntSize" (click)= "loadSpint(sprintKeyword)"
+                              *ngFor="let sprintKeyword of sprintKeywords" [value]="sprintKeyword.sprintUNID" >          
+                      {{sprintKeyword.sprintName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </td>
+            <td class="noborder" [hidden] ="dataLength !== 0"></td>
+            <td class="noborder" [hidden] ="dataLength !== 0"></td>
+            <td class="noborder" [hidden] ="dataLength === 0">Planned Start Date : {{sstartdate}}</td>
+            <td class="noborder" [hidden] ="dataLength === 0">Planned End Date : {{enddate}}</td>            
+            <td class="noborder" [hidden] ="dataLength === 0">RePlanned Start Date : {{rsstartdate}}</td>
+            <td class="noborder" [hidden] ="dataLength === 0">RePlanned End Date : {{renddate}}</td>            
+            <td class="noborder" [hidden] ="dataLength === 0">Actual Start Date : {{asstartdate}}</td>
+            <td class="noborder" [hidden] ="dataLength === 0">Actual End Date : {{aenddate}}</td>            
+        </tr>
+        <tr>
+            <td class="noborder" style="width: 30%;" *ngIf = "LevelRadioValue === 'AT'">
+           <mat-form-field class="example-full-width">
+               <mat-label style="font-size: 11px;">Select Application</mat-label>
+            <mat-select class="fntSize" id="SLPApp" [(value)]="selectedApplication">
+               <mat-option class="fntSize" [value]="null"></mat-option>
+              <mat-option class="fntSize" (click)= "loadApplication(applicationkeyword)"
+                          *ngFor="let applicationkeyword of applicationkeywords" 
+                          [value]="applicationkeyword.AppUNID" >          
+                  {{applicationkeyword.AppName}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>  
+
+        <td class="noborder" style="width: 40%;" *ngIf = "LevelRadioValue === 'ST'">
+         <mat-form-field class="example-full-width">
+             <mat-label style="font-size: 11px;">Service Transition Scope</mat-label>
+          <mat-select class="fntSize" id="SLPST" [(value)]="selectedSTScope">
+            <mat-option class="fntSize" [value]="null"></mat-option>
+            <mat-option class="fntSize" (click)= "loadSTScope(STScopekeywords)"
+                        matTooltipClass="tooltip-color" matTooltip="{{STScopekeywords.STScopeLevel}}-{{STScopekeywords.STScope}}-{{STScopekeywords.STDetailedScope}}-{{STScopekeywords.STScopeActivity}}"
+                        *ngFor="let STScopekeywords of STScopekeywords" 
+                        [value]="STScopekeywords.MasterSTInfoid" >          
+                        {{STScopekeywords.STScopeLevel}}-{{STScopekeywords.STScope}}-{{STScopekeywords.STDetailedScope}}-{{STScopekeywords.STScopeActivity}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>  
+        <td class="noborder" *ngIf = "LevelRadioValue === 'AT'">
+            <button  id="SLPLoadPlanAT" class="btn btn-info" [disabled]="progress>0 || selectedApplication === null" (click)="loadPlan()">
+                <i class="fa fa-save "></i> Load Plan
+            </button>
+        </td>      
+        <td class="noborder" *ngIf = "LevelRadioValue === 'ST'">
+         <button  id="SLPLoadPlanST" class="btn btn-info" [disabled]="progress>0 || selectedSTScope === null" (click)="loadPlan()">
+             <i class="fa fa-save "></i> Load Plan
+         </button>
+         </td>      
+        </tr>
+         </table>
+        
+         <br>
+        <table class="fntSize" style="text-align:right;" style="width :90%" id="btnTable">
+            <tr class="noborder">
+               <td class="noborder">
+                  <button  id="SLPUpdate" class="btn btn-info" type="submit" [hidden]="FlagHide=== 'Yes' || RadioFlag === false"  [disabled]="progress>0 || dataLength === 0" (click)="onUpdate()">
+                     <i class="fa fa-save "></i> Update
+               </button>
+               
+               
+               <button  id="SLPBaseLine" class="btn btn-info" type="submit" [hidden]="FlagHide=== 'Yes' || RadioFlag === false" 
+               [disabled]="progress>0 || dataLength === 0 || isExistValue === 0" (click)="onBaseline()">
+                     <i class="fa fa-save "></i> Baseline
+               </button>
+               </td>
+            </tr>
+      </table>
+             
+                            <br>
+                        
+                            <mat-progress-bar mode="indeterminate" *ngIf="progress"></mat-progress-bar>
+                        
+                            <div class="fntSize" *ngIf="progress">
+                                <h2> Please wait while data loads</h2>
+                            </div>
+                            <div class="example-container fntSize columnfsize" *ngIf ="this.dataLength === 0 && LevelRadioValue === 'AT'">
+                                Please Tailor for sprint execution plan task level plan under Master -> Account Level Tailoring --> Tailor WBS -> Tailor(AT-PLAN - AT-LEARN - AT-PERFORM) activities from the drop-down.
+                            </div>
+                            <div class="example-container fntSize columnfsize" *ngIf ="this.dataLength === 0 && LevelRadioValue === 'ST'">
+                              Please Tailor for sprint execution plan task level plan under Master -> Account Level Tailoring --> Tailor WBS -> Tailor(ST-PLAN - ST-DEFINE - ST-IMPLEMENT - ST-HANDOVER) activities from the drop-down.
+                          </div>
+                            <div class="example-container mat-elevation-z8"  *ngIf ="dataLength !== 0 || progress>0">              
+                                <table class="fntSize" id="SLPDTabale" mat-table [dataSource]="dataSource" matSort>
+                                    <ng-container matColumnDef="PHASE_NAME" sticky>
+                                       <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                          <div class="fntSize" style=" width: 80px;" >Phase Name</div>
+                                       </th>
+                                       <td class="staticfield" mat-cell *matCellDef="let element">                                         
+                                          {{element.PHASE_NAME}}
+                                       </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="STANDARD_ACTIVITY_NAME" sticky>
+                                       <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                          <div class="fntSize" style=" width: 120px;"> Standard Activity Name</div>
+                                       </th>
+                                       <td class="staticfield" mat-cell *matCellDef="let element">                                            
+                                          {{element.STANDARD_ACTIVITY_NAME}}                                        
+                                       </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="MILESTONE_OR_TASK" sticky>
+                                       <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                          <div class="fntSize" style=" width: 120px;"> Milestone OR Task</div>
+                                       </th>
+                                       <td class="staticfield" style="text-align: center;" mat-cell  *matCellDef="let element">                                       
+                                          {{element.MILESTONE_OR_TASK}}                                    
+                                       </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="P_Start_Date">
+                                       <th  mat-header-cell *matHeaderCellDef mat-sort-header>
+                                          <div class="fntSize">Plan Start Date  (mm/dd/yyyy)</div>
+                                       </th>
+                                       <td mat-cell *matCellDef="let element;let i = index">
+                                          <mat-form-field class="example-full-width">
+                                             <input class="fntSize" id="{{'SLPPSD'+i}}"  matInput [min]="setsStartDate" [max]="setEndDate"
+                                             [matDatepicker]="planStartDt" 
+                                             [disabled]="element.Baselined=== 1 || FlagHide === 'Yes'"
+                                            
+                                             (dateChange)="updateDate($event,i,'Plan_Start_Date')"                                                             
+                                             [value]="element.Plan_Start_Date">
+                                             <mat-datepicker-toggle matSuffix [for]="planStartDt"></mat-datepicker-toggle>
+                                             <mat-datepicker #planStartDt></mat-datepicker>
+                                          </mat-form-field>
+                                       </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="P_End_Date">
+                                       <th  mat-header-cell *matHeaderCellDef mat-sort-header>
+                                          <div class="fntSize">Plan End Date  (mm/dd/yyyy)</div>
+                                       </th>
+                                       <td mat-cell *matCellDef="let element;let i = index">
+                                          <mat-form-field class="example-full-width">
+                                             <input class="fntSize" id="{{'SLPPED'+i}}" matInput [min]="setsStartDate" [max]="setEndDate"
+                                             [matDatepicker]="PlanEndDt" 
+                                             [disabled]="element.Baselined=== 1 || FlagHide === 'Yes'" 
+                                              
+                                             (dateChange)="updateDate($event,i,'Plan_End_Date')"                                                             
+                                             [value]="element.Plan_End_Date">
+                                             <mat-datepicker-toggle matSuffix [for]="PlanEndDt"></mat-datepicker-toggle>
+                                             <mat-datepicker #PlanEndDt></mat-datepicker>
+                                          </mat-form-field>
+                                       </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="RP_Start_Date">
+                                       <th  mat-header-cell *matHeaderCellDef mat-sort-header>
+                                          <div class="fntSize">Replan Start Date  (mm/dd/yyyy)</div>
+                                       </th>
+                                       <td mat-cell *matCellDef="let element;let i = index">
+                                          <mat-form-field class="example-full-width">
+                                             <input class="fntSize" id="{{'SLPRSD'+i}}" matInput [min]="setsStartDate" [max]="setEndDate"
+                                             [matDatepicker]="RplanStartDt"
+                                             [disabled]="element.Baselined=== 0 || FlagHide === 'Yes'
+                                             || element.Actual_Start_Date !== null"                                             
+                                             (dateChange)="updateDate($event,i,'Replan_Start_Date')"                                                             
+                                             [value]="element.Replan_Start_Date">
+                                             <mat-datepicker-toggle matSuffix [for]="RplanStartDt"></mat-datepicker-toggle>
+                                             <mat-datepicker #RplanStartDt></mat-datepicker>
+                                          </mat-form-field>
+                                       </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="RP_End_Date">
+                                       <th  mat-header-cell *matHeaderCellDef mat-sort-header>
+                                          <div class="fntSize">Replan End Date  (mm/dd/yyyy)</div>
+                                       </th>
+                                       <td mat-cell *matCellDef="let element;let i = index">
+                                          <mat-form-field class="example-full-width">
+                                             <input class="fntSize" id="{{'SLPRED'+i}}" matInput [min]="setsStartDate" [max]="setEndDate"
+                                             [matDatepicker]="RPlanEndDt" 
+                                             [disabled]="element.Baselined=== 0 || FlagHide === 'Yes'
+                                             || element.Actual_End_Date !== null" 
+                                             
+                                             (dateChange)="updateDate($event,i,'RePlan_End_Date')" 
+                                             [value]="element.RePlan_End_Date">
+                                             <mat-datepicker-toggle matSuffix [for]="RPlanEndDt"></mat-datepicker-toggle>
+                                             <mat-datepicker #RPlanEndDt></mat-datepicker>
+                                          </mat-form-field>
+                                       </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="A_Start_Date">
+                                       <th  mat-header-cell *matHeaderCellDef mat-sort-header>
+                                          <div class="fntSize">Actual Start Date  (mm/dd/yyyy)</div>
+                                       </th>
+                                       <td mat-cell *matCellDef="let element;let i = index">
+                                          <mat-form-field class="example-full-width">
+                                             <input class="fntSize" id="{{'SLPASD'+i}}" matInput [min]="setsStartDate" [max]="setEndDate"
+                                             [matDatepicker]="AStartDt"                                            
+                                             [disabled]="FlagHide === 'Yes'"                                                            
+                                             (dateChange)="updateDate($event,i,'Actual_Start_Date')" 
+                                             [value]="element.Actual_Start_Date">                                                            
+                                             <mat-datepicker-toggle matSuffix [for]="AStartDt"></mat-datepicker-toggle>
+                                             <mat-datepicker #AStartDt></mat-datepicker>
+                                          </mat-form-field>
+                                       </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="A_End_Date">
+                                       <th  mat-header-cell *matHeaderCellDef mat-sort-header>
+                                          <div class="fntSize">Actual End Date  (mm/dd/yyyy)</div>
+                                       </th>
+                                       <td mat-cell *matCellDef="let element;let i = index">
+                                          <mat-form-field class="example-full-width">
+                                             <input class="fntSize" id="{{'SLPAED'+i}}" matInput [min]="setsStartDate" [max]="setEndDate"
+                                             [matDatepicker]="AEndDt" 
+                                            
+                                             [disabled]="FlagHide === 'Yes'" 
+                                             (dateChange)="updateDate($event,i,'Actual_End_Date')"                                                             
+                                             [value]="element.Actual_End_Date">
+                                             <mat-datepicker-toggle matSuffix [for]="AEndDt"></mat-datepicker-toggle>
+                                             <mat-datepicker #AEndDt></mat-datepicker>
+                                          </mat-form-field>
+                                       </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="Status">
+                                       <th  mat-header-cell *matHeaderCellDef mat-sort-header>
+                                          <div class="fntSize"> Status</div>
+                                       </th>
+                                       <td mat-cell *matCellDef="let element;let i = index">
+                                          <mat-form-field class="example-full-width">
+                                             <mat-select class="fntSize" id="{{'SLPStatus'+i}}" [(value)]="element.ServiceStatus" [disabled]="FlagHide === 'Yes'">
+                                             <mat-option class="fntSize" [value]="StatusKeywords[0].Categoryvalues"> {{StatusKeywords[0].Categoryvalues}} </mat-option>
+                                             <mat-option class="fntSize" [value]="StatusKeywords[1].Categoryvalues"> {{StatusKeywords[1].Categoryvalues}} </mat-option>
+                                             <mat-option class="fntSize" [value]="StatusKeywords[2].Categoryvalues" [disabled]="element.statusFlag === 1" > {{StatusKeywords[2].Categoryvalues}} </mat-option>
+                                             <mat-option class="fntSize" [value]="StatusKeywords[3].Categoryvalues"> {{StatusKeywords[3].Categoryvalues}} </mat-option>
+                                             </mat-select>
+                                          </mat-form-field>
+                                       </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="Owner_Name">
+                                       <th  mat-header-cell *matHeaderCellDef mat-sort-header>
+                                          <div class="fntSize">Owner name</div>
+                                       </th>
+                                       <td mat-cell *matCellDef="let element;let i = index;">
+                                          <mat-form-field style="width:80%">
+                                             <input class="fntSize" id="{{'SLPOName'+i}}" #oName name="oName" [disabled]="FlagHide === 'Yes'" 
+                                             matInput (keydown)="valuechangeCorrection($event,i)" (keypress)="updateOwner($event,i)"  [value] ="(element.Owner_Name === null||element.Owner_Name === 'null') ? '' : element.Owner_Name" [matAutocomplete]="auto">
+                                             <mat-autocomplete #auto="matAutocomplete">
+                                                <ng-container>
+                                                   <mat-option *ngIf="matchID !== i">
+                                                   </mat-option>
+                                                </ng-container>
+                                                <ng-container *ngFor="let option of myJSON">
+                                                   <mat-option  class="fntSize" *ngIf="matchID === i" 
+                                                   [disabled]="FlagHide === 'Yes'"
+                                                   (onSelectionChange)="ownerlist(option.name,i)" 
+                                                   [value]="option.Emp_Name">
+                                                   <img class="ibm-downsize ibm-circle" *ngIf="matchID === i" src={{option.photo}} style="width:30px;height:30px;background-size: contain;"> {{matchID === i ? option.name :''}}
+                                                   </mat-option>
+                                                </ng-container>
+                                             </mat-autocomplete>
+                                          </mat-form-field>
+                                          <button id="{{'SLPONSearch'+i}}" class="btn btn-info" style="width:20%;" type="button" [disabled]="FlagHide === 'Yes'" (click)="getEmployeeName(element,i)">
+                                          <i class="fa fa-search"></i>
+                                          </button>
+                                       </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="Comments">
+                                       <th  mat-header-cell *matHeaderCellDef mat-sort-header>
+                                          <div class="fntSize">Comments </div>
+                                       </th>
+                                       <td mat-cell *matCellDef="let element;let i = index">
+                                          <mat-form-field>
+                                             <textarea class="fntSize" id="{{'SLPComments'+i}}" matInput placeholder="" 
+                                             [disabled]="FlagHide === 'Yes'" 
+                                             (keyup)="CommentsonKey($event,i)" 
+                                             [value]="element.Comments">
+                                             </textarea>
+                                          </mat-form-field>
+                                       </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="star" stickyEnd>
+                                       <th  mat-header-cell *matHeaderCellDef mat-sort-header></th>
+                                       <td mat-cell *matCellDef="let element">
+                                          <mat-icon>more_vert</mat-icon>
+                                       </td>
+                                    </ng-container>
+                                    <tr mat-header-row class="columnName" *matHeaderRowDef="displayedColumns; sticky: true">
+                                    </tr>
+                                    <tr mat-row 
+                                    [ngClass]= "{'result-row-red': row.ServiceStatus === 'Not Started' && row.colorFlag === '1',
+                                    'result-row-BS': row.ServiceStatus == 'Behind Schedule',
+                                    'result-row-OT': row.ServiceStatus == 'On Schedule' ,
+                                    'result-row-C': row.ServiceStatus == 'Completed' }" 
+                                    *matRowDef="let row; let element; columns: displayedColumns;">
+                                    </tr>
+                                    <!-- </mat-row> -->
+                                 </table>
+                                 
+                                 
+                        </div>        
+    </div>

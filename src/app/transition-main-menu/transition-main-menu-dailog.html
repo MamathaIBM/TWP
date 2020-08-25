@@ -1,0 +1,60 @@
+ <style>
+
+     button.btn-info {
+    background-color: #1d3649;
+    color: white;
+    font-size:11px;
+   }  
+
+    .example-radio-group {
+      display: flex;
+      flex-direction: row;
+      margin: 15px 0;
+      font-size: 11px;
+      padding: 3px;
+    }
+    
+    .example-radio-button {
+      margin: 5px;
+      font-size: 11px;
+    }
+  
+    ::ng-deep .mat-radio-label-content{
+      font-size: 11px
+    }
+    ::ng-deep .mat-radio-outer-circle{
+      height: 12px !important;
+      width: 12px !important;
+      font-size: 11px
+  }
+  ::ng-deep .mat-radio-inner-circle{
+      height: 12px !important;
+      width: 12px !important;
+      font-size: 11px
+  }
+  
+  ::ng-deep .mat-radio-container{
+    height: 12px !important;
+    width: 12px !important;
+  }
+ </style>
+ 
+    <mat-dialog-content>
+      <h3>Select Scope for Transition Plan</h3>
+        <mat-radio-group class="example-radio-group" id="OTPStreamGroup" [formControl]="OTPStream">
+            <mat-radio-button class="example-radio-button" [value]="'OverAll'">OverAll</mat-radio-button>
+            <mat-radio-button class="example-radio-button" [value]="'AT'">Only AT</mat-radio-button>
+            <mat-radio-button class="example-radio-button" [value]="'ST'">Only ST</mat-radio-button>
+          </mat-radio-group>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button id="OTPStreamOK" class="btn btn-info" [mat-dialog-close]="OTPStream.value">Generate Report</button>   
+    &nbsp;&nbsp;&nbsp;
+        <button id="OTPStreamClose" class="btn btn-info" (click)="onNoClick()">Cancel</button>    
+    </mat-dialog-actions>
+
+
+
+
+
+

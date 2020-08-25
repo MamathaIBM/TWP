@@ -1,0 +1,43 @@
+<div  class="container" style="text-align:right;width:100%;padding-left: 15%;padding-right: 15%;">  
+
+
+<table class="container" style="width: 100%;">
+
+<tr style="text-align: left;">
+      <td style="text-align: left;display: inline-flex;" class="headerrowheadpage">Functionality - Upload </td>
+      <td style="text-align: right;">
+            <button type="button" id="submit_id" mat-raised-button color="primary" class="mybutton" (click)="onSubmit()" >Upload</button>
+            <button type="button" id="cancel_id" mat-raised-button color="primary" class="mybutton" (click)="cancel()" >Cancel</button> 
+      </td>
+</tr>
+
+</table>
+
+
+&nbsp;&nbsp;&nbsp;
+<div style="height: 3.5px;"></div> 
+
+
+<div class="Block">
+ 
+<table class="container" style="width: 100%;">
+
+      <tr style="text-align: left;">
+            <td style="text-align: left;" class="fntsz">
+                  <label id="lbl">Upload file</label>
+            </td>
+            <td class="fntsz">
+                  <input type='file' id="file_id" (change)="fileChanged($event)" style="font-size: 11px;">
+            </td>    
+      </tr>
+
+      <tr style="text-align: left;">
+                  <td style="text-align: left;" class="fntsz"> Sample Excel Template :  </td>
+                  <td>
+                              <button id="excel_id" (click)="exportAsXLSX()"><em class="fa fa-file-excel-o" style="font-size:15px;color:green"></em></button>                        
+                  </td>
+      </tr>
+ 
+</table>
+
+</div>

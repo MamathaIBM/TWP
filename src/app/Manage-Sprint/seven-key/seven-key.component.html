@@ -1,0 +1,341 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://1.www.s81c.com/common/v18/css/grid-fluid.css" rel="stylesheet">
+<!-- Bundle: Easiest to use, supports all browsers -->
+<script src="PptxGenJS/libs/pptxgen.bundle.js"></script> 
+<!-- Individual files: Add only what's needed to avoid clobbering loaded libraries -->
+<script src="PptxGenJS/libs/jquery.min.js"></script>
+<script src="PptxGenJS/libs/jszip.min.js"></script>
+<script src="PptxGenJS/dist/pptxgen.min.js"></script>
+<!-- IE11 requires Promises polyfill -->
+<!-- <script src="PptxGenJS/libs/promise.min.js"></script> -->
+<form #form="ngForm" [formGroup] ="sevenKeyForm" (ngSubmit) = "onSubmit()" >
+    <div class="example-container1" style="margin-right: 40px;margin-left:25px;">
+        <table style="table-layout: fixed;">
+            <tr>  
+                <td>
+                <mat-label class="fntsz"><strong>Week End Date: </strong></mat-label>
+                &nbsp;
+                <mat-form-field class="fntsz">
+                    <mat-select class="fntsz" id="week_end_dt" formControlName="week_end_dt">
+                        <mat-option class="fntsz" (onSelectionChange)="hideProfileDiv($event)" *ngFor="let weekenddt of weekenddtlist" [value]="weekenddt">{{weekenddt}}</mat-option>
+               </mat-select>
+                </mat-form-field>
+                &nbsp;&nbsp;
+                <button id="week_end_dt_submit" class="btn btn-info" type="submit" [hidden]="sevenKeyForm.controls['week_end_dt'].value=== '' || show" (click) ="fetchSevenKey()">Show Data</button>
+                </td>
+                <td style="text-align:right;" *ngIf="show">              
+                            <ul style="font-size:11px;">
+                                  <button class="dropdown-toggle" style="color:white;font-size:11px;" 
+                                  data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                   Select RAID</button>  &nbsp;&nbsp;
+                                <ul class="dropdown-menu" style="width:30px!important;font-size:11px;">                                            
+                                                        <li style="font-size:11px;">
+                                                        <span><a href="javascript:;" id="openKeyRisks_btn" (click)="openKeyRisks()">Key Risks</a></span></li>
+                                                        <div class="divider"></div>
+                                                        <li style="font-size:11px;">
+                                                        <span><a href="javascript:;" id="openIssues_btn" (click)="openIssues()">Issues</a></span></li>
+                                                        <div class="divider"></div>
+                                                        <li style="font-size:11px;">
+                                                        <span><a href="javascript:;" id="openActions_btn" (click)="openActions()">Actions</a></span></li>
+                                                        <div class="divider"></div>
+                                                        <li style="font-size:11px;">
+                                                        <span><a href="javascript:;" id="openDependencies_btn" (click)="openDependencies()">Dependencies</a></span></li>
+                                                    </ul>      
+                            </ul>  
+                </td>
+                <td style="text-align:right;" *ngIf="show">              
+                    <ul style="font-size:11px;">
+                          <button class="dropdown-toggle" style="color:white;font-size:11px;" 
+                          data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                           View Details</button>  &nbsp;&nbsp;
+                        <ul class="dropdown-menu" style="width:30px!important;font-size:11px;">                                            
+                                                <li style="font-size:11px;">
+                                                <span><a href="javascript:;" id="openDeliverables_btn" (click)="openDeliverables()">Deliverables</a></span></li>
+                                                <div class="divider"></div>
+                                                <li style="font-size:11px;">
+                                                <span><a href="javascript:;" id="openDetailedSchedule_btn" (click)="openDetailedSchedule()">Detailed Schedule</a></span></li>
+                                            </ul>      
+                    </ul>  
+                </td>
+                <td style="text-align:right;" *ngIf="show">           
+                    <ul style="font-size:11px;">
+                            <button class="dropdown-toggle" style="color:white;font-size:11px;" 
+                                     data-toggle="dropdown" data-hover="dropdown" data-close-others="true" (onclick)="repCheck()">
+                                               Reports</button>  &nbsp;&nbsp;
+                            <ul class="dropdown-menu" style="width:30px!important;font-size:11px;">                                            
+                                                                    <li style="font-size:11px;">
+                                                                    <span><a href="javascript:;" id="exportAsPPT_btn" (click)="exportAsPPT()"><em class="fa fa-file-powerpoint-o" style="font-size:11px;color:red"></em> &nbsp; 7 Key Report</a></span></li>
+                                                                    <div class="divider"></div>
+                                                                    <li style="font-size:11px;">
+                                                                    <span><a href="javascript:;" id="WSRPPT_btn" class="butcolor" (click)="WSRPPT()"><em class="fa fa-file-powerpoint-o" style="font-size:11px;color:red"></em> &nbsp; WSR</a></span></li>
+                            </ul>      
+                    </ul>  
+                </td>
+                <td style="text-align:right;" *ngIf="show && FlagHide === 'No'"> 
+                <button id="save_btn" class="btn btn-info" type="submit" (click) ="saveSevenKey()">Save </button>
+                &nbsp;&nbsp;
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div *ngIf="show" class="example-container1" style="margin-right: 40px;margin-left:25px;">
+    <table style="width:80%;">
+      <tr>
+            <td>
+                <mat-label class="fntsz">Overall RAG : </mat-label>
+                <mat-label class="form__error" *ngIf="!formErrors.overall_rag"> * </mat-label>
+                <mat-label *ngIf="formErrors.overall_rag" class="form__error">{{ formErrors.overall_rag }}</mat-label>
+                &nbsp;&nbsp;
+                <mat-form-field class="example-width">
+                    <mat-select [ngClass]="{'red': colorcode[0]==='red',
+                    'amber': colorcode[0]==='amber',
+                    'green': colorcode[0]==='green'
+                    }" id="rag" [(value)]="rag" formControlName="overall_rag" [disabled]="FlagHide === 'Yes'">
+                        <mat-option (click)="getColor(0,'green')" value="green" style="background-color: green;">Green</mat-option>
+                        <mat-option (click)="getColor(0,'amber')" value="amber" style="background-color: rgb(255, 205, 0);">Amber</mat-option>
+                        <mat-option (click)="getColor(0,'red')" value="red" style="background-color: red;">Red</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-label class="fntsz">Trend as : </mat-label>
+                <mat-label class="form__error" *ngIf="!formErrors.trend_as"> * </mat-label>
+                <mat-label *ngIf="formErrors.trend_as" class="form__error">{{ formErrors.trend_as }}</mat-label>
+                &nbsp;&nbsp;
+                <mat-form-field class="example-width">
+                    <mat-select id="trend_as" formControlName="trend_as" [disabled]="FlagHide === 'Yes'">
+                        <mat-option value="up">Up</mat-option>
+                        <mat-option value="down">Down</mat-option>
+                        <mat-option value="same_status">Same Status</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </td>
+        </tr> 
+    </table>
+    <table style="width:100%;">
+        <tr>   
+            <td style="width: 100%;">             
+                <mat-form-field class="example-full-width">
+                <mat-label class="fntsz">Summary for program for the week</mat-label>
+                <mat-label class="form__error" *ngIf="!formErrors.summary_for_program"> * </mat-label>
+                <mat-label *ngIf="formErrors.summary_for_program" class="form__error">{{ formErrors.summary_for_program }}</mat-label>
+                <textarea class="fntsz" matInput #summary maxlength="500" id="summary_for_program" formControlName="summary_for_program" [readonly]="FlagHide === 'Yes'">
+                </textarea>
+                <mat-hint class="fntsz" align="end">{{summary.value.length}} / 500</mat-hint>
+                </mat-form-field>                
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 100%;">
+                <mat-form-field class="example-full-width">
+                <mat-label class="fntsz">Current Week Progress</mat-label>
+                <textarea class="fntsz" matInput #current maxlength="500" id="current_week_progress" formControlName="current_week_progress" [readonly]="FlagHide === 'Yes'">
+                </textarea>
+                <mat-hint class="fntsz" align="end">{{current.value.length}} / 500</mat-hint>
+                </mat-form-field>
+            </td>
+        </tr>
+        <tr>      
+            <td style="width: 100%;">
+                <mat-form-field class="example-full-width">
+                <mat-label class="fntsz">Next Week Plan</mat-label>
+                <textarea class="fntsz" matInput #nxt maxlength="500" id="next_week_plan" placeholder="Next Week Plan" formControlName="next_week_plan" [readonly]="FlagHide === 'Yes'">
+                </textarea>
+                <mat-hint class="fntsz" align="end">{{nxt.value.length}} / 500</mat-hint>
+                </mat-form-field>
+            </td>
+        </tr>
+    </table>
+    &nbsp;
+    <table style="width:100%;">
+        <tr>
+            <td style="vertical-align:center;width: 30%;" class="fntsz"><strong>Scope is realistic and Managed :</strong></td>
+            <td style="width:8%;">
+                <mat-form-field class="example-width">
+                    <mat-label class="fntsz">Please select</mat-label>
+                    <mat-select [ngClass]="{'red': colorcode[1]==='red',
+                    'amber': colorcode[1]==='amber',
+                    'green': colorcode[1]==='green' 
+                    }" id="key1" [(value)]="key1" formControlName="scope_color" [disabled]="FlagHide === 'Yes'">
+                        <mat-option (click)="getColor(1,'green')" value="green" style="background-color: green;">Green</mat-option>
+                        <mat-option (click)="getColor(1,'amber')" value="amber" style="background-color: rgb(255, 205, 0);">Amber</mat-option>
+                        <mat-option (click)="getColor(1,'red')" value="red" style="background-color: red;">Red</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </td>
+            <td style="width:67%;">
+                <mat-form-field class="example-width-fld">
+                <mat-label class="fntsz">Comments</mat-label>
+                <textarea class="fntsz" matInput #scope maxlength="100" formControlName="scope_comment" [readonly]="FlagHide === 'Yes'">
+                </textarea>
+                <mat-hint class="fntsz" align="end">{{scope.value.length}} / 100</mat-hint>
+                </mat-form-field>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align:center;width: 30%;" class="fntsz"><strong>Team is high performing :</strong></td>
+            <td style="width:8%;">
+                <mat-form-field class="example-width">
+                    <mat-label class="fntsz">Please select</mat-label>
+                    <mat-select [ngClass]="{'red': colorcode[2]==='red',
+                    'amber': colorcode[2]==='amber',
+                    'green': colorcode[2]==='green' 
+                    }" id="key2" [(value)]="key2" formControlName="team_color" [disabled]="FlagHide === 'Yes'">
+                        <mat-option (click)="getColor(2,'green')" value="green" style="background-color: green;">Green</mat-option>
+                        <mat-option (click)="getColor(2,'amber')" value="amber" style="background-color: rgb(255, 205, 0);">Amber</mat-option>
+                        <mat-option (click)="getColor(2,'red')" value="red" style="background-color: red;">Red</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </td>            
+            <td style="width:67%;">
+                <mat-form-field class="example-width-fld">
+                        <mat-label class="fntsz">Comments</mat-label>
+                <textarea class="fntsz" class="fntsz" matInput #team maxlength="100" formControlName="team_comment" [readonly]="FlagHide === 'Yes'">
+                </textarea>
+                <mat-hint class="fntsz" align="end">{{team.value.length}} / 100</mat-hint>
+                </mat-form-field>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align:center;width: 30%;" class="fntsz"><strong>Risks are mitigated :</strong></td>
+            <td style="width:8%;">
+                <mat-form-field class="example-width">
+                    <mat-label class="fntsz">Please select</mat-label>
+                    <mat-select [ngClass]="{'red': colorcode[3]==='red',
+                    'amber': colorcode[3]==='amber',
+                    'green': colorcode[3]==='green' 
+                    }" id="key3" [(value)]="key3" formControlName="risk_color" [disabled]="FlagHide === 'Yes'">
+                        <mat-option (click)="getColor(3,'green')" value="green" style="background-color: green;">Green</mat-option>
+                        <mat-option (click)="getColor(3,'amber')" value="amber" style="background-color: rgb(255, 205, 0);">Amber</mat-option>
+                        <mat-option (click)="getColor(3,'red')" value="red" style="background-color: red;">Red</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </td>
+            <td style="width:67%;">
+                <mat-form-field class="example-width-fld">
+                        <mat-label class="fntsz">Comments</mat-label>
+                <textarea class="fntsz" matInput #risk maxlength="100" formControlName="risk_comment" [readonly]="FlagHide === 'Yes'">
+                </textarea>
+                <mat-hint class="fntsz" align="end">{{risk.value.length}} / 100</mat-hint>
+                </mat-form-field>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align:center;width: 30%;" class="fntsz"><strong>Organization Benefits are realized :</strong></td>
+            <td style="width:8%;">
+                <mat-form-field class="example-width">
+                    <mat-label class="fntsz">Please select</mat-label>
+                    <mat-select [ngClass]="{'red': colorcode[4]==='red',
+                    'amber': colorcode[4]==='amber',
+                    'green': colorcode[4]==='green'
+                    }" id="key4" [(value)]="key4" formControlName="org_color" [disabled]="FlagHide === 'Yes'">
+                        <mat-option (click)="getColor(4,'green')" value="green" style="background-color: green;">Green</mat-option>
+                        <mat-option (click)="getColor(4,'amber')" value="amber" style="background-color: rgb(255, 205, 0);">Amber</mat-option>
+                        <mat-option (click)="getColor(4,'red')" value="red" style="background-color: red;">Red</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </td>
+            <td style="width:67%;">
+                <mat-form-field class="example-width-fld">
+                        <mat-label class="fntsz">Comments</mat-label>
+                <textarea class="fntsz" matInput #org maxlength="100" formControlName="org_comment" [readonly]="FlagHide === 'Yes'">
+                </textarea>
+                <mat-hint class="fntsz" align="end">{{org.value.length}} / 100</mat-hint>
+                </mat-form-field>
+            </td>               
+        </tr>
+        <tr>
+            <td style="vertical-align:center;width: 30%;" class="fntsz"><strong>Work and Schedule are predictable :</strong></td>
+            <td style="width:8%;">
+                <mat-form-field class="example-width">
+                        <mat-label class="fntsz">Please select</mat-label>
+                    <mat-select [ngClass]="{'red': colorcode[5]==='red',
+                    'amber': colorcode[5]==='amber',
+                    'green': colorcode[5]==='green'
+                    }" id="key5" [(value)]="key5" formControlName="work_color" [disabled]="FlagHide === 'Yes'">
+                        <mat-option (click)="getColor(5,'green')" value="green" style="background-color: green;">Green</mat-option>
+                        <mat-option (click)="getColor(5,'amber')" value="amber" style="background-color: rgb(255, 205, 0);">Amber</mat-option>
+                        <mat-option (click)="getColor(5,'red')" value="red" style="background-color: red;">Red</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </td>
+            <td style="width:67%;">
+                <mat-form-field class="example-width-fld">
+                        <mat-label class="fntsz">Comments</mat-label>
+                <textarea class="fntsz" matInput #work maxlength="100" formControlName="work_comment" [readonly]="FlagHide === 'Yes'">
+                </textarea>
+                <mat-hint class="fntsz" align="end">{{work.value.length}} / 100</mat-hint>
+                </mat-form-field>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align:center;width: 30%;" class="fntsz"><strong>Business benefits are realized :</strong></td>
+            <td style="width:8%;">
+                <mat-form-field class="example-width">
+                        <mat-label class="fntsz">Please select</mat-label>
+                    <mat-select [ngClass]="{'red': colorcode[6]==='red',
+                    'amber': colorcode[6]==='amber',
+                    'green': colorcode[6]==='green' 
+                    }" id="key6" [(value)]="key6" formControlName="business_color" [disabled]="FlagHide === 'Yes'">
+                        <mat-option (click)="getColor(6,'green')" value="green" style="background-color: green;">Green</mat-option>
+                        <mat-option (click)="getColor(6,'amber')" value="amber" style="background-color: rgb(255, 205, 0);">Amber</mat-option>
+                        <mat-option (click)="getColor(6,'red')" value="red" style="background-color: red;">Red</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </td>
+            <td style="width:67%;">
+                <mat-form-field class="example-width-fld">
+                        <mat-label class="fntsz">Comments</mat-label>
+                <textarea class="fntsz" matInput #business maxlength="100" formControlName="business_comment" [readonly]="FlagHide === 'Yes'">
+                </textarea>
+                <mat-hint class="fntsz" align="end">{{business.value.length}} / 100</mat-hint>
+                </mat-form-field>
+            </td>  
+        </tr>
+        <tr>
+            <td style="vertical-align:center;width: 30%;" class="fntsz"><strong>Financials in control :</strong></td>
+            <td style="width:8%;">
+                <mat-form-field class="example-width">
+                        <mat-label class="fntsz">Please select</mat-label>
+                    <mat-select [ngClass]="{'red': colorcode[7]==='red',
+                    'amber': colorcode[7]==='amber',
+                    'green': colorcode[7]==='green'  
+                    }" id="key7" [(value)]="key7" formControlName="financial_color" [disabled]="FlagHide === 'Yes'">
+                        <mat-option (click)="getColor(7,'green')" value="green" style="background-color: green;">Green</mat-option>
+                        <mat-option (click)="getColor(7,'amber')" value="amber" style="background-color: rgb(255, 205, 0);">Amber</mat-option>
+                        <mat-option (click)="getColor(7,'red')" value="red" style="background-color: red;">Red</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </td>
+            <td style="width:67%;">
+                <mat-form-field class="example-width-fld">
+                        <mat-label class="fntsz">Comments</mat-label>
+                <textarea class="fntsz" matInput #finan maxlength="100" formControlName="financial_comment" [readonly]="FlagHide === 'Yes'">
+                </textarea>
+                <mat-hint class="fntsz" align="end">{{finan.value.length}} / 100</mat-hint>
+                </mat-form-field>
+            </td>
+        </tr> 
+    </table>
+    <table style="width:100%;">
+        <tr>
+            <td style="width:20%;">
+                <mat-label class="fntsz">Last Modified By</mat-label>
+            </td>
+            <td style="width:26%;">
+                <mat-form-field class="fntsz">
+                <input class="fntsz" id="last_modified_on" matInput formControlName="last_modified_by" readonly>
+                </mat-form-field>
+            </td>  
+            <td style="width:25%;">
+                <mat-label class="fntsz"> Last Modified On: </mat-label>
+            </td>
+            <td style="width:30%;">
+                <mat-form-field class="fntsz">
+                <input class="fntsz" id="last_modified_by" matInput formControlName="last_modified_on" readonly>
+                </mat-form-field> 
+            </td>
+        </tr> 
+    </table> 
+    </div>
+</form>

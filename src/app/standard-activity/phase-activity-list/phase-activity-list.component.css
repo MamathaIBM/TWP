@@ -1,0 +1,152 @@
+
+nav.nav-center ul {
+    text-align: center;
+    background-color:paleturquoise;
+  }
+  nav.nav-center ul li {
+    display: inline;
+    float: none;
+  }
+  nav.nav-center ul li a {
+    display: inline-block;
+  }
+  
+  table {
+    width: 100%;
+  }
+  
+
+  .highlight  {
+    background-color:cornsilk !important;
+    font-weight: bold;
+  } 
+  
+  .columnName {
+    color:white;
+    font-weight: bold;
+    background-color: #1d3649;
+    text-align: center;
+  }
+  
+  .headerrow {  
+    font-weight: bold;
+    background-color: #1d3649;
+    text-align: center;
+    color:white;
+    font-size:11px;
+  }
+    
+  .headerrowheadpage{
+    color:white;
+    font-weight: bold;
+    background-color: #1d3649;
+    font-size:11px;
+  }
+  
+  .matHeader {
+    font-weight: bold;
+    color:white;    
+    font-size:11px;
+  }
+  
+  
+  .mat-cell{
+    display:flex !important;
+    font-size:11px;
+  
+  }
+  
+  .mat-row {
+    min-height: 10px !important;
+    font-size:11px;
+  }
+  .mat-elevation-z8 {
+    width: 1050px;
+  }
+  /* th.mat-sort-header {
+    color:white;
+  } */
+  
+  .mat-form-field {
+    font-size: 14px;
+  } 
+  button {
+    background-color: #1d3649;
+    color: white;
+    font-size: 11px;
+  }
+  button.btn-info {
+    background-color: #1d3649;
+    color: white;
+  } 
+  
+  .fntszacc{
+    font-size:11px;
+    word-wrap: break-word;
+    width:89%
+  }
+  
+  .fntsz{
+    font-size:11px;
+    word-wrap: break-word;
+  }
+  
+  .fntszDt{
+    font-size:11px;
+    width:75%
+  }
+  
+  .mat-error{
+   font-size: 11px;
+  }   
+
+
+
+  .mat-column-standardActivityName {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 70% !important;
+    width: 70% !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  
+    word-break: break-word;
+  
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+
+  .mat-column-milestoneOrTask {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 10% !important;
+    width: 10% !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  
+    word-break: break-word;
+  
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+
+  .mat-column-standardActivityId {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 20% !important;
+    width: 20% !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  
+    word-break: break-word;
+  
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+ 

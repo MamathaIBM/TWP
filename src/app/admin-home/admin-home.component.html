@@ -1,0 +1,135 @@
+<div style="width: 100%;right: 0;">
+<app-menu-top></app-menu-top>
+</div>
+
+
+   <div  class="row" >
+            <app-menu-left [activePage]='admin-home'></app-menu-left>
+   </div>
+
+
+
+  <div id="leftss" style="left:0;right:0;text-align:center;color:white;font-weight: bold;background-color: #2B506D;font-size:11px;width: 100%;">  
+          
+      <div  id="rightss"  style="left:0;right:0;width: 100%; display: block;padding-left: 15%;">                                                    
+              <button mat-button id="matMaster" [matMenuTriggerFor]="UserAccess">User Access & Security <em class="fa fa-angle-down" aria-hidden="true"></em></button>
+            
+              <button mat-button id="activity" [matMenuTriggerFor]="Activity">Standard Phase Activities <em class="fa fa-angle-down" aria-hidden="true"></em></button>
+              
+              <button mat-button id="TransitionPlan" [matMenuTriggerFor]="Exit">Exit Criteria <em class="fa fa-angle-down" aria-hidden="true"></em></button>
+              
+              <button mat-button id="ParamsHR" (click)="showParameterList()">Health & Readiness Criteria <em class="fa fa-angle-down" aria-hidden="true"></em></button>
+              
+              <button mat-button id="ParamsGlobal" (click)="showGlobalConfigParameterList()">Parameters <em class="fa fa-angle-down" aria-hidden="true"></em></button>
+              
+              <button mat-button id="TranRisk" (click)="TransitionRiskAnalyzerAdmin()">Transition Risk Analyzer <em class="fa fa-angle-down" aria-hidden="true"></em></button>              
+    
+              <button mat-button id="Reports" [matMenuTriggerFor]="reports"  >Reports <em class="fa fa-angle-down" aria-hidden="true"></em></button>                  
+             
+
+              <mat-menu #reports="matMenu">                
+                    <button mat-menu-item id="content_type_list_id" (click)="showContentTypeList()">Content type list</button>
+                    <button mat-menu-item id="report_template_list_id" (click)="showReportTemplateList()">Report template list</button>
+                    <button mat-menu-item id="report_org_level" (click)="showReportOrgList()">Org level reports</button>
+                    <button mat-menu-item id="report_global_level" (click)="showReportGlobalList()">Global reports</button>
+              </mat-menu>
+
+              <mat-menu #UserAccess="matMenu">                
+                    <button mat-menu-item id="fuctionality_id" (click)="showFunctionalityList()">Functionality</button>
+                    <button mat-menu-item id="role_id" (click)="showRoleList()">Role</button>
+                    <button mat-menu-item id="user_id" (click)="showUserLsit()">User</button>
+              </mat-menu>
+
+              <mat-menu #Activity="matMenu">                    
+                    <button mat-menu-item id="service_backlog" (click)="showServiceBackLogPhaseActivityList()">Service Backlog</button>
+                    <button mat-menu-item id="sprint_backlog" (click)="showSprintBackLogPhaseActivityList()">Sprint Backlog</button>
+                    <button mat-menu-item [matMenuTriggerFor]="SEP">Sprint Execution</button>
+                    <button mat-menu-item id="closure_activity" (click)="showClosurePhaseActivityList()">Closure</button>                    
+              </mat-menu>
+              
+              <mat-menu #Exit="matMenu">                    
+                    <button mat-menu-item id="service_backlog" (click)="showServiceBackLogPhaseExitCriteriaList()">Service Backlog</button>
+                    <button mat-menu-item id="sprint_backlog"(click)="showSprintBackLogPhaseExitCriteriaList()">Sprint Backlog</button>
+                    <button mat-menu-item [matMenuTriggerFor]="SEP_EXIT">Sprint Execution</button>
+                    <button mat-menu-item id="closure_exit" (click)="showClosurePhaseExitCriteriaList()">Closure</button>                    
+              </mat-menu>
+
+              <mat-menu #Param="matMenu">
+                  <button mat-menu-item id="showParameterCustomList" (click)="showParameterCustomList('showParameterCustomList')">Health and Readiness Factor Configuration</button>  
+              </mat-menu>
+              <mat-menu #TranRisk="matMenu">
+                  <button mat-menu-item id="parameterCustomTrackingList" color="primary"  (click)="parameterCustomTrackingList('parameterCustomTrackingList')">Health & Readiness Tracking</button>                 
+              </mat-menu>
+              <mat-menu #SEP="matMenu">
+                  <button mat-menu-item [matMenuTriggerFor]="SEP_AT">AT Sprint Execution</button>
+                  <button mat-menu-item [matMenuTriggerFor]="SEP_ST">ST Sprint Execution</button>                  
+            </mat-menu> 
+                         
+              <mat-menu #SEP_EXIT="matMenu">
+                  <button mat-menu-item [matMenuTriggerFor]="Exit_SEP_AT">AT Sprint Execution</button>
+                  <button mat-menu-item [matMenuTriggerFor]="Exit_SEP_ST">ST Sprint Execution</button>    
+                        <!-- <button mat-menu-item id="plan_exit" color="primary"  (click)="showPlanPhaseExitCriteriaList()">Plan</button>
+                        <button mat-menu-item id="plan_learn" (click)="showLearnPhaseExitCriteriaList()">Learn</button>    
+                        <button mat-menu-item id="plan_perform" (click)="showPerformPhaseExitCriteriaList()">Perform</button>     -->
+            </mat-menu>
+
+            <mat-menu #SEP_AT="matMenu">
+                  <button mat-menu-item id="plan_activity" color="primary"  (click)="showPlanPhaseActivityList()">AT Plan</button>
+                  <button mat-menu-item id="learn_activity" (click)="showLearnPhaseActivityList()">AT Learn</button>    
+                  <button mat-menu-item id="perform_activity" (click)="showPerformPhaseActivityList()">AT Perform</button>    
+            </mat-menu>  
+            <mat-menu #SEP_ST="matMenu">                 
+                  <button mat-menu-item id="act_plan_id"  color="primary"  (click)="showSTPlanPhaseActivityList()"> ST Plan </button>  
+                  <button  mat-menu-item id="act_Define_id" color="primary"  (click)="showSTDefinePhaseActivityList()"> ST Define </button>  
+                  <button  mat-menu-item id="act_Implement_id" color="primary"  (click)="showSTImplementPhaseActivityList()"> ST Implement </button>          
+                  <button  mat-menu-item id="act_Handover_id" color="primary"  (click)="showSTHandoverPhaseActivityList()"> ST Handover </button>    
+            </mat-menu>  
+            <mat-menu #Exit_SEP_AT="matMenu">
+                  <button mat-menu-item id="plan_exit" color="primary"  (click)="showPlanPhaseExitCriteriaList()">AT Plan</button>
+                  <button mat-menu-item id="plan_learn" (click)="showLearnPhaseExitCriteriaList()">AT Learn</button>    
+                  <button mat-menu-item id="plan_perform" (click)="showPerformPhaseExitCriteriaList()">AT Perform</button>    
+            </mat-menu>  
+            <mat-menu #Exit_SEP_ST="matMenu">                 
+                  <button mat-menu-item id="ext_plan_id" color="primary"  (click)="showSTPlanPhaseExitCriteriaList()"> ST Plan </button>  
+                  <button mat-menu-item id="ext_Define_id" color="primary"  (click)="showSTDefinePhaseExitCriteriaList()"> ST Define </button>  
+                  <button mat-menu-item id="ext_Implement_id" color="primary"  (click)="showSTImplementPhaseExitCriteriaList()"> ST Implement </button>          
+                  <button mat-menu-item id="ext_Handover_id" color="primary"  (click)="showSTHandoverPhaseExitCriteriaList()"> ST Handover </button>          
+            </mat-menu> 
+
+<!--
+               <mat-menu #SYSTEM="matMenu">
+                  <button mat-menu-item id="systemSettingsList" (click)="showSystemSettingsList()">System Settings</button>  
+               </mat-menu>                             
+-->               
+              </div>
+
+
+
+            <div class="headerrowhead" style="right:0;left:0">   
+                        <div style="text-align:center;   font-size:11px;">
+                              {{screen}}
+                        </div>    
+            </div>
+
+  </div>
+
+<!--
+
+<div class="container" style="text-align:center;">
+      <router-outlet></router-outlet>
+</div>
+-->
+
+
+
+
+<div id="wrapper" style="text-align:center;">
+      <div id="left" style="width: 50%;">
+      </div>   
+      <div id="right" style="text-align:center;width:50%">
+            <router-outlet></router-outlet>
+      </div>                  
+</div>
+
+
+ 

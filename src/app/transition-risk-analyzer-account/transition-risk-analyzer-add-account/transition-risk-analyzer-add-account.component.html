@@ -1,0 +1,58 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+&nbsp;&nbsp;&nbsp;
+<link href="https://1.www.s81c.com/common/v18/css/grid-fluid.css" rel="stylesheet">      
+&nbsp;&nbsp;&nbsp;
+
+<div style="border : 2px solid;text-align :center;font-family : Arial;font-size : 11px; color : rgba(0, 89, 255, 0.705)" > Account Specific Risk </div> 
+<br>
+
+
+<div class="row"  style="margin-left: 20px;">
+    <form #form="ngForm"  [formGroup]="RAUpdateeForm" (ngSubmit)="onSubmit()" autocomplete="off"  >    
+
+      <!-- <mat-form-field class="example-full-width">
+            <input id="Risk_id" matInput placeholder="" formControlName = "Risk_ID"   [hidden]=true>
+        </mat-form-field>
+         -->
+        <mat-form-field class="example-full-width" >
+          <input class="fntsize" type="text" id="Risk_Category_id" 
+                             placeholder="Risk Category" 
+                             aria-label="Risk Category" 
+                             matInput formControlName ="Risk_Category" 
+                             [matAutocomplete]="auto"
+                             [formControl]="myControl"                             
+                             >
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+            <mat-option class="fntsize" *ngFor="let option of filteredOptions | async" [value]="option.Risk_Category">
+              {{option.Risk_Category}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+        &nbsp;&nbsp;
+
+        <mat-form-field class="example-full-width">
+            <textarea class="fntsize" id ="Risk_Attribute_id" matInput placeholder="Risk Attribute" 
+                      formControlName = "Risk_Attribute"                      
+                      ></textarea>
+            </mat-form-field> 
+        &nbsp;&nbsp;
+       
+        <mat-form-field class="example-full-width">
+          <textarea class="fntsize" id ="Planned_Mitigation_Action_id" matInput placeholder="Planned Mitigation Action" 
+                    formControlName ="Planned_Mitigation_Action"                    
+                    ></textarea>
+      </mat-form-field> 
+     
+      <!-- || (RAUpdateeForm.controls['Risk_Attribute'] === '' && RAUpdateeForm.controls['Planned_Mitigation_Action']=== '' -->
+        <div class="example-button-row">
+            <button class="fntsize" id="RAUpdateeForm_Add" mat-raised-button color="primary" type="submit" 
+                    [disabled]="!RAUpdateeForm.valid || editFlag === 1" 
+                    (click) ="Add()">ADD </button>   
+            &nbsp;&nbsp;            
+            <button class="fntsize" id="RAUpdateeForm_Close" mat-raised-button color="primary" mat-button (click)="onNoClick()">Close</button>
+            </div>
+    </form>
+</div>
+
+

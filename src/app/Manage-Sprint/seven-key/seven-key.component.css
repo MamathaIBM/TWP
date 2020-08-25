@@ -1,0 +1,108 @@
+
+.example-full-width{
+  width: 100%;
+  height:50%;
+  font-size:11px;
+}
+.fntsz{
+  font-size:11px;
+}
+.example-width{
+  width: 50%;
+  height:50%;
+  font-size:11px;
+}
+.fntsz{
+  font-size:11px;
+}
+.example-width-fld{
+  width: 100%;
+  height:70%;
+  font-size:11px;
+}
+
+.butcolor{
+  background-color: whitesmoke;
+}
+.headerrow {  
+    font-weight: bold;
+    background-color: #1d3649;
+    text-align: center;
+    color:white;
+    font-size: 11px;
+    width: 100%;
+}
+.example-container1 {
+    display: flex;
+    flex-direction: column;
+}
+   
+.example-container > * {
+    width: 100%;
+}
+
+textarea {
+    height: 30px;
+    font-size:11px;
+}
+.highlight  {
+  background-color:cornsilk !important;
+  font-weight: bold;
+}
+
+.columnName {
+  color:white;
+  font-weight: bold;
+  background-color: #1d3649;
+  text-align: center;
+  font-size:11px;
+}
+.matHeader {
+  font-weight: bold;
+  color:white; 
+  font-size:11px;   
+}
+
+.mat-form-field {
+  font-size: 11px;
+}
+
+.green{
+  background-color: green;
+}
+.red{
+  background-color: red;
+}
+.amber{
+  background-color: rgb(255, 230, 0); 
+}
+
+.form__error{
+  color:red;
+}
+
+input[readonly] {
+  background-color: lightGray;
+}
+
+button.btn-info {
+    background-color: #1d3649;
+    color: white;
+    font-size:11px;
+  }
+  .mat-elevation-z8 {
+    width: 1000px;
+    font-size:11px;
+  }
+  .mat-row {
+    min-height: 10px !important;
+    font-size:11px;
+  }
+  .mat-cell {    
+    font-size:11px;
+  }
+  .dropdown-toggle{
+    background-color: #1d3649;
+    color: white;
+    font-size:11px;
+  }

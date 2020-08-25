@@ -1,0 +1,49 @@
+
+  table {
+    width: 100%;
+    font-size: 11px;
+  }
+  
+  .mat-form-field {
+    font-size: 11px;  
+  }
+  .example-full-width {
+    width: 100%;
+    font-size: 11px;
+    margin-left: 20px;
+  }
+  .headerrow {  
+    font-size: 11px;
+    font-weight: bold;
+    background-color: #1d3649;
+    text-align: center;
+    color:white;
+    width: 100%;
+  }
+  .highlight  {
+    background-color:cornsilk !important;
+    font-weight: bold;
+  } 
+
+ .columnName {
+  font-size: 11px;
+    color:white;
+    font-weight: bold;
+    background-color: #1d3649;
+    text-align: center;
+  }
+
+  .matHeader {
+    font-size: 11px;
+    font-weight: bold;
+    color:white;    
+  }
+ .fntsize{
+  font-size: 11px;
+ }
+  
+  button.btn-info {
+    background-color: #1d3649;
+    color: white;
+    font-size: 11px;
+  }  

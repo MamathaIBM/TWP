@@ -1,0 +1,220 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> &nbsp;&nbsp;&nbsp;
+
+<link href="https://1.www.s81c.com/common/v18/css/grid-fluid.css" rel="stylesheet"> &nbsp;&nbsp;&nbsp;
+
+<div class="row" style="margin-left: -12px;">
+  
+
+    <div style="text-align:right;">
+
+        <button id="TSprintBckUpdate" class="btn btn-info" [disabled]="progress>0" [hidden] ="FlagHide === 'Yes' || dataLength === 0" (click)="onUpdate()">
+            <em class="fa fa-save "></em> Update
+        </button>
+        <button id="TSprintBckBaseline" class="btn btn-info"  [disabled]="progress>0" [hidden] ="FlagHide === 'Yes' || dataLength === 0" (click)="onBaseline()">
+                <em class="fa fa-save "></em> Baseline
+        </button>
+    </div>
+    <br>
+
+    <mat-progress-bar mode="indeterminate" *ngIf="progress"></mat-progress-bar>
+
+    <div style="font-size: 11px;" *ngIf="progress">
+         Please wait while data loads
+    </div><br>
+    
+    <div class="example-container columnfsize" style="font-size: 11px;"  *ngIf="this.dataLength === 0">
+      Please Tailor the Sprint Backlog under Master -> Account Level Tailoring --> Tailor WBS -> Tailor (Sprint Backlog activities) from the drop-down
+    </div>
+    <!-- {{this.dataLength}} {{progress}} -->
+
+    <div class="example-container" *ngIf ="this.dataLength !== 0"> 
+   <table class="mat-elevation-z8" id="TSprintBckDTable" mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="STANDARD_ACTIVITY_NAME" sticky>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                <div class="matHeader"  class="staticText1">Standard Activity Name</div>
+            </th>
+            <td mat-cell *matCellDef="let element">{{element.STANDARD_ACTIVITY_NAME}}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="MILESTONE_OR_TASK" sticky> 
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                <div class="matHeader"  class="staticText1">Milestone OR Task</div>
+            </th>
+            <td mat-cell *matCellDef="let element">{{element.MILESTONE_OR_TASK}}
+            </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="P_Start_Date">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                <div class="matHeader">Plan Start Date  (mm/dd/yyyy)</div>
+            </th>
+            <td mat-cell *matCellDef="let element; let i = index;">
+                <mat-form-field class="example-full-width">
+                    <input class="fntSize"id="{{'TSprintBckPlStart'+i}}" matInput [min]="TransStartDt" [max]="TransEndDt"
+                     [matDatepicker]="planStartDt"  
+                    [disabled]="element.Baselined===1 || FlagHide === 'Yes'"  
+                    (dateChange)="updateDate($event,element,'Plan_Start_Date')"
+                    [value]="element.Plan_Start_Date">
+                    <mat-datepicker-toggle matSuffix [for]="planStartDt"></mat-datepicker-toggle>
+                    <mat-datepicker #planStartDt></mat-datepicker>
+                </mat-form-field>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="P_End_Date">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                <div class="matHeader">Plan End Date  (mm/dd/yyyy)</div>
+            </th>
+            <td mat-cell *matCellDef="let element; let i = index;">
+                <mat-form-field class="example-full-width">
+                    <input class="fntSize"id="{{'TSprintBckPlEnd'+i}}" matInput [min]="TransStartDt" [max]="TransEndDt" [matDatepicker]="PlanEndDt" [disabled]="element.Baselined===1 || FlagHide === 'Yes'" 
+                                     (dateChange)="updateDate($event,element,'Plan_End_Date')" 
+                                     [value]="element.Plan_End_Date">
+                    <mat-datepicker-toggle matSuffix [for]="PlanEndDt"></mat-datepicker-toggle>
+                    <mat-datepicker #PlanEndDt></mat-datepicker>
+                </mat-form-field>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="RP_Start_Date">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                <div class="matHeader">Replan Start Date  (mm/dd/yyyy)</div>
+            </th>
+            <td mat-cell *matCellDef="let element; let i = index;">
+                <mat-form-field class="example-full-width">
+                    <input class="fntSize"id="{{'TSprintBckRPStart'+i}}" matInput [min]="TransStartDt" [max]="TransEndDt" [matDatepicker]="RplanStartDt" 
+                           [disabled]="element.Baselined===0 || FlagHide === 'Yes' || element.Actual_Start_Date !== null "                             
+                           (dateChange)="updateDate($event,element,'Replan_Start_Date')" 
+                           [value]="element.Replan_Start_Date">
+                    <mat-datepicker-toggle matSuffix [for]="RplanStartDt"></mat-datepicker-toggle>
+                    <mat-datepicker #RplanStartDt></mat-datepicker>
+                </mat-form-field>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="RP_End_Date">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                <div class="matHeader">Replan End Date  (mm/dd/yyyy)</div>
+            </th>
+            <td mat-cell *matCellDef="let element; let i = index;">
+                <mat-form-field class="example-full-width">
+                    <input class="fntSize"id="{{'TSprintBckRPEnd'+i}}" matInput [min]="TransStartDt" [max]="TransEndDt" 
+                    [matDatepicker]="RPlanEndDt" [disabled]="element.Baselined===0 || FlagHide === 'Yes' || element.Actual_End_Date !== null  " 
+                     (dateChange)="updateDate($event,element,'RePlan_End_Date')"                       
+                     [value]="element.RePlan_End_Date">
+                    <mat-datepicker-toggle matSuffix [for]="RPlanEndDt"></mat-datepicker-toggle>
+                    <mat-datepicker #RPlanEndDt></mat-datepicker>
+                </mat-form-field>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="A_Start_Date">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                <div class="matHeader">Actual Start Date  (mm/dd/yyyy)</div>
+            </th>
+            <td mat-cell *matCellDef="let element; let i = index;">
+                <mat-form-field class="example-full-width">
+                    <input class="fntSize"id="{{'TSprintBckAStart'+i}}" matInput [min]="TransStartDt" [max]="TransEndDt" 
+                    [matDatepicker]="AStartDt"  [disabled]="element.Baselined===0 || FlagHide === 'Yes'" 
+                           (dateChange)="updateDate($event,element,'Actual_Start_Date')"                            
+                           [value]="element.Actual_Start_Date">
+                    <mat-datepicker-toggle matSuffix [for]="AStartDt"></mat-datepicker-toggle>
+                    <mat-datepicker #AStartDt></mat-datepicker>
+                </mat-form-field>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="A_End_Date">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                <div class="matHeader">Actual End Date  (mm/dd/yyyy)</div>
+            </th>
+            <td mat-cell *matCellDef="let element; let i = index;">
+                <mat-form-field class="example-full-width">
+                    <input class="fntSize"id="{{'TSprintBckAEnd'+i}}" matInput [min]="TransStartDt" [max]="TransEndDt"
+                     [matDatepicker]="AEndDt" [disabled]="element.Baselined===0 || FlagHide === 'Yes'"   
+                    (dateChange)="updateDate($event,element,'Actual_End_Date')"                    
+                    [value]="element.Actual_End_Date">                            
+                    <mat-datepicker-toggle matSuffix [for]="AEndDt"></mat-datepicker-toggle>
+                    <mat-datepicker #AEndDt></mat-datepicker>
+                </mat-form-field>
+            </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="Status">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    <div class="matHeader">Status</div>
+                </th>
+                <td mat-cell *matCellDef="let element; let i = index;">
+                    
+                        <mat-select class="fntSize" id="{{'TSprintBckStatus'+i}}" [(value)]="element.ServiceStatus" [disabled]="FlagHide === 'Yes'">
+                            <mat-option class="fntSize" [value]="StatusKeywords[0].Categoryvalues" (onSelectionChange)="change($event,element)"> {{StatusKeywords[0].Categoryvalues}} </mat-option>
+                            <mat-option class="fntSize" [value]="StatusKeywords[1].Categoryvalues" (onSelectionChange)="change($event,element)"> {{StatusKeywords[1].Categoryvalues}} </mat-option>
+                            <mat-option class="fntSize" [value]="StatusKeywords[2].Categoryvalues" (onSelectionChange)="change($event,element)" [disabled]="element.statusFlag === 1" > {{StatusKeywords[2].Categoryvalues}} </mat-option>
+                            <mat-option class="fntSize" [value]="StatusKeywords[3].Categoryvalues" (onSelectionChange)="change($event,element)"> {{StatusKeywords[3].Categoryvalues}} </mat-option>
+                                
+                            
+                        </mat-select>
+                    
+                </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="Owner_Name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    <div class="matHeader">Owner Name</div>
+                </th>
+                <td mat-cell *matCellDef="let element;let i = index;" >    
+                        <mat-form-field style="width:80%">
+                                <input class="fntSize"id="{{'TSprintBckOwnName'+i}}" #oName name="oName"  [readonly]="FlagHide === 'Yes'" matInput (keypress)="updateOwner($event,i)"  
+                                                     [value]="element.Owner_Name" 
+                                                     [matAutocomplete]="auto">
+                                <mat-autocomplete #auto="matAutocomplete">
+                                    <ng-container>
+                                            <mat-option  *ngIf="matchID !== i">
+                                            </mat-option>
+                                    </ng-container>
+                                    <ng-container *ngFor="let option of myJSON">
+                                            <mat-option  *ngIf="matchID === i" [disabled]="FlagHide === 'Yes'"
+                                            (onSelectionChange)="ownerlist(option.name,element,i)"
+                                            [value]= "option.Emp_Name">
+                                                    <img class="ibm-downsize ibm-circle" *ngIf="matchID === i"  src= {{option.photo}} 
+                                                    alt="IBM face" style="width:30px;height:30px;background-size: contain;">                                              
+                                                {{matchID === i ? option.name :''}}
+                                        </mat-option>
+                                        </ng-container>
+                                </mat-autocomplete>
+                              </mat-form-field>
+                              <button id="{{'TSprintBckNameSearch'+i}}" class="btn btn-info" type="button" [hidden] ="FlagHide === 'Yes'" (click)="getEmployeeName(element,i)">
+                              <em class="fa fa-search"></em></button> 
+                </td>
+        </ng-container>
+
+    
+        <ng-container matColumnDef="Comments">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    <div class="matHeader">Comments</div>
+                </th>
+                <td mat-cell *matCellDef="let element; let i = index;">
+                        <mat-form-field class="example-full-widthFormField">
+                                <textarea class="fntSize" id="{{'TSprintBckComments'+i}}" matInput placeholder="" 
+                                [readonly]="FlagHide === 'Yes'"
+                                (keyup)="CommentsonKey($event,element)"                                
+                                [value] = "element.Comments" >                                    
+                                </textarea>
+                            </mat-form-field>
+                </td>        
+    </ng-container>
+
+
+        <tr mat-header-row class="columnName" *matHeaderRowDef="displayedColumns;sticky:true">            
+        </tr>        
+        <tr mat-row  [ngClass]="{'result-row-red': row.ServiceStatus == 'Not Started' && row.colorFlag === '1',
+                              'result-row-BS': row.ServiceStatus == 'Behind Schedule',
+                              'result-row-OT': row.ServiceStatus == 'On Schedule' ,
+                              'result-row-C': row.ServiceStatus == 'Completed' }"          
+                             *matRowDef="let row; let element; columns:displayedColumns;" >
+        </tr>
+    </table> 
+    </div>
+</div>

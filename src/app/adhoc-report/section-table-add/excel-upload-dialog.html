@@ -1,0 +1,11 @@
+<mat-dialog-content [formGroup]="form">
+    <div class="headerrow" style="margin-right: 20px;margin-left: 10px;" >
+        <p>Upload your excel data </p>  {{data.reportName}}
+    </div>
+    <div mat-dialog-content>    
+         <input type='file' id="file_id" style="font-size: 11px;" (change)="fileChanged($event)">
+         <button mat-icon-button type="button" id="upload_id" mat-raised-button color="primary" class="form_main_button" (click)="upload()" style="font-size: 11px;">Upload</button>
+         <button mat-button (click)="close()"> Close/Cancel </button>          
+    </div>
+</mat-dialog-content>
+

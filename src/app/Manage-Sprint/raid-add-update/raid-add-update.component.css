@@ -1,0 +1,67 @@
+
+      table {
+        width: 105%;  
+      }
+  
+          button {
+              background-color: #1d3649;
+              color: white;
+              font-size: 11px;
+            }
+  
+            .fntszacc{
+              font-size:11px;
+              word-wrap: break-word;
+              width:87%
+            }
+  
+            .fntsz{
+              font-size:11px;
+              word-wrap: break-word;
+            }
+  
+            .fntszDt{
+              font-size:11px;
+              width:75%
+            }
+  
+            .mat-error{
+             font-size: 11px;
+            }
+  
+            .form__error{
+              color:red;
+            }
+  
+            .headerrow {  
+              font-weight: bold;
+              background-color: #1d3649;
+              text-align: center;
+              color:white;
+              font-size:11px;
+              width: 93%;
+            }
+  
+            input[readonly] {
+              background-color: lightGray;
+              font-size:11px;
+            }
+ 
+          ::ng-deep .mat-radio-label-content{
+            font-size: 11px
+          }
+          ::ng-deep .mat-radio-outer-circle{
+            height: 12px !important;
+            width: 12px !important;
+            font-size: 11px
+        }
+        ::ng-deep .mat-radio-inner-circle{
+            height: 12px !important;
+            width: 12px !important;
+            font-size: 11px
+        }
+
+        ::ng-deep .mat-radio-container{
+          height: 12px !important;
+          width: 12px !important;
+        }

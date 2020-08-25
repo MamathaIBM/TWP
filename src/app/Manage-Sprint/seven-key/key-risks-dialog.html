@@ -1,0 +1,122 @@
+  
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+            .columnName {
+                color:white;
+                font-weight: bold;
+                background-color: #1d3649;
+                text-align: center;
+                font-size:11px;
+
+            }
+     .mat-elevation-z8 {
+    width: 900px;
+    font-size:11px;
+  }
+  .mat-row {
+    min-height: 10px !important;
+    font-size:11px;
+  }
+  .mat-cell {    
+    font-size:11px;
+  }
+  button.btn-info {
+    background-color: #1d3649;
+    color: white;
+    font-size: 11px;
+  } 
+  .matHeader {
+  font-weight: bold;
+  color:white; 
+  font-size:11px;   
+}
+table {
+    width: 85%;
+  }
+
+  .customWidthClass{
+    flex: 0 0 210px;
+ }
+
+ .customWidthlessClass{
+  flex: 0 0 100px;
+} 
+
+    </style>
+</head>
+<body>
+<h4 mat-dialog-title>Key Risks Dialog</h4>
+<div class="example-button-row">                    
+    <button id="saveRisk" class="btn btn-info" color="primary" type="submit" [disabled]="!updateFlag" (click) ="saveRisk()" [hidden]="FlagHide === 'Yes'">Save </button>   
+</div>
+<div mat-dialog-content>
+  <table id="KeyRiskDTable" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+        
+    <ng-container matColumnDef="RaidID">
+        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthlessClass'" style="display:flex !important;">
+            <th class="matHeader">Raid ID</th>
+        </mat-header-cell>    
+        <mat-cell *matCellDef="let element" [ngClass]="'customWidthlessClass'" style="display:flex !important;">
+            <mat-checkbox [checked]= "element.IntegrationID" (change) = "onChange(element.RaidID,$event)" [disabled]="FlagHide === 'Yes'"></mat-checkbox><span>&nbsp;</span>{{element.RaidID}}
+        </mat-cell>
+    </ng-container> 
+
+    <ng-container matColumnDef="Description">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+        <th class="matHeader">Description</th>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.Description}}</mat-cell>
+    </ng-container> 
+
+    <ng-container matColumnDef="Risk Type">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th class="matHeader">Risk Type</th>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.RiskType}}</mat-cell>
+        </ng-container> 
+                
+    <ng-container matColumnDef="Status">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+        <th class="matHeader">Status</th>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.Status}}</mat-cell>
+    </ng-container> 
+
+    <ng-container matColumnDef="Owner">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+        <th class="matHeader">Owner</th>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.Owner}}</mat-cell>
+    </ng-container> 
+    
+    <ng-container matColumnDef="TargetDate">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+        <th class="matHeader">TargetDate</th>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.TargetDate | date : 'MM/dd/yyyy'}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="RaisedDate">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+      <th class="matHeader">RaisedDate</th>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.DateRaised | date : 'MM/dd/yyyy'}}</mat-cell>
+  </ng-container> 
+  
+  <ng-container matColumnDef="Priority">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+      <th class="matHeader">Priority</th>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.Priority}}</mat-cell>
+  </ng-container>
+
+    <mat-header-row class="columnName" *matHeaderRowDef="displayedColumns"></mat-header-row>                
+    <mat-row class="result-row" *matRowDef="let row; let element; columns:displayedColumns;">            
+    </mat-row>
+  </table> 
+</div>
+</body>
+</html>
+

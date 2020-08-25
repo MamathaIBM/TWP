@@ -1,0 +1,256 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://1.www.s81c.com/common/v18/css/grid-fluid.css" rel="stylesheet">
+<br>
+<div class="row" style="margin-right: 20px;margin-left: 25px;">
+    <form #form="ngForm" [formGroup]="TransitionProfileForm" (ngSubmit)="onSubmit()" novalidate autocomplete="off">
+        <table style="table-layout: fixed;">
+            <tr style="text-align:right;">                    
+                <button class="btn btn-info" id="ProfileUpdate"
+                            [hidden] ="FlagHide === 'Yes' || Flag=== 'Save'">
+                            Update 
+                </button>    
+                <button class="btn btn-info" id="ProfileSave"
+                            [hidden] ="FlagHide === 'Yes' || Flag=== 'Update'">
+                            Save</button>   
+            </tr>
+        </table>
+        <table style="table-layout: fixed;">
+                    <tr>                     
+                        <td style="width:60%">    
+                                <mat-form-field class="fntszacc">
+                                        <mat-label class="fntszacc">Account Name</mat-label>
+                                    <input class="fntszacc" id="ProfileAccountName" matInput formControlName="ClientName" >
+                             </mat-form-field>
+                             <mat-label class="form__error" *ngIf="!formErrors.ClientName"> * </mat-label>
+                             <mat-label *ngIf="formErrors.ClientName" class="form__error">{{ formErrors.ClientName }}
+                             </mat-label> 
+                        </td>
+                        <td style="width:60%">
+                                    <mat-form-field class="fntszacc">
+                                    <mat-label class="fntszacc">Client Name</mat-label>
+                                    <input class="fntszacc" id="ProfileClientName" matInput formControlName="TransitionName">                       
+                                    </mat-form-field>
+                                    <mat-label class="form__error" *ngIf="!formErrors.TransitionName"> * </mat-label>
+                                    <mat-label *ngIf="formErrors.TransitionName" class="form__error">{{ formErrors.TransitionName }}
+                                    </mat-label> 
+                        </td>
+                        <!-- <td  style="width:5%"></td> -->
+                        
+                    </tr>
+        </table>
+        <table style="table-layout: fixed;">          
+            <tr>               
+                <td>
+                    <mat-form-field class="fntsz">
+                        <mat-label class="fntsz">Siebel No.</mat-label>
+                        <input class="fntsz" id="ProfileSiebelNo" matInput formControlName="SiebelOppNo">
+                    </mat-form-field>
+                    <mat-label class="form__error" *ngIf="!formErrors.SiebelOppNo"> * </mat-label>
+                    <mat-label *ngIf="formErrors.SiebelOppNo" class="form__error">{{ formErrors.SiebelOppNo }}
+                    </mat-label> 
+                </td>
+                <td>
+                    <mat-form-field class="fntsz">
+                        <mat-label class="fntsz">Owning TTS Organization</mat-label>
+                        <mat-select class="fntsz" (selectionChange)="OrgValidation()" id="ProfileOwningTTS" formControlName="Geo">
+                            <mat-option class="fntsz"></mat-option>
+                                <mat-option class="fntsz" *ngFor="let SolOwnTTS of SolOwnTTS" [value]=SolOwnTTS>
+                                        {{SolOwnTTS}}
+                            </mat-option>
+                        </mat-select>
+                        </mat-form-field>
+                        <mat-label class="form__error" *ngIf="!formErrors.Geo"> * </mat-label>
+                        <mat-label *ngIf="formErrors.Geo" class="form__error">{{ formErrors.Geo }}
+                    </mat-label>
+                </td>
+                <td>
+                    <mat-form-field class="fntsz">
+                        <mat-label class="fntsz">Sector</mat-label>
+                        <mat-select class="fntsz" id="ProfileSector" formControlName="Sector" (selectionChange)="onKeyIndustry()">
+                            <mat-option class="fntsz" (click)="deselectInd()"></mat-option>
+                            <mat-option class="fntsz" (click)="deselectInd()" *ngFor="let SolSector of SolSector" [value]=SolSector.Categoryvalues>
+                                            {{SolSector.Categoryvalues}}
+                            </mat-option>
+                        </mat-select>
+                        </mat-form-field>
+                        <mat-label class="form__error" *ngIf="!formErrors.Sector"> * </mat-label>
+                        <mat-label *ngIf="formErrors.Sector" class="form__error">{{ formErrors.Sector }}
+                    </mat-label> 
+                </td>
+                <td>
+                    <mat-form-field class="fntsz">
+                        <mat-label class="fntsz">Industry</mat-label>
+                        <mat-select class="fntsz" id="ProfileIndustry" matTooltipClass="tooltip-color" matTooltip="Options for Industry will appear only after selection of Sector" formControlName="Industry">
+                            <mat-option class="fntsz"></mat-option>
+                            <mat-option class="fntsz" *ngFor="let Industry of Industry" [value]=Industry.Categoryvalues>
+                                     {{Industry.Categoryvalues}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-label class="form__error" *ngIf="!formErrors.Industry"> * </mat-label>
+                    <mat-label *ngIf="formErrors.Industry" class="form__error">{{ formErrors.Industry }}
+                    </mat-label>    
+                </td>
+            </tr>
+            <tr>                
+                <td>    
+                    <mat-form-field class="fntszDt">
+                        <mat-label class="fntszDt">Transition Start Date</mat-label>
+                        <input class="fntszDt" id="ProfileStartDate" matInput [matDatepicker]="TransStartDt" formControlName="TransStartDt">
+                        <mat-datepicker-toggle matSuffix [for]="TransStartDt"></mat-datepicker-toggle>
+                        <mat-datepicker #TransStartDt></mat-datepicker>   
+                    </mat-form-field>
+                    <mat-label class="form__error" *ngIf="!formErrors.TransStartDt"> * </mat-label>
+                    <mat-label *ngIf="formErrors.TransStartDt" class="form__error">{{ formErrors.TransStartDt }}
+                    </mat-label>    
+                </td>
+                <td>    
+                    <mat-form-field class="fntszDt">
+                        <mat-label class="fntszDt">Transition End Date</mat-label>
+                        <input class="fntszDt" id="ProfileEndDate" matInput [min]= "minDate" [matDatepicker]="TransEndDt" formControlName="TransEndDt">
+                        <mat-datepicker-toggle matSuffix [for]="TransEndDt"></mat-datepicker-toggle>
+                        <mat-datepicker #TransEndDt></mat-datepicker>
+                    </mat-form-field>
+                    <mat-label class="form__error" *ngIf="!formErrors.TransEndDt"> * </mat-label>
+                    <mat-label *ngIf="formErrors.TransEndDt" class="form__error">{{ formErrors.TransEndDt}}
+                    </mat-label>     
+                </td>
+                <td>
+                    <mat-form-field class="fntsz">
+                        <mat-label class="fntsz">Transition Status</mat-label>
+                        <mat-select class="fntsz" id="ProfileStatus" formControlName="TransitionStatus">
+                            <mat-option class="fntsz"></mat-option>
+                            <mat-option class="fntsz" *ngFor="let TransitionStatus of TransitionStatus" [value]=TransitionStatus.Categoryvalues>
+                                 {{TransitionStatus.Categoryvalues}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field class="fntsz">
+                        <mat-label class="fntsz">TCV (M $)</mat-label>
+                        <input class="fntsz" id="ProfileTCV" matInput formControlName="TCV" (keypress)="numberOnly($event)" (keyup)="UpdateTier($event)">
+                    </mat-form-field>
+                    <mat-label class="fntsz" class="form__error" *ngIf="!formErrors.TCV"> * </mat-label>
+                    <mat-label class="fntsz" *ngIf="formErrors.TCV" class="form__error">{{ formErrors.TCV }}
+                    </mat-label> 
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <mat-form-field class="fntsz">
+                        <mat-label class="fntsz">Service Line</mat-label>
+                        <mat-select class="fntsz" id="ProfileServiceLine" formControlName="ServiceLine">
+                            <mat-option class="fntsz"></mat-option>
+                            <mat-option class="fntsz" *ngFor="let ServiceLine of ServiceLine" [value]=ServiceLine.Categoryvalues>
+                                         {{ServiceLine.Categoryvalues}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </td>
+                        
+                <td>            
+                    <mat-form-field class="fntsz">
+                        <mat-label class="fntsz">IOT</mat-label>
+                        <mat-select class="fntsz" id="ProfileIOT" formControlName="IOT" (selectionChange)="onKeyIOT()">
+                            <mat-option class="fntsz"></mat-option>
+                            <mat-option class="fntsz" *ngFor="let IOT of IOT" [value]=IOT.Categoryvalues>
+                                 {{IOT.Categoryvalues}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field class="fntsz">
+                        <mat-label class="fntsz">Contract Owning Country</mat-label>
+                        <mat-select class="fntsz" id="ProfileContractOwning" matTooltipClass="tooltip-color" matTooltip="Options for Contract Owning Country will appear only after selection of IOT" formControlName="CountriesInvolved" multiple>
+                            <mat-option class="fntsz" *ngFor="let IOTCountry of IOTCountry" [value]=IOTCountry.Categoryvalues>
+                                 {{IOTCountry.Categoryvalues}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </td>
+                <td>    
+                    <mat-form-field class="fntsz">
+                        <mat-label class="fntsz">Incumbent Vendor</mat-label>
+                        <mat-select class="fntsz" id="ProfileVendor" matTooltipClass="tooltip-color" matTooltip="To select other options, please uncheck the 'None' if option selected." (selectionChange)="HideOtherV(value)" formControlName="IncumbentVendor" multiple> 
+                            <mat-option class="fntsz" #N value="None" (click)="deselect()">None</mat-option>
+                            <mat-option class="fntsz" [disabled]="N.selected" matTooltipClass="tooltip-color" matTooltip="To select other options, please uncheck the 'None' option." 
+                                        [matTooltipDisabled]="!N.selected" *ngFor="let IncumbentVendor of IncumbentVendor" 
+                                        [value]=IncumbentVendor.Categoryvalues>
+                                        {{IncumbentVendor.Categoryvalues}}     
+                            </mat-option> 
+                        </mat-select>
+                    </mat-form-field>
+                </td>    
+            </tr> 
+            <tr>               
+                <td>    
+                    <mat-form-field class="fntsz" [hidden]=boolan>
+                        <mat-label class="fntsz">If Other, Please specify the details</mat-label>
+                        <input class="fntsz" id="ProfileOtherVendor" matInput formControlName="OtherVendor">
+                    </mat-form-field>
+                </td>       
+            </tr> 
+            <tr>   
+                <td>
+                    <mat-form-field class="fntsz">
+                            <mat-label class="fntsz">Project ID</mat-label>
+                            <input class="fntsz" id="ProfileProjectID" matInput formControlName="ProjectID">
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field class="fntsz">
+                            <mat-label class="fntsz">CIC Locations (Should be Primary CIC and Supporting CIC)</mat-label>
+                            <mat-select class="fntsz" id="ProfileCIC" matTooltipClass="tooltip-color" matTooltip="To select other options, please uncheck the 'No CIC' if option selected." formControlName="CICLocations" multiple> 
+                                <mat-option class="fntsz" #NCIC value="No CIC" (click)="deselectCIC()">No CIC</mat-option>
+                                <mat-option class="fntsz" [disabled]="NCIC.selected" matTooltipClass="tooltip-color" matTooltip="To select other options, please uncheck the 'No CIC' option." 
+                                                    [matTooltipDisabled]="!NCIC.selected" *ngFor="let SolCICLocations of SolCICLocations" [value]=SolCICLocations.Categoryvalues>
+                                                        {{SolCICLocations.Categoryvalues}}
+                                </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </td>      
+                <td>
+                    <mat-form-field class="fntsz">
+                        <mat-label class="fntsz">Number of FTE</mat-label>
+                        <input class="fntsz" id="ProfileFTE" matInput formControlName="NumberofFTE" (keypress)="numberOnly($event)" (keyup)="UpdateFTE($event)">
+                    </mat-form-field>
+               </td>
+               <td>
+                    <mat-form-field class="fntsz">
+                        <mat-label class="fntsz">Number of Applications in Scope</mat-label>
+                        <input class="fntsz" id="ProfileNoofApp" matInput formControlName="NoAppinScope" (keypress)="numericvalueApp($event)">
+                    </mat-form-field>
+                </td> 
+               
+            </tr>  
+            <tr>
+                <td>        
+                    <mat-form-field class="fntsz">
+                            <mat-label class="fntsz">Integration ID</mat-label>
+                        <input class="fntsz" id="ProfileIntegrationID" matInput formControlName="IntegrationID" [readonly]="!editable">
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field class="fntsz">
+                            <mat-label class="fntsz">Transition Tier</mat-label>
+                        <input class="fntsz" id="ProfileTier" matInput formControlName="TransitionTier" [readonly]="!editable">
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field class="fntsz">
+                            <mat-label class="fntsz">Created By</mat-label>
+                        <input class="fntsz" id="ProfileCreatedBy" matInput formControlName="CreatedBy" [readonly]="!editable">
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field class="fntsz">
+                            <mat-label class="fntsz">Modified By</mat-label>
+                        <input class="fntsz" id="ProfileModifiedBy" matInput formControlName="ModifiedBy" [readonly]="!editable">
+                    </mat-form-field>
+                </td>
+            </tr>           
+        </table>
+    </form>
+</div>

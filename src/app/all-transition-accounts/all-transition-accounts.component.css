@@ -1,0 +1,158 @@
+table { 
+  width: 100%; 
+  table-layout: fixed;   
+  font-size:11px;
+  }
+
+button {
+  background-color: #1d3649;
+  color: white;
+  font-size:11px;
+}
+
+.mat-elevation-z8 {
+  width: 1000px;
+  font-size:11px;
+}
+
+.columnName {
+  color:white;
+  font-weight: bold;
+  background-color: #1d3649;
+  text-align: center;
+  font-size:11px;
+}
+
+.mat-form-field, .matInput {
+  font-size:11px;
+  width: 100%;
+}
+.txtar{
+  font-size:11px;
+}
+
+.result-row:hover {
+  transform: scale(1.02);
+  background-color:cornsilk !important;
+}
+.matHeader {
+  font-size:11px;
+  font-weight: bold;
+  color:white;   
+}
+
+.mat-header-cell {
+  font-size:11px;
+  color:white;
+}
+
+.mat-row {
+  min-height: 10px !important;
+  font-size:11px;
+}
+.mat-cell {    
+  font-size:11px;
+}
+
+.customWidthClass{
+  flex: 0 0 120px;
+}
+.customWidthClasswid{
+  flex: 0 0 165px;
+  word-wrap: break-word;
+}
+.mat-paginator .mat-paginator-container{
+  justify-content: flex-start;
+  font-size:11px;
+}
+
+.highlight  {
+  background-color:cornsilk !important;
+  font-weight: bold;
+} 
+
+::ng-deep .mat-sort-header-container:not(.mat-sort-header-sorted) .mat-sort-header-arrow {
+/* .mat-header-cell .mat-sort-header-container.mat-sort-header-sorted .mat-sort-header-arrow { */
+  opacity: 2 !important;
+  color:white; 
+  transform: translateY(0px) !important;
+}
+
+.mat-sort-header-arrow {
+  opacity: 2 !important;
+  color:white; 
+ }
+
+ ::ng-deep .mat-select-value {
+  font-size:11px;
+}
+
+::ng-deep .mat-select-trigger {
+  font-size:11px;
+}
+
+::ng-deep .mat-select-panel {
+  font-size:11px;
+}
+
+::ng-deep .mat-paginator-range-actions {
+font-size:11px;
+}
+
+::ng-deep .mat-paginator-container {
+font-size:11px;
+min-height: 10px !important;
+display: flex;
+}
+
+::ng-deep .mat-paginator-page-size-label {
+font-size:11px;
+}
+::ng-deep .mat-paginator-range-label {
+font-size:11px;
+} 
+
+::ng-deep .mat-icon-button {
+width:25px;
+height:25px;
+font-size:11px;
+align-items: center;
+margin: 0;
+padding: 0;
+justify-content: center;
+}
+::ng-deep .mat-paginator-navigation-first {
+font-size:11px;
+align-items: top; 
+display: flex;
+margin: 0; 
+padding: 0;
+justify-content: top;
+}
+
+::ng-deep .mat-paginator-navigation-last {
+font-size:11px;
+align-items: top; 
+display: flex;
+margin: 0; 
+padding: 0;
+justify-content: top;
+}
+
+::ng-deep .mat-paginator-navigation-next {
+font-size:11px;
+align-items: top; 
+display: flex;
+margin: 0; 
+padding: 0;
+justify-content: top;
+}
+
+::ng-deep .mat-paginator-navigation-previous {
+font-size:11px;
+align-items: top; 
+display: flex;
+margin: 0; 
+padding: 0;
+justify-content: top;
+}

@@ -1,0 +1,96 @@
+
+  <!DOCTYPE html>
+  <html>
+  <head>
+    <style>
+        .columnName {
+            color:white;
+            font-weight: bold;
+            background-color: #1d3649;
+            text-align: center;
+            font-size:11px;
+
+        }
+ .mat-elevation-z8 {
+width: 900px;
+font-size:11px;
+}
+.mat-row {
+min-height: 10px !important;
+font-size:11px;
+}
+.mat-cell {    
+font-size:11px;
+}
+button.btn-info {
+background-color: #1d3649;
+color: white;
+font-size: 11px;
+} 
+.matHeader {
+font-weight: bold;
+color:white; 
+font-size:11px;   
+}
+table {
+width: 50%;
+}
+
+.customWidthClass{
+flex: 0 0 210px;
+}
+
+.customWidthlessClass{
+flex: 0 0 100px;
+} 
+
+</style>
+    </head>
+    <body>
+    <h4 mat-dialog-title>Deliverables Dialog</h4>
+    <div mat-dialog-content>
+      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+            
+        <ng-container matColumnDef="DeliverableName">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                <th class="matHeader">Deliverable Name</th>
+            </mat-header-cell>    
+            <mat-cell *matCellDef="let element">
+                {{element.DeliverableName}}
+            </mat-cell>
+        </ng-container> 
+    
+        <ng-container matColumnDef="DeliverableValues">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th class="matHeader">Deliverable Description</th>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.DeliverableValues}}</mat-cell>
+        </ng-container>
+        
+        <ng-container matColumnDef="ContractDoc_OwnerNM">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th class="matHeader">Contract Owner Name</th>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.ContractDoc_OwnerNM}}</mat-cell>
+        </ng-container> 
+    
+        <ng-container matColumnDef="ContractDeliver_Status">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th class="matHeader">Status</th>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">{{(element.ContractDeliver_Status===null||element.ContractDeliver_Status==='null') ? '' : element.ContractDeliver_Status}}</mat-cell>
+        </ng-container> 
+        <ng-container matColumnDef="ContractDeliver_Comments">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th class="matHeader">Comments</th>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.ContractDeliver_Comments}}</mat-cell>
+        </ng-container> 
+                        
+        <mat-header-row class="columnName" *matHeaderRowDef="displayedColumns"></mat-header-row>                
+        <mat-row class="result-row" *matRowDef="let row; let element; columns:displayedColumns;">            
+        </mat-row>
+      </table> 
+    </div>
+    </body>
+    </html>

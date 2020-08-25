@@ -1,0 +1,139 @@
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+&nbsp;&nbsp;&nbsp;
+
+<form [formGroup]="appTraineeMapEditForm"  >
+
+<!--
+
+        <div class="headerrow" style="margin-left: -12px;font-size:11px;margin-right: 120px" >
+  
+            APP Vs TRAINEE MAP
+            <div *ngIf="userAccessProfileService.getViewFlag()=='No'" > 
+                <button mat-icon-button type="button" id="save_id" (click)="saveAppTraineeMap()">
+                        <mat-icon >save</mat-icon>
+                </button> 
+            </div>
+        </div>
+
+-->
+
+        <link href="https://1.www.s81c.com/common/v18/css/grid-fluid.css" rel="stylesheet">      
+        &nbsp;&nbsp;&nbsp;
+
+        <table class="container" style="width: 100%;">
+                <tr style="text-align: left;">
+                        <td class="headerrowheadpage" style="text-align: left;display: inline-flex;">APP Vs TRAINEE MAP</td>
+                        <td style="text-align: right;">            
+                                <div *ngIf="userAccessProfileService.getViewFlag()=='No'" > 
+                                        <button mat-icon-button type="button" id="save_id" (click)="saveAppTraineeMap()">
+                                                <mat-icon >save</mat-icon>
+                                        </button> 
+                                        <button mat-icon-button type="button" id="back_id" (click)="back()">
+                                                        <mat-icon >arrow_back</mat-icon>
+                                        </button> 
+                                </div>
+                                <div *ngIf="userAccessProfileService.getViewFlag()!='No'" > 
+                                        <button mat-icon-button type="button" id="back_id" (click)="back()">
+                                                        <mat-icon >arrow_back</mat-icon>
+                                        </button> 
+                                </div>
+                        </td>
+                </tr>
+        </table>   
+        <br>    
+
+        <div *ngIf="dataLoaded | async; let dataLoaded; else loading"> 
+                <ng-container formArrayName="maps" >
+                        <table mat-table  [dataSource]="dataSource"   matSort  >
+
+                        <!--- Note that these columns can be defined in any order.
+                                The actual rendered columns are set as a property on the row definition" -->
+                        
+                                
+                        <ng-container *ngFor="let disCol of displayedColumns; let colIndex = index" matColumnDef="{{disCol}}">
+
+                                        <mat-header-cell *matHeaderCellDef class="headerrow"  matTooltip="{{traineeKeyValue[disCol].traineeName}}">                    
+                                        
+                                                        <th class="headerrow_table">
+                                                                <div style="font-size:11px;"  *ngIf="(traineeKeyValue[disCol]).traineeName.length > 20">      
+                                                                                {{traineeKeyValue[disCol].traineeName.substring(0,16)}}... 
+                                                                                <div   *ngIf="colIndex !=0 && colIndex!=displayedColumns.length-1">       
+                                                                                </div>        
+                                                                </div>
+                                                                <div style="font-size:11px;" *ngIf="(traineeKeyValue[disCol]).traineeName.length <= 20">      
+                                                                                {{traineeKeyValue[disCol].traineeName}}
+                                                                </div>   
+                                                        </th>
+                                        </mat-header-cell>   
+                                        
+                                        
+                                        <mat-cell  *matCellDef="let element; let rowIndex = index" [formGroupName]="rowIndex*(displayedColumns.length) + colIndex"> 
+
+
+                                        <div *ngIf="(rowIndex!==(dataLength-1))">            
+                                                                        
+                                                <div style="font-size:11px;" matTooltip="{{element[disCol]}}" [matTooltipClass]="'wpd-tool-tip'" *ngIf="(traineeKeyValue[disCol]).traineeName==='APPLICATION'">      
+                                                                <div style="font-size:11px;"  *ngIf="element[disCol].length > 20">      
+                                                                                {{element[disCol].substring(0,16)}}...    
+                                                                </div>
+                                                                <div style="font-size:11px;" *ngIf="element[disCol].length <= 20">      
+                                                                                {{element[disCol]}}
+                                                                </div>  
+                                                        
+                                                </div>
+
+                                                <div style="font-size:11px;" matTooltip="{{element[disCol]}}" [matTooltipClass]="'wpd-tool-tip'" *ngIf="(traineeKeyValue[disCol]).traineeName==='TOTAL TRAINEE FTE'">                                                              
+                                                                                <mat-form-field class="fntsz">                                                                                                                      
+                                                                                                <input matInput class="fntsz" placeholder="Total trainee fte" id="text{{rowIndex}}" formControlName="answer"   [value]="element[disCol]" >    
+                                                                                </mat-form-field>                                     
+                                                </div>
+
+                                                <div style="font-size:11px;" *ngIf="(traineeKeyValue[disCol]).traineeName!=='APPLICATION'  && (traineeKeyValue[disCol]).traineeName!=='TOTAL TRAINEE FTE'  ">                                     
+                                                                <div *ngIf="(element[disCol]!==undefined)">    
+                                                                        <mat-form-field class="fntsz">                                                                                                                      
+                                                                                <input matInput class="fntsz" placeholder="FTE" id="text{{rowIndex}}" formControlName="answer" [disabled]="userAccessProfileService.getViewFlag()=='Yes'" (change)="onChange(rowIndex*(displayedColumns.length) + colIndex, rowIndex, colIndex,element[disCol]==undefined?'':element[disCol].fte)" [value]="element[disCol]==undefined?'':element[disCol].fte">    
+                                                                        </mat-form-field>  
+                                                                        <div *ngIf="userAccessProfileService.getViewFlag()=='No'" > 
+                                                                                <button mat-icon-button type="button" id="save_id" (click)="deleteAppTraineeMap(rowIndex*(displayedColumns.length) + colIndex,undefined?'':element[disCol].fte )">
+                                                                                        <em class="fa fa-trash"></em>
+                                                                                </button> 
+                                                                        </div>
+                                                                                        
+                                                        </div>                                  
+                                                        <div style="font-size:11px;" *ngIf="(element[disCol]==undefined)">                                                                                                 
+                                                                        <mat-form-field class="fntsz">                                                                                                                      
+                                                                                        <input class="fntsz" matInput placeholder="FTE" id="text{{rowIndex}}" formControlName="answer" [disabled]="userAccessProfileService.getViewFlag()=='Yes'" (change)="onChange(rowIndex*(displayedColumns.length) + colIndex, rowIndex, colIndex)"  [value]="element[disCol]==undefined?'':element[disCol].fte" >    
+                                                                        </mat-form-field>    
+                                                        </div>   
+                                                </div>
+
+                                        </div>     
+                                        <div *ngIf="(rowIndex===(dataLength-1))">   
+                                                        
+                                                        <div style="font-size:11px;"  *ngIf="(traineeKeyValue[disCol]).traineeName==='APPLICATION'">      
+                                                                        TOTAL APP FTE    
+                                                        </div>
+                                                        <div  style="font-size:11px;" *ngIf="(traineeKeyValue[disCol]).traineeName!=='APPLICATION'  && (traineeKeyValue[disCol]).traineeName!=='TOTAL TRAINEE FTE' ">                                                                                                      
+                                                                        <mat-form-field class="fntsz">                                                                                                                      
+                                                                                        <input class="fntsz" matInput placeholder="Total app fte" id="text{{rowIndex}}" formControlName="answer"  [disabled]="true"   [value]="element[disCol]==undefined?'':element[disCol].fte" >    
+                                                                        </mat-form-field>  
+                                                        </div>   
+                                        </div>        
+                                        </mat-cell>
+                                
+                        </ng-container>
+
+                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                        
+
+                        </table>  
+                </ng-container>
+        </div>
+        <ng-template #loading>
+                LOADING...
+                <mat-spinner></mat-spinner>  
+        </ng-template>
+</form>

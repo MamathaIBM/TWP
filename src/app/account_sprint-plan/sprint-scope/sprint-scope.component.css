@@ -1,0 +1,154 @@
+  table {
+    width: 100%;
+  }
+  td{
+    font-size: 11px;
+    text-align: center;
+  }
+  .Cellsize,.mat-cell{
+    font-size: 11px;
+  }
+
+  .CellsizeLen{
+    font-size: 11px;
+    width: 100%;
+  }
+
+  .headerrow {  
+    font-weight: bold;
+    background-color: #1d3649;
+    text-align: center;
+    color:white;
+    width: 100%;
+    font-size: 11px;
+  }
+  .highlight  {
+    font-size: 11px;
+    background-color:cornsilk !important;
+    font-weight: bold;
+  } 
+
+ .columnName {
+    color:white;
+    font-weight: bold;
+    background-color: #1d3649;
+    text-align: center;
+    font-size: 11px;
+  }
+
+ 
+
+  .row{
+    width: 100%;
+  }
+
+  .matHeader {
+    font-weight: bold;
+    color:white; 
+    font-size: 11px;   
+  }
+ 
+  /* th.mat-sort-header {
+    color:white;
+  } */
+
+  .mat-form-field {
+    font-size: 11px;
+  } 
+  button.btn-info {
+    font-size: 11px;
+    background-color: #1d3649;
+    color: white;
+  }  
+
+  ::ng-deep .mat-paginator-navigation-first {
+    font-size:11px;
+    align-items: top; 
+    display: flex;
+    margin: 0; 
+    padding: 0;
+    justify-content: top;
+    }
+    
+    ::ng-deep .mat-paginator-navigation-last {
+    font-size:11px;
+    align-items: top; 
+    display: flex;
+    margin: 0; 
+    padding: 0;
+    justify-content: top;
+    }
+    
+    ::ng-deep .mat-paginator-navigation-next {
+    font-size:11px;
+    align-items: top; 
+    display: flex;
+    margin: 0; 
+    padding: 0;
+    justify-content: top;
+    }
+    
+    ::ng-deep .mat-paginator-navigation-previous {
+    font-size:11px;
+    align-items: top; 
+    display: flex;
+    margin: 0; 
+    padding: 0;
+    justify-content: top;
+    }
+    :host ::ng-deep .mat-sort-header-container {
+      display: flex;
+      justify-content: center;
+    }
+    
+    ::ng-deep .mat-sort-header-container:not(.mat-sort-header-sorted) .mat-sort-header-arrow { 
+      opacity: 0.54 !important;
+        color: white;
+        transform: translateY(0px) !important;
+    }    
+
+    ::ng-deep .mat-select-value {
+    width: 100%;
+    font-size:11px;
+  }
+
+  ::ng-deep .mat-select-trigger {
+    width: 100%;
+    font-size:11px;
+  }
+
+  ::ng-deep .mat-select-panel {
+    width: 100%;
+    font-size:11px;
+  }
+
+  .example-radio-group {
+    display: flex;
+    flex-direction: row;
+    margin: 15px 0;
+    font-size: 11px;
+  }
+  
+  .example-radio-button {
+    margin: 5px;
+    font-size: 11px;
+  }
+
+  ::ng-deep .mat-radio-label-content{
+    font-size: 11px
+  }
+  ::ng-deep .mat-radio-outer-circle{
+    height: 12px !important;
+    width: 12px !important;
+    font-size: 11px
+}
+::ng-deep .mat-radio-inner-circle{
+    height: 12px !important;
+    width: 12px !important;
+    font-size: 11px
+}
+
+::ng-deep .mat-radio-container{
+  height: 12px !important;
+  width: 12px !important;
+}

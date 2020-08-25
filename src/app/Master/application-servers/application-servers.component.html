@@ -1,0 +1,127 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://1.www.s81c.com/common/v18/css/grid-fluid.css" rel="stylesheet">      
+<div class="row" *ngIf="FlagHide=== 'No'" style="margin-left: -12px;">
+    <form #form="ngForm"  [formGroup]="applServersUpdateeForm" (ngSubmit)="onSubmit()" autocomplete="off">  
+        <mat-form-field class="fntsz">
+            <mat-label class="fntsz">Application Name</mat-label>
+            <mat-select class="fntsz" id="AppSerName" formControlName="AppName">
+                <mat-option class="fntsz"></mat-option>
+                <mat-option class="fntsz" *ngFor="let appName of ApplnNameDatasource" [value]=appName.AppName>
+                    {{appName.AppName}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field> 
+        &nbsp;&nbsp;
+
+        <mat-form-field class="fntsz">
+            <mat-label class="fntsz">Environment</mat-label>
+            <mat-select class="fntsz" id="AppSerEnv" formControlName="Environment">
+                <mat-option class="fntsz"></mat-option>
+                <mat-option class="fntsz" *ngFor="let env of EnvironmentDatasource" [value]=env.Categoryvalues>
+                    {{env.Categoryvalues}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field> 
+        &nbsp;&nbsp;
+        
+        <mat-form-field class="fntsz">
+            <mat-label class="fntsz">Server Type</mat-label>
+            <mat-select class="fntsz" id="AppSerType" formControlName="serverType">
+                <mat-option class="fntsz"></mat-option>
+                <mat-option class="fntsz" *ngFor="let ST of serverTypeDatasource" [value]=ST.Categoryvalues>
+                    {{ST.Categoryvalues}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field> 
+        &nbsp;&nbsp;    
+
+        <mat-form-field class="fntsz">
+            <mat-label class="fntsz">IP or Host Name</mat-label>
+            <input class="fntsz" id ="AppSerServername" matInput formControlName = "serverName"  >
+            </mat-form-field> 
+        &nbsp;&nbsp;
+
+        <mat-form-field class="fntsz">
+                <mat-label class="fntsz">Remarks</mat-label>
+            <input class="fntsz" id ="AppSerRemarks" matInput placeholder="Remarks" formControlName = "AppServer_Remarks"  >
+            </mat-form-field> 
+
+        <div class="example-button-row">
+            <button id="AppSerAdd" class="btn btn-info" type="submit" [disabled]="!applServersUpdateeForm.valid || editFlag === 1  " (click) ="Add()">ADD </button>   
+            &nbsp;&nbsp;
+            <button id="AppSerUpdate" class="btn btn-info" type="submit" [disabled]="!applServersUpdateeForm.valid || editFlag === 0 " (click)= "Update()">Update </button>                              
+            &nbsp;&nbsp;           
+        </div>
+    </form>
+</div>
+<br>
+<div class="row" style="margin-left: -12px;font-size:11px">   
+        <tr>
+           <th style="font-size:11px" id="header">Available Applications :  <span>{{dataLength}}</span> </th>                  
+        </tr>  
+        <mat-form-field class="fntsz">
+                <mat-label class="fntsz"><em class="fa fa-search" aria-hidden="true"></em></mat-label><input class="fntsz" id="AppSersearch" matInput (keyup)="applyFilter($event.target.value)">
+        </mat-form-field>            
+        <table id="AppSerDataTable" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+                            <ng-container matColumnDef="AppName">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    <th class="matHeader">Application Name</th>
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let element"  >{{element.AppName}}                
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="Environment">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    <th class="matHeader">Environment</th>
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let element"  >{{element.Environment}}                
+                                </mat-cell>
+                            </ng-container>
+            
+                            <ng-container matColumnDef="serverType">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    <th class="matHeader">Server Type</th>
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let element"  >{{element.serverType}}                
+                                </mat-cell>
+                            </ng-container>
+                            
+                            <ng-container matColumnDef="serverName">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    <th class="matHeader">Server Name</th>
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let element"  >{{element.serverName}}                
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="remarks">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    <th class="matHeader">Remarks</th>
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let element"  >{{element.AppServer_Remarks}}                
+                                </mat-cell>
+                            </ng-container>
+                            
+                            <ng-container matColumnDef="Delete">
+                                <mat-header-cell *matHeaderCellDef>
+                                    <th class="matHeader"></th>
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let element;let i = index;"  >                                         
+                                        <button class="btn btn-info" id="{{'AppSerDelete'+i}}" [hidden]="FlagHide=== 'Yes'" (click)="onDelete(element)">
+                                            <em class="fa fa-trash"></em>
+                                        </button>
+
+                                        
+                                </mat-cell>
+                            </ng-container>
+
+                            
+                            <mat-header-row class="columnName" *matHeaderRowDef="displayedColumns"></mat-header-row>              
+                            <mat-row class="result-row" *matRowDef="let row; let element; columns:displayedColumns;" (click)="setClickedRow(row,element)" [ngClass]="{ highlight: row == selectedRow }">
+                            </mat-row> 
+                        </table> 
+                        <mat-paginator [pageSizeOptions]="[5, 1, 10, 20]" showFirstLastButtons (click)="setClickedRow(0,element)"></mat-paginator> 
+  
+</div>

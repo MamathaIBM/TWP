@@ -1,0 +1,75 @@
+
+
+
+
+<mat-tab-group (selectedTabChange)="tabClick($event)" [selectedIndex]="selectedTab">  
+
+        <mat-tab label="User Access & Security">
+            <button mat-button color="primary" (click)="showFunctionalityList()" matStepperNext >Functionality</button>
+            <button mat-button color="primary" (click)="showRoleList()" matStepperNext >Role</button>
+            <button mat-button color="primary" (click)="showUserLsit()" matStepperNext  >User</button>
+            
+        </mat-tab>
+
+        <mat-tab label="Standard Phase Activities"> 
+                <button mat-button  color="primary"  (click)="showServiceBackLogPhaseActivityList()"> Service Backlog </button>                                                                                                    
+            	<ng-template matTabContent>                           
+                            <mat-tab-group (selectedTabChange)="activityTabClick($event)" [selectedIndex]="selectedTab" >            
+                                            <mat-tab label="Service Backlog" >                                                    
+                                               <button mat-button  color="primary"  (click)="showServiceBackLogPhaseActivityList()"> Service Backlog </button>                                                                                                    
+                                            </mat-tab> 
+                            
+                                            <mat-tab label="Sprint Backlog">
+                                                <button mat-button  color="primary"  (click)="showSprintBackLogPhaseActivityList()"> Sprint Backlog </button>
+                                            </mat-tab>    
+                                    
+                                            <mat-tab label="Sprint Execution">
+                                                <button mat-button  color="primary"  (click)="showPlanPhaseActivityList()"> Plan </button>  
+                                                <button mat-button  color="primary"  (click)="showLearnPhaseActivityList()"> Learn </button>  
+                                                <button mat-button  color="primary"  (click)="showPerformPhaseActivityList()"> Perform </button>          
+                                            </mat-tab>
+                                            <mat-tab label="Closure">
+                                                <button mat-button  color="primary"  (click)="showClosurePhaseActivityList()"> Closure </button> 
+                                            </mat-tab>                            
+                            </mat-tab-group>                    
+                </ng-template>
+        </mat-tab>  
+        
+        <mat-tab label="Exit Criteria"> 
+            	<ng-template matTabContent>
+                
+                        <mat-tab-group (selectedTabChange)="exitCriteriaTabClick($event)" [selectedIndex]="selectedTab">             
+                                        <mat-tab label="Service Backlog">            
+                                                 <button mat-button  color="primary"  (click)="showServiceBackLogPhaseExitCriteriaList()"> Service Backlog </button>
+                                        </mat-tab>
+                                        <mat-tab label="Sprint Backlog">
+                                                 <button mat-button  color="primary"  (click)="showSprintBackLogPhaseExitCriteriaList()"> Sprint Backlog </button>
+                                        </mat-tab>
+                                        <mat-tab label="Sprint Execution">
+                                                <button mat-button  color="primary"  (click)="showPlanPhaseExitCriteriaList()"> Plan </button>  
+                                                <button mat-button  color="primary"  (click)="showLearnPhaseExitCriteriaList()"> Learn </button>  
+                                                <button mat-button  color="primary"  (click)="showPerformPhaseExitCriteriaList()"> Perform </button> 
+                                        </mat-tab>
+                                        <mat-tab label="Closure">
+                                                <button mat-button  color="primary"  (click)="showClosurePhaseExitCriteriaList()"> Closure </button> 
+                                        </mat-tab>
+                        </mat-tab-group>
+            	</ng-template>                        
+        </mat-tab>
+        <mat-tab label="Health & Readiness Criteria"> 
+            <button mat-button  color="primary"  (click)="showParameterList()"> Transition Parameters</button>            
+            
+            <!--<button mat-button  color="primary"  (click)="testAngular()"> Test Angular</button> -->
+        </mat-tab>
+</mat-tab-group>
+
+
+
+
+    <div class="container">
+        &nbsp;&nbsp;
+      <router-outlet></router-outlet>
+      &nbsp;&nbsp;
+    </div>
+    
+

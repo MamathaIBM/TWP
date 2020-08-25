@@ -1,0 +1,122 @@
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+&nbsp;&nbsp;&nbsp;
+
+
+<link href="https://1.www.s81c.com/common/v18/css/grid-fluid.css" rel="stylesheet">      
+&nbsp;&nbsp;&nbsp;
+
+<div style="text-align: left;"><label>SECTION IMAGE</label></div>
+<div class="line" style="text-align:right;width:100%;padding-left: 5%;padding-right: 5%;" >      
+</div>
+<form [formGroup]="sectionImageAddForm"  >
+
+    <div style="text-align: center;" >
+
+            <table>
+                <tr style="text-align: left;">
+                        <td style="text-align: left;">
+                            <mat-form-field style="font-size: 11px;">
+                                <input matInput  style="font-size: 11px;" placeholder="Section title"  id="sectionTextName_id"  formControlName="sectionName" >
+                            </mat-form-field>
+                        </td>
+                        <td style="text-align: right;" >
+                            <button mat-icon-button type="submit" id="del_id" (click)="removeSelf()">
+                                <mat-icon aria-label="Example icon-button with a heart icon">delete_forever</mat-icon>
+                            </button> 
+                            <button mat-icon-button type="submit" id="up_id" (click)="goUp()">
+                                <mat-icon aria-label="Example icon-button with a heart icon">arrow_upward</mat-icon>
+                            </button> 
+                            <button mat-icon-button type="submit" id="up_id" (click)="goDown()">
+                                <mat-icon aria-label="Example icon-button with a heart icon">arrow_downward</mat-icon>
+                            </button> 
+                        </td>   
+                </tr>
+                    
+            </table>
+            <table>
+                    <tr style="text-align: left;">
+                            <td>  
+                                    <mat-form-field style="width:100px" class="fntsz" matTooltip="Note bg color">
+                                            <input matInput placeholder="Note bg color" class="fntsz" id="body_color_id"  formControlName="bodyColor"  required>
+                                    </mat-form-field>                  
+                            </td>
+                            <td  class="fntsz">
+                                    <mat-form-field style="width:100px" class="fntsz" matTooltip="Title text color">
+                                        <input matInput placeholder="Title text color" class="fntsz" id="title_color_id"  formControlName="titleColor"  required>
+                                    </mat-form-field>
+                            </td>
+                            <td >
+                                    <mat-form-field style="width:100px" class="fntsz" matTooltip="Title bg color">
+                                        <input matInput placeholder="Title bg color" class="fntsz" id="title_bg_color_id"  formControlName="titleBgColor"  required>
+                                    </mat-form-field>
+                            </td>   
+                            <td >
+                                    <mat-form-field style="width:100px" class="fntsz" matTooltip="Title height">
+                                         <input matInput placeholder="Title height" class="fntsz"  id="title_height_id"  formControlName="titleHeight"  required>
+                                    </mat-form-field>
+                            </td>  
+                            <td style="text-align: right;">  
+                                    <mat-form-field style="width:100px" class="fntsz" matTooltip="Title font size">
+                                        <input matInput placeholder="Title font size" class="fntsz" id="title_font_size_id"  formControlName="titleFontSize"  required>
+                                    </mat-form-field>                  
+                            </td>                                                                       
+            
+                    </tr>  
+                    <tr style="text-align: left;"> 
+                            <td style="text-align: left;">
+                                    <mat-select class="fntsz"  placeholder="Select slide" id="slide_id" formControlName="sectionSlide" style="width:100px" required>
+                                            <mat-option *ngFor="let slide of slideTypes" value="{{slide.id}}">
+                                                    {{slide.param}}
+                                            </mat-option>
+                                    </mat-select>
+                            </td>                           
+                                   
+                        <td style="text-align: left;">
+                                <mat-form-field style="width:100px" class="fntsz">
+                                    <input matInput placeholder="X(%)" class="fntsz"  id="x_id"  formControlName="positionX"  required>
+                                </mat-form-field>                        
+                        </td>
+                        <td >  
+                                <mat-form-field style="width:100px" class="fntsz">
+                                    <input matInput placeholder="Y(%)" class="fntsz" id="y_id"  formControlName="positionY"  required>
+                                </mat-form-field>                  
+                        </td> 
+                        <td >  
+                            <mat-form-field style="width:100px" class="fntsz" matTooltip="Image height">
+                                     <input matInput placeholder="Image height" class="fntsz" id="body_height_id"  formControlName="bodyHeight"  required>
+                            </mat-form-field>                  
+                        </td>                     
+                        <td style="text-align: right;">  
+                                <mat-form-field style="width:100px" class="fntsz" matTooltip="Note height">
+                                    <input matInput placeholder="Note height" class="fntsz" id="font_size_id"  formControlName="noteHeight"  required>
+                                </mat-form-field>                  
+                        </td>                             
+                    </tr>
+            </table>           
+            <div id="overall">
+                    <div id="left" style="text-align: left;">
+                        <div style="text-align: left;font-size: 14px;"><label>Upload</label></div>
+                        <input style="text-align: left;" class="text-input-width" type='file' id="file_id" #Image accept="image/*" (change)="handleFileInput($event.target.files)">                        
+                        <br>
+                        <img [src]="imageToShow"  style="width: 145px;height: 145px;"/>
+                    </div>
+                    <div id="right" style="text-align: right;">
+                        <mat-form-field class="text-input-width" style="font-size: 11px;">
+                            <input matInput placeholder="Picture title" style="font-size: 11px;" id="pictureName_id"  formControlName="pictureName">
+                        </mat-form-field>
+                        <br>
+                        <mat-form-field class="text-input-width" style="font-size: 11px;">
+                             <textarea matInput placeholder="Note" style="font-size: 11px;" id="note_id"  formControlName="note"></textarea>
+                        </mat-form-field>
+                    </div>
+            </div>
+    </div>
+</form>
+
+    
+  
+
+
+
+

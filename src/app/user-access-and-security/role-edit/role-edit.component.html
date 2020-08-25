@@ -1,0 +1,61 @@
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+&nbsp;&nbsp;&nbsp;
+
+
+<link href="https://1.www.s81c.com/common/v18/css/grid-fluid.css" rel="stylesheet">      
+&nbsp;&nbsp;&nbsp;
+<form [formGroup]="roleEditForm">
+
+
+  <div  class="container" style="text-align:right;width:100%;padding-left: 15%;padding-right: 15%;">  
+        <table style="width:100%;">
+                <tr>     
+                      <td >        
+                            <div style="text-align:left;" >           
+                                    <div class="headerrowheadpage" style="text-align:left;  font-size:11px;width:35%">
+                                            Role > Role edit
+                                    </div>    
+                            </div>  
+                      </td>
+                      <td>     <div style="text-align:right;" >                                  
+                                    <button type="button" id="submit_id" mat-raised-button color="primary" class="form_main_button" (click)="onSubmit()" >Submit</button>
+                                    <button type="button" id="cancel_id" mat-raised-button color="primary" class="form_main_button" (click)="cancel()">Cancel</button>                                                                    
+                                </div>                                  
+                      </td>
+                </tr>      
+        </table>  
+
+  <table style="width:100%;" >
+    <tr>
+      <td style="text-align:left;">
+        <mat-form-field class="text-input-width">
+              <input matInput class="fntsz" placeholder="Role Name"  id="roleName_id"   formControlName="roleName" required>
+          </mat-form-field>
+      </td>
+
+    <td >
+      <mat-form-field class="text-input-width">
+            <textarea class="fntsz"  matInput placeholder="Description" id="roleDescription_id" formControlName="roleDescription" required></textarea>
+          </mat-form-field>
+    </td>
+  </tr>  
+
+<!--
+    <tr>
+        <td style="text-align:center;" colspan="2">
+            <button type="button" id="submit_id" mat-raised-button color="primary" class="form_main_button" (click)="onSubmit()" >Submit</button>
+            <button type="button" id="cancel_id" mat-raised-button color="primary" class="form_main_button" (click)="cancel()">Cancel</button>
+        </td>      
+      </tr>  
+-->          
+</table>
+</div>
+</form>
+
+    
+  
+
+
+
+

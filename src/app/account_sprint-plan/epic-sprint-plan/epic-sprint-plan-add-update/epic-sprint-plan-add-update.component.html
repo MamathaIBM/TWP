@@ -1,0 +1,136 @@
+<mat-icon aria-label="close icon" style="float: right;" (click)="close()"  >close</mat-icon>
+<div class="text">
+    By Default Replan Start date and Replan End Date will be hidden .&nbsp; For Baselined plan, Start date and End Date will be hidden.
+</div>
+<div style="margin-left: -12px;">   
+    <form #form="ngForm" [formGroup]="epicUpdateForm" (ngSubmit)="onSubmit()" autocomplete="off">
+        <table style="width: 300px;" id="SLPFFormRadioTable">
+            <tr>
+               <td> <mat-label class="Cellsize" style="font-weight: bold;">Scope Stream : </mat-label></td>
+               <td>
+                <mat-radio-group class="example-radio-group" id="EpicSPEScopeLevel" formControlName="scopelevel" [disabled]="editFlag===1">
+                    <mat-radio-button class="example-radio-button" id="{{'EpicSPE'+Scope_Level.Categoryvalues}}" [value]="Scope_Level.Categoryvalues" *ngFor="let Scope_Level of Scope_Level">
+                        {{Scope_Level.Categoryvalues}}</mat-radio-button>
+              </mat-radio-group> 
+               </td>
+            </tr>
+         </table>          
+        <mat-form-field class="example-full-width">
+            <mat-label class="Cellsize">Select Epic Name</mat-label>
+            <mat-select  class="Cellsize" id="EpicSPEName"  formControlName="epicUNID">
+                <mat-option  class="Cellsize" (click)="setDates(epName)" *ngFor="let epName of epicNameList" [value]="epName.epicUNID">
+                    {{epName.epicName}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        &nbsp;
+        <mat-form-field class="example-full-width">
+                <mat-label class="Cellsize">Sprint Name</mat-label>
+            <input class="Cellsize"  id="EpicSPName" matInput  formControlName="sprintName">
+        </mat-form-field>
+        &nbsp;
+        <mat-form-field class="date-full-width" [hidden]="baselinePageFlag === 1 || baselineFlagValue===1">
+                <mat-label class="Cellsize">Start Date</mat-label>  
+            <input class="Cellsize" id="EpicSPSD" matInput [min]="TransStartDt" [max]="TransEndDt" [matDatepicker]="startDate" formControlName="startDate">
+            <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+            <mat-datepicker #startDate></mat-datepicker>
+        </mat-form-field>
+        &nbsp;
+        <mat-form-field class="date-full-width" [hidden]="baselinePageFlag === 1 || baselineFlagValue===1">
+                <mat-label class="Cellsize">End Date</mat-label>
+            <input class="Cellsize" id="EpicSPED" matInput [min]="TransStartDt" [max]="TransEndDt" [matDatepicker]="endDate" formControlName="endDate">
+            <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+            <mat-datepicker #endDate></mat-datepicker>
+        </mat-form-field>
+        &nbsp;
+        <mat-form-field class="date-full-width" [hidden]="baselinePageFlag === 0 || baselineFlagValue===0 ">
+                <mat-label class="Cellsize">Replan Start Date</mat-label>
+            <input class="Cellsize" id="EpicSPRSD" matInput [min]="TransStartDt" [max]="TransEndDt" 
+            [disabled] = "acsDateFlag === 1"
+            [readonly] = "acsDateFlag === 1"
+            [matDatepicker]="replanStartDate" formControlName="replanStartDate">
+            <mat-datepicker-toggle matSuffix [for]="replanStartDate"></mat-datepicker-toggle>
+            <mat-datepicker #replanStartDate></mat-datepicker>
+        </mat-form-field>
+        &nbsp;
+        <mat-form-field class="date-full-width" [hidden]="baselinePageFlag === 0 || baselineFlagValue===0">
+                <mat-label class="Cellsize">Replan End Date</mat-label>
+            <input class="Cellsize" id="EpicSPRED" matInput [min]="TransStartDt" [max]="TransEndDt" [matDatepicker]="replanEndDate" 
+            [disabled] = "aceDateFlag === 1"
+            [readonly] = "aceDateFlag === 1 "
+            placeholder="Replan End Date" formControlName="replanEndDate">
+            <mat-datepicker-toggle matSuffix [for]="replanEndDate"></mat-datepicker-toggle>
+            <mat-datepicker #replanEndDate></mat-datepicker>
+        </mat-form-field>
+        &nbsp;
+        <mat-form-field  class="date-full-width">
+                <mat-label class="Cellsize">Actual Start Date</mat-label>                
+            <input class="Cellsize" id="EpicSPASD" matInput [min]="TransStartDt" [max]="TransEndDt" [matDatepicker]="actualStartDate" formControlName="actualStartDate">
+            <mat-datepicker-toggle  matSuffix [for]="actualStartDate"></mat-datepicker-toggle>
+            <mat-datepicker #actualStartDate></mat-datepicker>
+        </mat-form-field>
+        &nbsp;
+        <mat-form-field class="date-full-width">
+                <mat-label class="Cellsize">Actual End Date</mat-label>
+            <input class="Cellsize" id="EpicSPAED" matInput [min]="TransStartDt" [max]="TransEndDt" [matDatepicker]="actualEndDate"  formControlName="actualEndDate">
+            <mat-datepicker-toggle matSuffix [for]="actualEndDate"></mat-datepicker-toggle>
+            <mat-datepicker #actualEndDate></mat-datepicker>
+        </mat-form-field>
+        <br>
+        <mat-form-field style="width: 10%;">
+            <mat-label class="Cellsize">RAG</mat-label>
+            <mat-select  class="Cellsize" [ngClass]="{'red': colorcode==='Red',
+            'amber': colorcode==='Amber',
+            'green': colorcode==='Green' 
+            }" id="rag" [(value)]="rag" formControlName="rag">
+                <mat-option  class="Cellsize" (click)="getColor('Green')" value="Green" style="background-color: green;">Green</mat-option>
+                <mat-option  class="Cellsize" (click)="getColor('Amber')" value="Amber" style="background-color: rgb(255, 230, 0);">Amber</mat-option>
+                <mat-option  class="Cellsize" (click)="getColor('Red')" value="Red" style="background-color: red;">Red</mat-option>
+            </mat-select>
+        </mat-form-field>
+        &nbsp;            
+        <mat-form-field style="width: 33%;">
+                <mat-label class="Cellsize">Owner</mat-label>
+            <input class="Cellsize" id="EpicSPOwner" #Owner matInput
+             (keydown)="valuechangeCorrection($event)" (keypress)="valuechange($event.target.value)" placeholder="Owner" formControlName="Owner" [matAutocomplete]="auto">             
+            <mat-autocomplete #auto="matAutocomplete">
+                <mat-option class="Cellsize" (onSelectionChange)="setOWnerFlag()" *ngFor="let option of myJSON" [value]="option.Emp_Name">
+                    <img class="ibm-downsize ibm-circle" src= {{option.photo}} alt="IBM face" style="width:30px;height:30px;background-size: contain;"> {{option.Emp_Name}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+        <button class="Cellsize" id="EpicSPSearch" style="width: 4%;" class="btn btn-info" type="button" (click)="getEmployeeName(epicUpdateForm.controls['Owner'].value)"><em class="fa fa-search"></em></button> 
+        &nbsp;
+        <mat-form-field style="width: 48%;">
+                <mat-label class="Cellsize">Remarks</mat-label>
+            <textarea class="fntsize" id="EpicSPRemarks" matInput #remarks maxlength="500"  formControlName="remarks">
+            </textarea>
+            <mat-hint class="Cellsize" align="end">{{remarks.value.length}} / 500</mat-hint>
+        </mat-form-field>
+
+    <br>
+        <mat-form-field style="width: 48%;">
+                <mat-label class="Cellsize">Reason for not Green</mat-label>
+            <textarea class="fntsize" id="EpicSPnotgreen" matInput #notgreen maxlength="500"  formControlName="reason_for_not_green">
+            </textarea>
+            <mat-hint class="Cellsize" align="end">{{notgreen.value.length}} / 500</mat-hint>
+        </mat-form-field>
+    &nbsp;    
+        <mat-form-field style="width: 48%;">
+                <mat-label class="Cellsize">Go to Green Plan</mat-label>
+            <textarea class="fntsize" id="EpicSPGreenPlan" matInput #green maxlength="500"  formControlName="go_to_green_plan">
+            </textarea>
+            <mat-hint class="Cellsize" align="end">{{green.value.length}} / 500</mat-hint>
+        </mat-form-field>
+<br>
+        <div class="example-button-row">
+            <button  id= "EpicSPAdd"class="btn btn-info"  type="submit" [disabled]="!epicUpdateForm.valid || editFlag === 1  " (click)="Add()">ADD </button>
+            &nbsp;&nbsp;
+            <button id= "EpicSPUpdate" class="btn btn-info" type="submit"
+                 [disabled]="!epicUpdateForm.valid || editFlag === 0 " (click)="Update()">Update </button>
+            &nbsp;&nbsp;
+            <!-- <button mat-raised-button color="primary" type="submit"  (click)= "resetFields()">Reset </button>                               -->
+        </div>
+    </form>
+</div>
+<br>

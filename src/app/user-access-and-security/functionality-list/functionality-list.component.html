@@ -1,0 +1,183 @@
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+<!--
+
+<div class="headerrow" style="text-align: center" >
+    Functionality List       <button mat-icon-button type="button" (click)="gotoFileUpload()">
+                                <mat-icon >attach_file</mat-icon> 
+                            </button>                
+                            <button mat-icon-button type="submit" (click)="copyAndCreateNew('NEW')">
+                                <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+                            </button> 
+</div>
+
+-->
+
+<link href="https://1.www.s81c.com/common/v18/css/grid-fluid.css" rel="stylesheet">      
+  
+
+<div  class="container" style="text-align:right;width:100%;padding-left: 10%;padding-right: 10%;">        
+
+            <form [formGroup]="funcListForm">                               
+                    <table>
+                        <tr> 
+
+                              <td>
+
+                                    <div style="text-align:left;" >   
+                                            <div class="headerrowheadpage" style="text-align:left;  font-size:11px;display: inline-flex;">
+                                                    Functionality > Functionality List
+                                            </div>    
+                                    </div>  
+                              </td>
+      
+                              <td style="text-align:right;"> 
+
+                                    <!--
+                                    <a id="get_all_id" type="button"  (click)="getAllFunctionality()"> <i class="blueColor" style="font-size: 11px;">Get all functionalities </i></a>
+
+                                    -->
+
+                                    <mat-form-field>
+                                        <input class="fntsz" matInput placeholder="Search by name"  id="funcName_id"  formControlName="funcName" >
+                                    </mat-form-field> 
+                                    <button mat-icon-button type="button" (click)="searchFunctionality()">
+                                            <mat-icon >search</mat-icon> 
+                                    </button> 
+                                    <button mat-icon-button type="button" (click)="gotoFileUpload()">
+                                            <mat-icon >attach_file</mat-icon> 
+                                    </button>
+                                    <button mat-icon-button type="submit" (click)="copyAndCreateNew('NEW')">
+                                            <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+                                    </button> 
+
+                                    <br>       
+                                    <div  style="vertical-align: middle;" >
+                                        <button class="button" type="button" (click)="getAllFunctionality()" style="height: 30px;width: 40px;vertical-align: middle;">
+                                                <div style="vertical-align: middle;text-align: center;">
+                                                         All
+                                                </div>
+                                        </button> 
+                                    </div>                             
+                              </td> 
+                       </tr>                          
+                    </table>                         
+            </form>
+
+  <table mat-table [dataSource]="dataSource"  matSort style="width:100%"  >
+
+  
+    <!-- Name Column -->
+    <ng-container matColumnDef="FUNC_NAME">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th class="matHeader">Name</th>
+        </mat-header-cell>
+      <mat-cell *matCellDef="let functionality"> {{functionality.FUNC_NAME}} </mat-cell>
+    </ng-container>
+
+  
+    <!-- Router Link Column -->
+    <ng-container matColumnDef="FUNC_ROUTERLINK">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th class="matHeader">Router<br>Link</th>
+        </mat-header-cell>
+      <mat-cell  *matCellDef="let functionality" > {{functionality.FUNC_ROUTERLINK}}                               
+      </mat-cell>
+    </ng-container>
+
+ 
+       <!-- Unique Operation Identifier -->
+       <ng-container matColumnDef="FUNC_UOI">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th class="matHeader">UOI</th>
+          </mat-header-cell>
+      <mat-cell *matCellDef="let functionality"> {{functionality.FUNC_UOI}} </mat-cell>
+    </ng-container>
+
+  
+    <!--Default Functionality -->
+    <ng-container matColumnDef="FUNC_DEFAULT">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th class="matHeader">Default<br>Access</th>
+        </mat-header-cell>
+      <mat-cell  *matCellDef="let functionality" > {{functionality.FUNC_DEFAULT}}                               
+      </mat-cell>
+    </ng-container> 
+
+    <!-- Operation type Column -->
+    <ng-container matColumnDef="FUNC_OPERATION_TYPE">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th class="matHeader">Read<br>Write</th>
+        </mat-header-cell>
+        <mat-cell  *matCellDef="let functionality"> {{functionality.FUNC_OPERATION_TYPE}}                               
+        </mat-cell>
+      </ng-container>
+
+
+    <!-- Transition Column -->
+    <ng-container matColumnDef="FUNC_TRANSITION_DEPENDENCY">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th class="matHeader">Tran<br>Func?</th>
+        </mat-header-cell>
+        <mat-cell  *matCellDef="let functionality"  > {{functionality.FUNC_TRANSITION_DEPENDENCY}}                               
+        </mat-cell>
+      </ng-container>
+
+
+    <!-- Module Column -->
+    <ng-container matColumnDef="FUNC_MODULE">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th class="matHeader">Module</th>
+        </mat-header-cell>
+        <mat-cell  *matCellDef="let functionality"  > {{functionality.FUNC_MODULE}}                               
+        </mat-cell>
+      </ng-container>      
+
+   <!-- Description -->
+   <ng-container matColumnDef="FUNC_DESCRIPTION">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+          <th class="matHeader">Description</th>
+      </mat-header-cell>
+    <mat-cell  *matCellDef="let functionality"  > {{functionality.FUNC_DESCRIPTION}}                               
+    </mat-cell>
+  </ng-container> 
+  
+  
+   <!-- Linked Roles -->
+   <ng-container matColumnDef="FUNC_LINKED_ROLES">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>
+        <th class="matHeader">Linked Roles</th>
+    </mat-header-cell>
+  <mat-cell  *matCellDef="let functionality"  > {{functionality.FUNC_LINKED_ROLES}}                               
+  </mat-cell>
+</ng-container> 
+
+
+      <!-- Operations Column -->
+      <ng-container matColumnDef="FUNCTIONALITY_ID">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <th class="matHeader">Operation</th>
+          </mat-header-cell>
+
+
+        <mat-cell  *matCellDef="let functionality; let rowIndex = index" style=" width: 20em;" >                      
+            <button mat-icon-button type="submit"  id="edit_id{{rowIndex}}" (click)="onUpdate(functionality)">
+                <mat-icon aria-label="Example icon-button with a heart icon">edit</mat-icon>
+            </button>  
+            <div *ngIf="functionality.FUNC_LINKED_ROLES == ''" >                                
+                <button mat-icon-button type="submit" id="del_id{{rowIndex}}" (click)="onDelete(functionality)">
+                    <mat-icon aria-label="Example icon-button with a heart icon">delete_forever</mat-icon>
+                </button>   
+
+          
+            </div>                                              
+        </mat-cell>        
+
+    </ng-container>      
+    <mat-header-row class="columnName" *matHeaderRowDef="displayedColumns"></mat-header-row>                
+    <mat-row class="result-row" *matRowDef="let row; let element; columns:displayedColumns;" (click)="setClickedRow(row,element)" [ngClass]="{ highlight: row == selectedRow }">
+        </mat-row>  
+  </table>
+</div>

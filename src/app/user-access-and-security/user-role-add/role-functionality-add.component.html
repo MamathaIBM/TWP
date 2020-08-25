@@ -1,0 +1,71 @@
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
+<form [formGroup]="roleFunctionalityAddForm"   >
+
+    <div class="headerrow" style="margin-right: 20px;margin-left: 10px;" >
+        Add Functionality to Role ---> {{roleName}}         <button mat-icon-button type="button" (click)="addFunctionalities()">
+            <mat-icon >save</mat-icon>
+            </button> 
+    </div>
+
+
+    &nbsp;&nbsp;&nbsp;
+<div style="height: 3.5px;"></div> 
+
+<div >
+
+  <table mat-table [dataSource]="dataSource" >
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+  
+    <!-- Name Column -->
+    <ng-container matColumnDef="roleFunctionalityName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th class="matHeader">Name</th>
+          </mat-header-cell>
+      <mat-cell *matCellDef="let roleFunctionality"    > {{roleFunctionality.roleFunctionalityName}} </mat-cell>
+    </ng-container>
+  
+
+    <!-- Skill Column -->
+    <ng-container matColumnDef="roleFunctionalityDescription">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th class="matHeader">Description</th>
+          </mat-header-cell>
+        <mat-cell *matCellDef="let roleFunctionality"   style=" width: 15em;" > {{roleFunctionality.roleFunctionalityDescription}}                               
+        </mat-cell>
+      </ng-container>
+
+
+      <!-- Operations Column -->
+      <ng-container matColumnDef="roleFunctionalityId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <th class="matHeader">Operation</th>
+            </mat-header-cell>
+        <mat-cell *matCellDef="let roleFunctionality"    >   
+            
+        
+            <div *ngIf="roleFunctionality.roleFunctionalityId===''">
+                    <mat-checkbox class="example-margin" (change)="onChange($event)"  value="{{roleFunctionality.functionalityId}}" ></mat-checkbox>                                 
+           </div>           
+           <div *ngIf="roleFunctionality.roleFunctionalityId!==''">  
+                  Already Added              
+           </div> 
+
+        </mat-cell>        
+
+    </ng-container>      
+  
+    <mat-header-row class="columnName" *matHeaderRowDef="displayedColumns"></mat-header-row>     
+               
+
+    <mat-row class="result-row" *matRowDef="let row; let element; columns:displayedColumns;" (click)="setClickedRow(row,element)" [ngClass]="{ highlight: row == selectedRow }">
+        </mat-row>
+  </table>
+</div>
+  </form>

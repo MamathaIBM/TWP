@@ -1,0 +1,73 @@
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!--
+&nbsp;&nbsp;&nbsp;
+<div *ngIf="operationType=='add_value'" class="headerrow" style="margin-right: 20px;margin-left: 10px;" >
+                     Add values for {{configParameterName}}
+</div>
+<div *ngIf="operationType=='new_param'" class="headerrow" style="margin-right: 20px;margin-left: 10px;" >
+    New Parameter 
+</div>
+-->
+<link href="https://1.www.s81c.com/common/v18/css/grid-fluid.css" rel="stylesheet">      
+&nbsp;&nbsp;&nbsp;
+<form [formGroup]="configParameterValuesAddForm" >
+
+
+<div  class="container" style="text-align:right;width:100%;padding-left: 15%;padding-right: 15%;">  
+
+        
+        <table style="width:100%;">
+                <tr>     
+                        <td >        
+                            <div style="text-align:left;" >             
+                                    
+                                    <div *ngIf="operationType=='add_value'" class="headerrowheadpage" style="text-align:left;  font-size:11px;display: inline-flex;" >
+                                            Add values for {{configParameterName}}
+                                    </div>
+                                    <div *ngIf="operationType=='new_param'" class="headerrowheadpage" style="text-align:left;  font-size:11px;display: inline-flex;" >
+                                            New Parameter 
+                                    </div>                                    
+                            </div>  
+                        </td>
+                        <td>     <div style="text-align:right;" >                                  
+                                        <button type="button" id="submit_id" mat-raised-button color="primary" class="form_main_button" (click)="onSubmit()" >Submit</button>
+                                        <button type="button" id="cancel_id" mat-raised-button color="primary" class="form_main_button" (click)="cancel()">Cancel</button>
+                                </div>                                  
+                        </td>
+                </tr>      
+        </table>
+    <table>
+    <tr>
+      <td style="text-align:left;">
+          <mat-form-field class="text-input-width">
+              <input class="fntsz"  matInput placeholder="Parameter Name"  id="config-parameter-values-add-Name_id" formControlName="configParameterName" required>
+          </mat-form-field>
+      </td>
+      <td >
+          <mat-form-field class="text-input-width">
+              <input class="fntsz"  matInput placeholder="Values" id="config-parameter-values-addDescription_id"  formControlName="configParameterValue" required>
+          </mat-form-field>
+      </td>
+  </tr> 
+</table>
+<!--
+<table>
+  <tr class ="config-parameter-values-add-table-tr">
+        <td style="text-align:center;" colspan="2">
+            <button type="button" id="submit_id" mat-raised-button color="primary" class="form_main_button" (click)="onSubmit()" >Submit</button>
+            <button type="button" id="cancel_id" mat-raised-button color="primary" class="form_main_button" (click)="cancel()">Cancel</button>
+        </td>      
+  </tr>     
+</table>
+-->
+</div>
+</form>
+
+    
+  
+
+
+
+

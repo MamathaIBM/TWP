@@ -1,0 +1,110 @@
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+&nbsp;&nbsp;&nbsp;
+<div class="container" style="text-align:left;width:80%" >
+  
+
+    <table style="text-align:center;width: 100%;">
+            <tr>  
+                <td>
+                    <div style="text-align:left;" >   
+                            <div class="headerrowheadpage" style="text-align:left;  font-size:11px; display: inline-flex;">
+                                    Health & Readiness Criteria > Questions List for {{parameterName}}  
+                            </div>    
+                    </div>  
+                </td>
+                <td style="text-align:right;"> 
+                        <button mat-icon-button type="submit" (click)="createNew()">
+                                <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+                        </button> 
+                </td> 
+            </tr>                          
+    </table>      
+</div>
+
+<link href="https://1.www.s81c.com/common/v18/css/grid-fluid.css" rel="stylesheet">      
+&nbsp;&nbsp;&nbsp;
+
+
+
+<div class="container" style="text-align:left;width:80%" >
+
+
+
+
+  <table mat-table [dataSource]="dataSource"   matSort style="text-align:center;width: 100%;"> >
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+  
+
+
+  
+    <!-- Readiness Question Column -->
+    <ng-container matColumnDef="readinessQuestion">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th class="matHeader">Readiness Question</th>
+        </mat-header-cell>
+      <mat-cell  *matCellDef="let readinessQuestion" > {{readinessQuestion.readinessQuestion}}                               
+      </mat-cell>
+    </ng-container>
+
+ 
+       <!-- Field Type -->
+       <ng-container matColumnDef="readinessQuestionAnswerFieldType">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th class="matHeader">Field Type</th>
+          </mat-header-cell>
+      <mat-cell *matCellDef="let readinessQuestion"> {{readinessQuestion.readinessQuestionAnswerFieldType}} </mat-cell>
+    </ng-container>
+
+  
+    
+    <!--Data Type -->
+    <ng-container matColumnDef="readinessQuestionDataType">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th class="matHeader">Data<br>Type</th>
+        </mat-header-cell>
+      <mat-cell  *matCellDef="let readinessQuestion" > {{readinessQuestion.readinessQuestionDataType}}                               
+      </mat-cell>
+    </ng-container> 
+
+    <!-- Answer Set -->
+    <ng-container matColumnDef="readinessQuestionAnswerSet">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th class="matHeader">Answer<br>Set</th>
+        </mat-header-cell>
+        <mat-cell  *matCellDef="let readinessQuestion"> {{readinessQuestion.readinessQuestionAnswerSet}}                               
+        </mat-cell>
+      </ng-container>
+
+
+
+      
+      
+      <!-- Operations Column -->
+      <ng-container matColumnDef="readinessQuestionId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <th class="matHeader">Operation</th>
+          </mat-header-cell>
+        <mat-cell  *matCellDef="let readinessQuestion; let rowIndex = index" style=" width: 20em;" > 
+            
+            <button mat-icon-button type="submit" id="id_delete{{rowIndex}}" (click)="onDelete(readinessQuestion)">
+                <mat-icon aria-label="Example icon-button with a heart icon">delete_forever</mat-icon>
+            </button>            
+            <button mat-icon-button type="submit" id="id_update{{rowIndex}}" (click)="onUpdate(readinessQuestion)">
+                <mat-icon aria-label="Example icon-button with a heart icon">edit</mat-icon>
+            </button>                             
+        </mat-cell>        
+
+    </ng-container>      
+    <mat-header-row class="columnName" *matHeaderRowDef="displayedColumns"></mat-header-row>                
+
+    <mat-row class="result-row" *matRowDef="let row; let element; columns:displayedColumns;" (click)="setClickedRow(row,element)" [ngClass]="{ highlight: row == selectedRow }">
+        </mat-row>  
+
+
+  </table>
+
+</div>

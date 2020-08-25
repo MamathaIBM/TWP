@@ -1,0 +1,119 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link href="//1.www.s81c.com/common/v18/css/www.css" rel="stylesheet"/>
+
+<div id="ibm-universal-nav"  style="background-color: #1d3649;">
+    <div id="ibm-home"><img src="assets/TransitionIMG.png" alt="IBM face"></div>
+
+        <div *ngIf = " url !==  '/' " >  
+            <div class="ibm-parent-site-name">
+                <div class="speech-bubble">
+                    <a routerLink="/HomePageComponent" class="glyphicon glyphicon-home" style="color:white; font-size:18px;padding-bottom: 5px;width: 32px;padding-left: 12px;"></a></div>
+                </div>
+            </div>
+
+            <div id="topright">
+                <ul id="topRightDropDown" class="nav navbar-nav pull-right" >
+                <!-- BEGIN USER LOGIN DROPDOWN -->
+                <div class="dropdown user">
+                    <a href="javascript:;" class="dropdown-toggle" style="color:white;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                        <!-- <span class="glyphicon glyphicon-user"></span> -->
+                        <span class="username">
+                            <!--  -->
+                            <img class="ibm-downsize ibm-circle" src={{photo}} alt="IBM face" style="width:40px;height:40px;background-size: contain;"> 
+                            {{nm}}
+                            <!-- <img alt="" role="presentation" src="https://w3-connections.ibm.com/common/resources/web/com.ibm.lconn.core.styles.oneui3/images/blank.gif?etag=20181026.173101" class="lotusArrow lotusDropDownSprite"><span class="lotusAltText">▼</span>
+                     -->
+                        </span>
+
+                        </a>
+                    <div *ngIf = " url !==  '/' " >   
+                        <ul class="dropdown-menu" style="width: 250px!important;">
+                            
+                            <li class="ibm-ind-link"><span><a class="ibm-document-link" routerLink="/ViewConsentformComponent">Consent Details</a></span></li>
+                            <div class="divider"></div>
+                            
+                            <li class="ibm-ind-link"><span><a class="ibm-blog-link" routerLink="/ToolGuideComponent">Tool Guide</a></span></li>
+                            <div class="divider"></div>
+                
+                            <li class="ibm-ind-link"><span><a class="ibm-secure-link" href="https://localhost:8080/logout">Log out</a></span></li>
+                            
+                        </ul>
+                    </div>    
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </div>               
+                <!-- END USER LOGIN DROPDOWN -->
+                </ul>
+            </div>
+            <br>
+        </div>
+            
+            <div>
+                    
+ </div>
+
+ <div class="container-fluid">
+        <div class="row">
+            
+                <div class="col-0" *ngIf = " url !==  '/' " >                
+                <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+                
+                <div class="page-sidebar navbar-collapse collapse" id="leftmenu">
+                <br>
+                <div class="page-sidebar-menu">
+                        
+                    <nav class="nav-list">
+                            <p><a routerLink="/NewExecutionComponent" class="nav-link" 
+                                routerLinkActive="activeClass"		   
+                                (click)="setActivePage('NewExecutionComponent')">
+                                <span style="text-align:center;"><em class="ibm-document-link"></em>
+                                &nbsp;&nbsp; New Transition Execution</span>	  					
+                        </a></p>
+                        <!-- <div class="divider"></div>			 -->
+                        <p><a routerLink="/AllTransitionAccountsComponent" class="nav-link" 
+                                routerLinkActive="activeClass"		   
+                                (click)="setActivePage('AllTransitionAccountsComponent')">
+                                <span style="text-align:center"><em class="ibm-folder-link"></em>
+                                &nbsp;&nbsp; All Transition Accounts</span>	  					
+                        </a></p>
+                        
+                       <p><a routerLink="/ManageActiveTransitionsComponent" class="nav-link" 
+                                routerLinkActive="activeClass"		   
+                                (click)="setActivePage('ManageActiveTransitionsComponent')">
+                                <span style="text-align:center"><em class="ibm-task-link"></em>
+                                &nbsp;&nbsp; Manage Active Transitions</span>	  					
+                        </a></p>
+                        
+                       <p><a routerLink="/TransitionClosureComponent" class="nav-link" 
+                                routerLinkActive="activeClass"		   
+                                (click)="setActivePage('TransitionClosureComponent')">
+                                <span style="text-align:center"><em class="ibm-confirm-link"></em>
+                                &nbsp;&nbsp; Transition Closure</span>	  					
+                        </a></p>
+
+                        <p><a routerLink="/admin-home" class="nav-link" 
+                            routerLinkActive="activeClass"		   
+                            (click)="setActivePage('TransitionClosureComponent')">
+                            <span style="text-align:center"><em class="ibm-confirm-link"></em>
+                            &nbsp;&nbsp; Admin</span>	  					
+                    </a></p>                        
+                        
+                    </nav>
+                
+                </div>
+                </div>
+                </div>
+            </div>
+       
+          <div class="container">
+            <div class="row" style="margin-right: 40px;margin-left: 40px;">
+              <div class="col-md-12">
+                  <br>
+                  <!-- <app-consent-form></app-consent-form> -->
+                <router-outlet></router-outlet>
+              </div>
+            </div>
+        </div>
+        
+        
+      </div>
+  

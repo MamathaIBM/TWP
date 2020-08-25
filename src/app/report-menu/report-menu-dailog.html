@@ -1,0 +1,45 @@
+<style>
+
+    button.btn-info {
+   background-color: #1d3649;
+   color: white;
+   font-size:11px;
+  }  
+
+  .fntsz{
+        font-size:11px;
+        word-wrap: break-word;
+  }
+  p{
+    font-size:11px;   
+  }
+  app-report-menu .mat-option:first-child .mat-pseudo-checkbox{ display: none !important; }
+</style>
+
+   <mat-dialog-content>
+      <p><strong>Important Note:</strong><br> If generating this report for the first time, Please follow the one time mandatory 
+        installation steps from below attached document for successful generation of Report.
+        <br>
+        <u>Installation Steps:</u> &nbsp; &nbsp;<a href="javascript:;" id="AutoFilterID" (click)="OpenAutoFile()"><em class="fa fa-file-word-o" style="font-size:20px;color:blue"></em></a>
+        <br>* Please ignore if already installed.
+    </p>
+     <h3>Select Owning TTS Organization</h3>
+     <mat-form-field class="fntsz">
+        <mat-label class="fntsz">Owning TTS Organization</mat-label>   
+        <mat-select class="fntsz" id="Report_OwningTTS" [formControl]="WSROrg" (selectionChange)="ValMethod(WSROrg)" multiple>
+            <mat-option class="fntsz">
+                <button id="DESALL" [disabled]="flgval==='Yes'" class="btn btn-info" (click)="deselectOrg()">De-Select All</button> &nbsp; &nbsp;
+                <button id="SELALL" class="btn btn-info" (click)="selectOrg()">Select All</button>
+            </mat-option>
+            <!-- <mat-option class="fntsz" #SELALL [disabled]="DESELALL.selected" value="Select All" (click)="selectOrg()">Select All</mat-option>            -->
+            <mat-option class="fntsz" *ngFor="let SolOwnTTS of SolOwnTTS" [value]=SolOwnTTS>
+                {{SolOwnTTS}}
+            </mat-option>
+        </mat-select>
+      </mat-form-field>  
+   </mat-dialog-content>
+   <mat-dialog-actions>
+       <button id="OrgWSROK" class="btn btn-info" [mat-dialog-close]="WSROrg.value">OK</button>   
+   &nbsp;&nbsp;&nbsp;
+       <button id="OrgWSRClose" class="btn btn-info" (click)="onNoClick()">Cancel</button>    
+   </mat-dialog-actions>

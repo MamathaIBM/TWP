@@ -1,0 +1,126 @@
+table {
+    width: 180%;    
+    font-size: 11px; 
+    border-collapse: separate;       
+ }
+ .mat-row,.mat-header-row {  
+  min-height: 10px !important;
+  font-size:11px;  
+  }
+
+  .mat-cell {  
+  font-size:11px;  
+  } 
+  .mat-header-cell,.mat-cell,th,td,table {
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: lightgrey
+  }
+
+  
+ td {
+  font-size: 11px;
+  
+ }
+ .columnName {
+  color:white;
+  font-weight: bold;
+  background-color: #1d3649;  
+  font-size: 11px;  
+}
+
+th,td{
+  text-align: center;
+  height : 30px;
+}
+
+.mat-header-cell,.th.mat-header-cell{
+  color: white;  
+  font-size: 11px;
+}
+
+.text{
+  font-size: 11px;
+  font-weight: bold;
+}
+
+
+  button.btn-info {
+    background-color: #1d3649;
+    color: white;
+    font-size:11px;
+  }
+  
+  .headerrow {  
+    font-size:11px;
+    text-align: center;
+  }
+ 
+  .mat-sort-header {    
+    color:white;
+  }
+  :host ::ng-deep .mat-sort-header-container {
+    display: flex;
+    justify-content: center;
+}
+
+  ::ng-deep .mat-sort-header-container:not(.mat-sort-header-sorted) .mat-sort-header-arrow { 
+    opacity: 0.54 !important;
+      color: white;
+      transform: translateY(0px) !important;
+  }
+
+
+ 
+  .searchField {
+    font-size: 11px;
+    width:50%;
+  }
+
+  .green{
+    background-color: green;
+  }
+  
+  .red{
+    background-color: red;
+  }
+  
+  .amber{
+    background-color: rgb(255, 230, 0);
+  }
+
+::ng-deep .mat-paginator-navigation-first {
+  font-size:11px;
+  align-items: top; 
+  display: flex;
+  margin: 0; 
+  padding: 0;
+  justify-content: top;
+  }
+  
+  ::ng-deep .mat-paginator-navigation-last {
+  font-size:11px;
+  align-items: top; 
+  display: flex;
+  margin: 0; 
+  padding: 0;
+  justify-content: top;
+  }
+  
+  ::ng-deep .mat-paginator-navigation-next {
+  font-size:11px;
+  align-items: top; 
+  display: flex;
+  margin: 0; 
+  padding: 0;
+  justify-content: top;
+  }
+  
+  ::ng-deep .mat-paginator-navigation-previous {
+  font-size:11px;
+  align-items: top; 
+  display: flex;
+  margin: 0; 
+  padding: 0;
+  justify-content: top;
+  }

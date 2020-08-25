@@ -1,0 +1,272 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://1.www.s81c.com/common/v18/css/grid-fluid.css" rel="stylesheet">      
+<div class="row" *ngIf="FlagHide=== 'No'" style="margin-left: -12px;">    
+        <form #form="ngForm" [formGroup] ="ApplInfoUpdateeForm" (ngSubmit) = "onSubmit()" autocomplete="off">                    
+        <mat-form-field class="fntsz">
+            <mat-label class="fntsz">Application ID</mat-label>
+            <input class="fntsz" id ="AppId" matInput formControlName="AppId">
+        </mat-form-field> 
+        &nbsp;&nbsp;
+
+        <mat-form-field class="fntsz">
+        <mat-label class="fntsz">Application Name</mat-label>
+        <input class="fntsz" id ="AppName" matInput formControlName="AppName" required>
+        </mat-form-field> 
+        &nbsp;&nbsp;
+        <mat-form-field class="fntszLessWidth">
+            <mat-label class="fntszLessWidth">Application Type</mat-label>       
+            <mat-select class="fntszLessWidth" id="AppType" formControlName="appApplicationType">
+                <mat-option class="fntszLessWidth"></mat-option>
+                <mat-option class="fntszLessWidth" *ngFor="let appAppType of appAppTypeDatasource" [value]=appAppType.Categoryvalues>
+                    {{appAppType.Categoryvalues}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        &nbsp;&nbsp;
+        <mat-form-field class="fntszLessWidth">
+            <mat-label class="fntszLessWidth">Size of Application Parameter</mat-label> 
+            <mat-select class="fntszLessWidth" id="AppParameter" formControlName="appSizeParameter">
+               <mat-option class="fntszLessWidth" (click)="onKey()"></mat-option>
+               <mat-option class="fntszLessWidth" *ngFor="let apppar of appSizeParameterDatasource" [value]=apppar.Categoryvalues (click)="onKey()">
+                   {{apppar.Categoryvalues}}
+               </mat-option>
+            </mat-select>
+          </mat-form-field>
+          &nbsp;&nbsp;   
+           <mat-form-field class="fntszLessWidth">
+                <mat-label class="fntszLessWidth">Size of Application Value</mat-label> 
+             <mat-select class="fntszLessWidth" id="AppSizeValue" formControlName="appSizeValue">
+               <mat-option class="fntszLessWidth"></mat-option>
+               <mat-option class="fntszLessWidth" *ngFor="let SizeValue of SizeValue" [value]=SizeValue.Categoryvalues>
+                   {{SizeValue.Categoryvalues}}
+               </mat-option>
+              </mat-select>
+           </mat-form-field>
+           <!-- <br> -->
+        <mat-form-field class="fntszLessWidth">
+                <mat-label class="fntszLessWidth">Complexity</mat-label> 
+            <mat-select class="fntszLessWidth" id="AppComplexity" formControlName="Complexity">
+                <mat-option class="fntszLessWidth"></mat-option>
+                <mat-option class="fntszLessWidth" *ngFor="let complex of complexityDatasource" [value]=complex.Categoryvalues>
+                    {{complex.Categoryvalues}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field> 
+        &nbsp;&nbsp;
+        <mat-form-field class="fntsz">
+                <mat-label class="fntsz">Criticality</mat-label> 
+            <mat-select class="fntsz" id="AppCriticality" formControlName="Criticality">
+                <mat-option class="fntsz"></mat-option>
+                <mat-option class="fntsz" *ngFor="let critical of criticalityDatasource" [value]=critical.Categoryvalues>
+                    {{critical.Categoryvalues}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        &nbsp;&nbsp;     
+        <mat-form-field class="fntsz">
+                <mat-label class="fntsz">Category</mat-label> 
+            <mat-select class="fntsz" id="AppCategory" formControlName="appCategory">
+                <mat-option class="fntsz"></mat-option>
+                <mat-option class="fntsz" *ngFor="let appCat of appCategoryDatasource" [value]=appCat.Categoryvalues>
+                    {{appCat.Categoryvalues}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        &nbsp;&nbsp;  
+        <mat-form-field class="fntsz">
+                <mat-label class="fntsz">Technology</mat-label> 
+            <mat-select class="fntsz" id="AppTechnology" (selectionChange)="HideOtherT(value)" formControlName="Technology" multiple>
+                    <mat-option class="fntsz" *ngFor="let tech of technologyDatasource" [value]=tech.Categoryvalues>
+                {{tech.Categoryvalues}}
+            </mat-option>
+           </mat-select>
+        </mat-form-field>
+        &nbsp;&nbsp;
+        <mat-form-field class="fntsz" [hidden]=boolan>
+                <mat-label class="fntsz">Other Techonology</mat-label> 
+            <input class="fntsz" id="AppOthTec" matInput formControlName="OtherTechonology">
+        </mat-form-field> <br>         
+        <mat-form-field class="fntsz">
+                <mat-label class="fntsz">Incumbent Service Provider</mat-label>
+           <mat-select class="fntsz" id="AppIncVendor" (selectionChange)="HideOtherV(value)" formControlName="Vendor">
+            <mat-option class="fntsz"></mat-option>
+            <mat-option class="fntsz" *ngFor="let ven of vendorDatasource" [value]=ven.Categoryvalues>
+                {{ven.Categoryvalues}}
+            </mat-option>
+           </mat-select>
+        </mat-form-field>
+        &nbsp;
+        <mat-form-field class="fntsz" [hidden]=boolanV>
+                <mat-label class="fntsz">Other Incumbent Service Provider</mat-label>
+          <input class="fntsz" id="AppOthVendor" matInput formControlName="OtherVendor">
+        </mat-form-field>   
+        &nbsp;  
+                <mat-form-field class="fntsz">
+                <mat-label class="fntsz">Service Agreement</mat-label>
+            <mat-select class="fntsz" id="AppServiceAgree" formControlName="AppServiceAgreement">
+             <mat-option class="fntsz"></mat-option>
+             <mat-option class="fntsz" *ngFor="let appB of appBooleankeyword" [value]=appB.Categoryvalues>
+                 {{appB.Categoryvalues}}
+             </mat-option>
+            </mat-select>
+         </mat-form-field>
+         &nbsp;&nbsp;
+         <mat-form-field class="fntsz" style="width:39%;">
+                <mat-label class="fntsz">Remark</mat-label>
+            <input class="fntsz" id="AppRemarks" matInput formControlName="AppRemark">
+          </mat-form-field>
+        <mat-form-field class="fntsz" style="width: 100%;">
+                <mat-label class="fntsz">Application Description</mat-label>
+            <textarea class="fntsz" id ="AppDes" matInput rows="1" formControlName ="AppDescription"></textarea>
+        </mat-form-field> 
+        <div class="example-button-row">           
+        <button id="AppAdd" class="btn btn-info" type="submit" [disabled]="!ApplInfoUpdateeForm.valid||editFlag === 1||progress>0" (click) ="Add()">ADD </button>   
+        &nbsp;&nbsp;
+        <button id="AppUpdate" class="btn btn-info" type="submit" [disabled]="!ApplInfoUpdateeForm.valid||editFlag === 0||progress>0" (click)= "Update()">Update </button>                              
+        &nbsp;&nbsp; 
+        <button id="AppClone" class="btn btn-info" type="submit" [disabled]="!ApplInfoUpdateeForm.valid||editFlag === 0||progress>0" (click)= "Clone()">Clone </button>
+       </div>
+        </form> 
+</div>     
+      <mat-progress-bar mode="indeterminate" *ngIf="progress"></mat-progress-bar>
+      <div *ngIf="progress">
+        <h2> Please wait while validate & upload data from excel</h2>
+      </div>
+<div class="row" style="margin-left: -12px;font-size:11px;">
+    <div [hidden]="progress>0">
+        <table style="width: 90%;">
+        <tr>
+            <td><mat-form-field class="fntsz">
+            <mat-label class="fntsz"><em class="fa fa-search" aria-hidden="true"></em></mat-label>
+            <input class="fntsz" id="AppSearch" matInput (keyup)="applyFilter($event.target.value)"></mat-form-field></td>
+            <th style="font-size:11px" id="header">Available Applications : <span>{{dataLength}}</span> </th> 
+            <th style="font-size:11px" *ngIf="FlagHide=== 'No'">Browse & Upload:</th>
+            <td *ngIf="FlagHide=== 'No'"><input class="fntsz" id="AppBrowser" #file type='file' (change)="fileChanged($event)" [disabled]="progress>0"></td> 
+            <th style="font-size:11px" *ngIf="FlagHide=== 'No'">Sample .csv:</th>    
+            <td *ngIf="FlagHide=== 'No'"><button id="AppExportExl" (click)="exportAsXLSX()"><em class="fa fa-file-excel-o" style="font-size:15px;color: green"></em></button></td>                              
+        </tr> 
+        <tr *ngIf="FlagHide=== 'No'"><mat-label style="font-size: 11px; color:red;">Note: Max.Limit for import will be upto 200 applications.</mat-label></tr>  
+       </table>        
+       <table id="AppDataTable" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+                                
+                                                            <ng-container matColumnDef="AppId" sticky>
+                                                                <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass'" style="display:flex !important;">
+                                                                    <th class="matHeader">App ID</th></mat-header-cell>
+                                                                <mat-cell *matCellDef="let element" [ngClass]="'customWidthClass'" style="display:flex !important;">{{element.AppId}}                
+                                                                </mat-cell>
+                                                            </ng-container>
+                                
+                                                            <ng-container matColumnDef="AppName" sticky>
+                                                                <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass'" style="display:flex !important;">
+                                                                    <th class="matHeader">App Name</th></mat-header-cell>
+                                                                <mat-cell *matCellDef="let element" [ngClass]="'customWidthClass'" style="display:flex !important;">{{element.AppName}}                
+                                                                </mat-cell>
+                                                            </ng-container>
+                                
+                                                            <ng-container matColumnDef="appApplicationType">
+                                                                <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthlessClass'" style="display:flex !important;">
+                                                                    <th class="matHeader">App Type</th></mat-header-cell>
+                                                                <mat-cell *matCellDef="let element" [ngClass]="'customWidthlessClass'" style="display:flex !important;">{{element.appApplicationType}}                
+                                                                </mat-cell>
+                                                            </ng-container>
+                                
+                                                            <ng-container matColumnDef="AppSizeParameter">
+                                                                <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthlessClass'" style="display:flex !important;">
+                                                                    <th class="matHeader">App Size</th>
+                                                                </mat-header-cell>
+                                                                <mat-cell *matCellDef="let element" [ngClass]="'customWidthlessClass'" style="display:flex !important;">{{element.AppSizeParameter}}                
+                                                                </mat-cell>
+                                                            </ng-container>
+                                
+                                                            <ng-container matColumnDef="AppSizeValue">
+                                                                <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthlessClass'" style="display:flex !important;">
+                                                                    <th class="matHeader">Size Value</th>
+                                                                </mat-header-cell>
+                                                                <mat-cell *matCellDef="let element" [ngClass]="'customWidthlessClass'" style="display:flex !important;">{{element.AppSizeValue}}                
+                                                                </mat-cell>
+                                                            </ng-container>
+                                
+                                                            <ng-container matColumnDef="Complexity">
+                                                                <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass'" style="display:flex !important;">
+                                                                    <th class="matHeader">Complexity</th>
+                                                                </mat-header-cell>
+                                                                <mat-cell *matCellDef="let element" [ngClass]="'customWidthClass'" style="display:flex !important;">{{element.Complexity}}                
+                                                                </mat-cell>
+                                                            </ng-container>
+                                
+                                                            <ng-container matColumnDef="Criticality">
+                                                                <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthlessClass'" style="display:flex !important;">
+                                                                    <th class="matHeader">Criticality</th>
+                                                                </mat-header-cell>
+                                                                <mat-cell *matCellDef="let element" [ngClass]="'customWidthlessClass'" style="display:flex !important;">{{element.Criticality}}                
+                                                                </mat-cell>
+                                                            </ng-container>
+                                
+                                                            <ng-container matColumnDef="appCategory">
+                                                                <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthlessClass'" style="display:flex !important;">
+                                                                    <th class="matHeader">Category</th>
+                                                                </mat-header-cell>
+                                                                <mat-cell *matCellDef="let element" [ngClass]="'customWidthlessClass'" style="display:flex !important;">{{element.appCategory}}                
+                                                                </mat-cell>
+                                                            </ng-container>
+                                
+                                                            <ng-container matColumnDef="Technology">
+                                                                <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass'" style="display:flex !important;">
+                                                                    <th class="matHeader">Technology</th>
+                                                                </mat-header-cell>
+                                                                <mat-cell *matCellDef="let element" [ngClass]="'customWidthClass'" style="display:flex !important;">{{element.Technology}}                
+                                                                </mat-cell>
+                                                            </ng-container>
+                                
+                                                            <ng-container matColumnDef="Vendor">
+                                                                <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass'" style="display:flex !important;">
+                                                                    <th class="matHeader">Incumbent Service Provider</th>
+                                                                </mat-header-cell>
+                                                                <mat-cell *matCellDef="let element" [ngClass]="'customWidthClass'" style="display:flex !important;">{{element.Vendor}}                
+                                                                </mat-cell>
+                                                            </ng-container>                          
+                                
+                                                            <ng-container matColumnDef="AppServiceAgreement">
+                                                                <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass'" style="display:flex !important;">
+                                                                    <th class="matHeader">Service Agreement</th>
+                                                                </mat-header-cell>
+                                                                <mat-cell *matCellDef="let element" [ngClass]="'customWidthClass'" style="display:flex !important;">{{element.AppServiceAgreement}}                
+                                                                </mat-cell>
+                                                            </ng-container>   
+                                
+                                                            <ng-container matColumnDef="AppRemarks">
+                                                                <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass'" style="display:flex !important;">
+                                                                    <th class="matHeader">Remarks</th>
+                                                                </mat-header-cell>
+                                                                <mat-cell *matCellDef="let element" [ngClass]="'customWidthClass'" style="display:flex !important;">{{element.AppRemark}}                
+                                                                </mat-cell>
+                                                            </ng-container>                          
+                                
+                                                            <ng-container matColumnDef="AppDescription">
+                                                                <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass'" style="display:flex !important;">
+                                                                    <th class="matHeader">Description</th>
+                                                                </mat-header-cell>
+                                                                <mat-cell *matCellDef="let element" [ngClass]="'customWidthClass'" style="display:flex !important;">{{element.AppDescription}}                
+                                                                </mat-cell>
+                                                            </ng-container>   
+                                
+                                                            <ng-container matColumnDef="Delete">
+                                                                <mat-header-cell *matHeaderCellDef [ngClass]="'customWidthbutClass'" style="display:flex !important;">
+                                                                    <th class="matHeader"></th>
+                                                                </mat-header-cell>
+                                                                <mat-cell *matCellDef="let element; let i = index;" [ngClass]="'customWidthbutClass'" style="display:flex !important;">                                                     
+                                                                        <button id="{{'AppDelete'+i}}" class="btn btn-info" [hidden]="FlagHide=== 'Yes'" (click)="onDelete(element)">
+                                                                            <em class="fa fa-trash"></em>
+                                                                        </button>                
+                                                                </mat-cell>
+                                                            </ng-container>
+                                
+                                
+                                                            <mat-header-row class="columnName" *matHeaderRowDef="displayedColumns"></mat-header-row>                
+                                                           
+                                                            <mat-row class="result-row" *matRowDef="let row; let element; columns:displayedColumns;" (click)="setClickedRow(row,element)" [ngClass]="{ highlight: row == selectedRow }">
+                                                            </mat-row> 
+                                                        </table>
+                                                        <mat-paginator class="matpaginator" [hidden]="progress>0" [pageSizeOptions]="[5, 1, 10, 20]" showFirstLastButtons (click)="setClickedRow(0,element)"></mat-paginator> 
+                    </div>
+</div>

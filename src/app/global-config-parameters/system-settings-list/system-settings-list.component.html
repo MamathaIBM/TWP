@@ -1,0 +1,44 @@
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+&nbsp;&nbsp;&nbsp;
+<div class="headerrow" style="margin-right: 20px;margin-left: 10px;" >
+    System Settings          <button mat-icon-button id="create_id" type="submit" (click)="createNew()">
+            <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+        </button> 
+
+</div>
+
+<link href="https://1.www.s81c.com/common/v18/css/grid-fluid.css" rel="stylesheet">      
+&nbsp;&nbsp;&nbsp;
+<form [formGroup]="systemSettingsForm" >
+
+<div class="row" style="margin-right: 15px;margin-left: 15px;">
+        
+          
+  <table >
+
+     <tr>
+             <td>
+                  Log:
+             </td>
+             <td>     
+                <mat-form-field >            
+                        <mat-select placeholder="Log On Off (Y/N)?"  id="log_value_id" formControlName="logTrace" required>
+                            <mat-option *ngFor="let logValue of logValues" [value]="logValue.id">
+                                {{logValue.param}}
+                            </mat-option>
+                        </mat-select>
+                </mat-form-field>                 
+             </td>
+             <td>
+                    <button  mat-icon-button type="submit" id="save_log_id" (click)="saveLogConfig()">
+                             <mat-icon aria-label="Example icon-button with a heart icon">Save</mat-icon>
+                    </button>
+             </td>
+     </tr>
+
+  </table>
+</div>
+</form>  
+  

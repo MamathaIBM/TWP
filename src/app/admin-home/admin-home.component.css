@@ -1,0 +1,133 @@
+
+
+
+
+  .mat-menu-item{
+    font-size:11px;
+  }
+
+  .arrow-down {
+    width: 0; 
+    height: 0; 
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;    
+    border-top: 20px solid #f00;
+  }
+
+  .highlight  {
+    background-color:cornsilk !important;
+    font-weight: bold;
+    font-size:11px;
+  } 
+
+   .columnName {
+    color:white;
+    font-weight: bold;
+    background-color: #1d3649;
+    text-align: center;
+    font-size:11px;
+  }
+
+  .headerrow {  
+    color:white;
+    font-weight: bold;
+    background-color: #1d3649;
+    font-size:11px;
+    width: 100%;
+  }
+  .headerrowmenu {
+    color:white;
+    font-weight: bold;
+    background-color: #2B506D;
+    font-size:11px;
+    width: 100%;
+  }
+  .headerrowhead{
+    color:white;
+    font-weight: bold;
+    background-color: #3A6C92;
+    font-size:11px;
+    width: 100%;
+  }
+
+  .matHeader {
+    font-weight: bold;
+    color:white;    
+    font-size:11px;
+  }
+  .mat-elevation-z8 {
+    width: 1000px;
+    font-size:11px;
+  }
+  
+  .mat-form-field {
+    font-size:11px;
+  } 
+    
+  .activeClass{
+    position: relative; 
+    font-weight: bold;
+    color: #ffa573;
+    border-radius: .2em; 
+     width: 50px; 
+   height: 50px; 
+   font-size:11px;    
+  }
+  .activeClass:after {
+    content: ''; 
+    position: absolute; 
+    bottom: 0; 
+    left: 50%; 
+    width: 0; 
+    height: 0; 
+    border: 10px solid transparent; 
+    border-top-color: #ffa573; 
+    border-bottom: 0; 
+    margin-left: -8px; 
+    margin-bottom: -8px; 
+    font-size:11px;
+  }
+
+  .mat-button{
+    font-size:11px;
+  }
+
+  .active {   
+       border-bottom: 3px solid #1d3649;
+       font-size:11px;
+   }
+
+   #wrapper {
+    display: flex;
+    flex: 0 0 100%;
+  }
+  
+  #left {
+    flex: 0 0 10%;
+    /*flex-grow: 1*/
+  }
+  
+  #right {  
+    /*flex: 1; */
+    flex: 0 0 90%;
+    /*justify-content: flex-end;*/
+    /*flex-grow: 1*/
+  }
+
+
+  #parents {
+    display: flex;
+    flex: 0 0 100%;
+  }
+  
+  #leftss {
+    flex: 0 0 100%;
+    /*flex-grow: 1*/
+  }
+  
+  #rightss {  
+    /*flex: 1; */
+    flex: 0 0 100%;
+    /*justify-content: flex-end;*/
+    /*flex-grow: 1*/
+  }

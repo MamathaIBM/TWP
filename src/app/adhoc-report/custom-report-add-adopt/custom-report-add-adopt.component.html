@@ -1,0 +1,107 @@
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!--
+&nbsp;&nbsp;&nbsp;
+
+<div class="headerrow" style="margin-right: 20px;margin-left: 10px;" >
+    <button type="button" id="submit_id" mat-raised-button color="primary" class="form_main_button" (click)="back()" >Back</button>
+    Custom Report
+    <button type="button" id="submit_id" mat-raised-button color="primary" class="form_main_button" (click)="save()" >Save</button>
+    <button type="button" id="submit_id" mat-raised-button color="primary" class="form_main_button" (click)="saveas()" >Save As</button>
+    <button type="button" id="submit_id" mat-raised-button color="primary" class="form_main_button" (click)="save_generate()" >Save & Generate</button>
+    <button type="button" id="submit_id" mat-raised-button color="primary" class="form_main_button" (click)="addComponent(sectionTextAddComponentClass)" >Add text section</button>    
+    <button type="button" id="submit_id" mat-raised-button color="primary" class="form_main_button" (click)="addComponent(sectionTableAddComponentClass)" >Add tabular section</button>    
+    <button type="button" id="submit_id" mat-raised-button color="primary" class="form_main_button" (click)="addComponent(sectionImageAddComponentClass)" >Add image section</button>    
+</div>
+-->
+
+
+
+
+&nbsp;&nbsp;
+<div  class="container" style="text-align:right;width:100%;padding-left: 5%;padding-right: 5%;">  
+
+        <table style="width: 100%;">
+                        <tr>  
+                            <td>
+                                <div style="text-align:left;" >   
+                                        <div class="headerrowheadpage" style="text-align:left;  font-size:11px;display: inline-flex;">
+                                            Custom Report > Report Template Adoption
+                                        </div>    
+                                </div>  
+                            </td>
+                            <td style="text-align:right;"> 
+                              <button type="button" id="submit_id" mat-raised-button color="primary" class="form_main_button" (click)="back()" >Back</button>
+                              <button type="button" id="submit_id" mat-raised-button color="primary" class="form_main_button" (click)="adopt()" >Adopt</button>
+                              <br>
+                              <!--
+                                    <button type="button" id="submit_id" mat-raised-button color="primary" class="form_main_button" (click)="addComponent(sectionTextAddComponentClass)" >Add text section</button>    
+                                    <button type="button" id="submit_id" mat-raised-button color="primary" class="form_main_button" (click)="addComponent(sectionTableAddComponentClass)" >Add tabular section</button>    
+                                    <button type="button" id="submit_id" mat-raised-button color="primary" class="form_main_button" (click)="addComponent(sectionImageAddComponentClass)" >Add image section</button>    
+                              -->
+                            </td> 
+                    </tr>                          
+        </table>   
+</div>
+
+
+
+<link href="https://1.www.s81c.com/common/v18/css/grid-fluid.css" rel="stylesheet">      
+&nbsp;&nbsp;&nbsp;
+<form [formGroup]="customReportAddForm"   >
+
+<div  class="container" style="text-align:right;width:100%;padding-left: 5%;padding-right: 5%;"> 
+
+  <!--
+
+  <table class="customReport-table" >
+    <tr>
+      <td class ="customReport-table-td" >
+          <mat-form-field>
+              <input matInput placeholder="Report name"  id="customReportName_id"  formControlName="customReportName" required>
+          </mat-form-field>
+      </td>
+      <td class ="customReport-table-td">
+          <mat-form-field>
+              <input matInput placeholder="Version"   id="description_id" formControlName="version" required>
+          </mat-form-field>
+      </td>   
+    </tr>  
+  </table>
+
+  -->
+
+  <table style="width: 100%;">
+    <tr style="text-align:left;">
+      <td style="text-align:left;">
+          <mat-form-field class="fntsz">
+              <input class="fntsz"  matInput placeholder="Report name"  id="customReportName_id"  formControlName="customReportName" required>
+          </mat-form-field>
+      </td>
+      <td style="text-align:right;">
+          <mat-form-field class="fntsz">
+              <input class="fntsz"  matInput placeholder="Version"   id="description_id" formControlName="version" required>
+          </mat-form-field>
+      </td>
+  </tr> 
+</table>
+</div>
+
+<div class="container" style="text-align:right;width:100%;padding-left: 5%;padding-right: 5%;">  
+    <!-- Use ng-template to ensure that the generated components end up in the right place -->
+    <ng-template #container>
+
+    </ng-template>
+</div>
+
+</form>
+
+
+
+    
+  
+
+
+
+

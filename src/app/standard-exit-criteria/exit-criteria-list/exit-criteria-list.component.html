@@ -1,0 +1,84 @@
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<form [formGroup]="exitCriteriaAddForm" >
+<!--
+&nbsp;&nbsp;&nbsp;
+<div  style="text-align: left" >
+      <table>
+            <tr>
+                  <td>
+                              <button mat-icon-button type="button" (click)="gotoFileUpload()">
+                              <mat-icon >attach_file</mat-icon>
+                              </button> 
+                              <button id="add_id" mat-icon-button type="button" (click)="gotoAddExitCriteria()">
+                                          <mat-icon >add</mat-icon>
+                              </button>   
+                  </td>
+            </tr>     
+      </table>               
+</div>
+-->
+    &nbsp;&nbsp;&nbsp;
+
+    <div  class="container" style="text-align:right;width:100%;padding-left: 15%;padding-right: 15%;">  
+                    <table>
+                        <tr> 
+
+                              <td>
+
+                                    <div style="text-align:left;" >   
+
+                                            <div class="headerrowheadpage" style="text-align:left;  font-size:11px; display: inline-flex;">
+                                                    Exit criteria > {{phaseName}} 
+                                            </div>    
+                                    </div>  
+                              </td>
+                              <td style="text-align:right;"> 
+                                          <button mat-icon-button type="button" (click)="gotoFileUpload()">
+                                                      <mat-icon >attach_file</mat-icon>
+                                                      </button> 
+                                                      <button id="add_id" mat-icon-button type="button" (click)="gotoAddExitCriteria()">
+                                                                  <mat-icon >add</mat-icon>
+                                                      </button>   
+                              </td> 
+                       </tr>                          
+                    </table>   
+                        <table mat-table [dataSource]="dataSource"  matSort >
+
+                        <!--- Note that these columns can be defined in any order.
+                              The actual rendered columns are set as a property on the row definition" -->
+                        
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="exitCriteria">
+                              <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    <th class="matHeader">Exit Criteria</th>
+                              </mat-header-cell>
+                              <mat-cell *matCellDef="let exitCriteria"    style="text-align: left;" > {{exitCriteria.exitCriteria}} </mat-cell>
+                        </ng-container>
+                        
+                        <!-- Operations Column -->
+                        <ng-container matColumnDef="exitCriteriaId">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                          <th class="matHeader">    
+                                                      Edit<button id="delete_id" mat-icon-button (click)="deleteExitCriteria()">
+                                                      <mat-icon aria-label="Example icon-button with a heart icon">delete</mat-icon>
+                                                </button>                                                  
+                                          </th>
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let exitCriteria; let rowIndex = index"    >  
+                                                <button id="update_id{{rowIndex}}" mat-icon-button type="submit" (click)="onUpdate(exitCriteria.exitCriteriaId)">
+                                                      <mat-icon aria-label="Example icon-button with a heart icon">edit</mat-icon>
+                                                </button> 
+                                                      &nbsp;&nbsp;&nbsp;                                                  
+                                                <mat-checkbox id="check_id{{rowIndex}}" class="example-margin" (change)="onChange($event)"  value="{{exitCriteria.exitCriteriaId}}" ></mat-checkbox>                        
+                                    </mat-cell>        
+                        </ng-container>      
+                        
+                        <mat-header-row class="columnName" *matHeaderRowDef="displayedColumns"></mat-header-row>     
+                                    
+                        <mat-row class="result-row" *matRowDef="let row; let element; columns:displayedColumns;" (click)="setClickedRow(row,element)" [ngClass]="{ highlight: row == selectedRow }"></mat-row>
+                        </table>
+
+    </div>

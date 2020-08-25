@@ -1,0 +1,110 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://1.www.s81c.com/common/v18/css/grid-fluid.css" rel="stylesheet">
+<div class="row" *ngIf="FlagHide === 'No'" style="margin-left: -12px;">
+    <form #form="ngForm" [formGroup]="ExecutionTeamForm" (ngSubmit)="onSubmit()" autocomplete="off">
+        <table id="ETFormTable">
+            <div style="display: none;">
+                <tr>
+                    <td>
+                       <mat-form-field class="example-full-width">
+                            <input id="ETIntegrationID" matInput placeholder="Integration ID" formControlName="IntegrationID" [readonly]="!editable" [hidden]=true>
+                       </mat-form-field> 
+                    </td>  
+                    <td>
+                        <mat-form-field class="example-full-width">
+                            <input id="ETCreated" matInput placeholder="Created By" formControlName="CreatedBy" [readonly]="!editable" [hidden]=true>
+                        </mat-form-field> 
+                    </td>
+                    <td>
+                        <mat-form-field class="example-full-width">
+                            <input id="ETModified" matInput placeholder="Modified By" formControlName="ModifiedBy" [readonly]="!editable" [hidden]=true>
+                        </mat-form-field>
+                    </td>
+                </tr>
+            </div>
+            <!-- <tr *ngIf="EmailResult.length===0"><mat-label style="font-size: 12px; color:red;">* Delivery Team is not available for the selected Owning TTS Organization in Profile >> Transition Profile Tab</mat-label></tr> -->
+            <tr>
+                <td>
+                    <mat-form-field class="fntsz">
+                        <mat-label class="fntsz">Delivery Member</mat-label>
+                        <mat-select class="fntsz" id="ETName" formControlName="ExecutionTeamName" [disabled]="editFlag=== 1">
+                            <mat-option class="fntsz">--</mat-option>
+                            <mat-option class="fntsz" (onSelectionChange)="getEmail(EmailResult.USER_NAME, EmailResult.USER_ID, EmailResult.USER_ORG)" *ngFor="let EmailResult of EmailResult" [value]=EmailResult.USER_EMAIL>
+                              {{EmailResult.USER_NAME}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    &nbsp;&nbsp;&nbsp;
+                    <mat-form-field class="fntsz">
+                            <mat-label class="fntsz">Role</mat-label>
+                            <mat-select class="fntsz" id="ETRole" formControlName="ExecutionTeamRole" multiple>                              
+                                <mat-option class="fntsz" (onSelectionChange)="getRoleID($event,TeamRole.ROLE_ID)" *ngFor="let TeamRole of TeamRole" [value]=TeamRole.ROLE_NAME>
+                                  {{TeamRole.ROLE_NAME}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                </td>
+            </tr>  
+            <tr><mat-label style="font-size: 11px; color:red;">Note: Options for Delivery Team is based on  Owning TTS Organization in Profile >> Transition Profile Tab</mat-label></tr>    
+        </table>   
+        <div class="example-button-row">                    
+                <button id="ETAdd" class="btn btn-info" type="submit" [disabled]="!ExecutionTeamForm.valid||editFlag=== 1" (click)= "Add()"> ADD </button>    
+                &nbsp;
+                <button id="ETUpdate" class="btn btn-info" type="submit" [disabled]="!ExecutionTeamForm.valid||editFlag=== 0"  (click)= "Update()"> Update </button>
+              
+        </div> 
+    </form>   
+</div>
+<br>
+<div class="row" style="margin-left: -12px;font-size:11px;">
+        
+            <tr>
+               <th id="header">Available Delivery Team Details :  <span>{{dataLength}}</span> </th>                  
+            </tr>  
+            <mat-form-field class="fntsz">
+                    <mat-label class="fntsz"><em class="fa fa-search" aria-hidden="true"></em></mat-label><input class="fntsz" id="ETSearch" matInput (keyup)="applyFilter($event.target.value)">
+            </mat-form-field>
+            <table id="ETDataTable" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8"> 
+                    <ng-container matColumnDef="USER_NAME">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>
+                            <th class="matHeader">Delivery Member</th>
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let element"  >{{element.USER_NAME}}                
+                        </mat-cell>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="USER_ROLE">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>
+                            <th class="matHeader">Delivery Member Role</th>
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let element"  >{{element.USER_ROLE}}
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="USER_ORG">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                <th class="matHeader">Owning TTS Organization</th>
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let element"  >{{element.USER_ORG}}
+                            </mat-cell>
+                   </ng-container>
+
+                    <ng-container matColumnDef="Delete">
+                            <mat-header-cell *matHeaderCellDef>
+                                <th class="matHeader"></th>
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let element; let i = index;">                                         
+                                    <button id="{{'ETDelet'+i}}" class="btn btn-info"  [hidden]="FlagHide === 'Yes'" (click)="onDelete(element)">
+                                        <em class="fa fa-trash"></em>
+                                    </button>          
+                            </mat-cell>
+                    </ng-container>
+                    
+                    <mat-header-row class="columnName" *matHeaderRowDef="displayedColumns"></mat-header-row>                
+                   
+                    <mat-row class="result-row" *matRowDef="let row; let element; columns:displayedColumns;" (click)="setClickedRow(row,element)" [ngClass]="{ highlight: row == selectedRow }">
+                    </mat-row>  
+            </table>  
+            <mat-paginator [pageSizeOptions]="[5, 1, 10, 20]" showFirstLastButtons (click)="setClickedRow(0,element)"></mat-paginator>       
+        
+</div> 

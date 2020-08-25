@@ -1,0 +1,18 @@
+<mat-dialog-content [formGroup]="form">
+    <div mat-dialog-content>
+      <p>This will create a new report, please enter Report name & Version</p>
+      <mat-form-field>
+          <input placeholder="Report name" matInput formControlName="reportName" value="{{reportName}}">
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <input matInput placeholder="Version" formControlName="version" value="{{version}}">
+      </mat-form-field>
+    </div>
+
+    <div mat-dialog-actions>
+          <button mat-button (click)="onNoClick()">Cancel </button>
+          <button mat-button (click)="save()"> Ok </button>
+    </div>
+</mat-dialog-content>

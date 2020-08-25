@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <style>
+            .columnName {
+                color:white;
+                font-weight: bold;
+                background-color: #1d3649;
+                text-align: center;
+                font-size:11px;
+
+            }
+     .mat-elevation-z8 {
+    width: 850px;
+    font-size:11px;
+  }
+  .mat-row {
+    min-height: 10px !important;
+    font-size:11px;
+  }
+  .mat-cell {    
+    font-size:11px;
+  }
+  button.btn-info {
+    background-color: #1d3649;
+    color: white;
+    font-size: 11px;
+  } 
+  .matHeader {
+  font-weight: bold;
+  color:white; 
+  font-size:11px;   
+}
+table {
+    width: 100%;
+  }
+
+  .customWidthClass{
+    flex: 0 0 210px;
+ }
+
+ .customWidthlessClass{
+  flex: 0 0 100px;
+} 
+
+.example-radio-group {
+      display: flex;
+      flex-direction: row;
+      margin: 15px 0;
+      font-size: 11px;
+    }
+    
+    .example-radio-button {
+      margin: 5px;
+      font-size: 11px;
+    }
+  
+    ::ng-deep .mat-radio-label-content{
+      font-size: 11px
+    }
+    ::ng-deep .mat-radio-outer-circle{
+      height: 12px !important;
+      width: 12px !important;
+      font-size: 11px
+  }
+  ::ng-deep .mat-radio-inner-circle{
+      height: 12px !important;
+      width: 12px !important;
+      font-size: 11px
+  }
+  
+  ::ng-deep .mat-radio-container{
+    height: 12px !important;
+    width: 12px !important;
+  }
+
+  .Cellsize{
+    font-size: 11px
+  }
+
+    </style>
+    </head>
+    <body>    
+    <div mat-dialog-content matSort class="mat-elevation-z8">
+        <h4 mat-dialog-title>Detailed Schedule Dialog</h4>
+        <mat-accordion>
+                <mat-expansion-panel style="background-color: #FFFFE0;font-size: 11px;" (opened)="getSerBacklogData()" expanded="false">
+                    <mat-expansion-panel-header>
+                    <mat-panel-title style="font-size: 11px;">
+                    Service Backlog
+                    </mat-panel-title>
+                    <mat-panel-description>                 
+                    </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <mat-card-content> 
+                        <table style="background-color: #FFFFE0;font-size: 11px;" id="sevenServiceTable" border="1">
+                            <tr>
+                                <td style="text-align: left;font-size: 11px;background-color:#1d3649;color:white">Standard Activity Name</td>
+                                <td style="text-align: left;font-size: 11px;background-color:#1d3649;color:white">Planned Start Date</td>
+                                <td style="text-align: left;font-size: 11px;background-color:#1d3649;color:white">Planned End Date</td>
+                                <td style="text-align: left;font-size: 11px;background-color:#1d3649;color:white">RePlanned Start Date</td>
+                                <td style="text-align: left;font-size: 11px;background-color:#1d3649;color:white">RePlanned End Date</td>
+                                <td style="text-align: left;font-size: 11px;background-color:#1d3649;color:white">Actual Start Date</td>
+                                <td style="text-align: left;font-size: 11px;background-color:#1d3649;color:white">Actual End Date</td>
+                            </tr>
+                            <tr *ngFor="let SerBck of Service_Bcklog">
+                                <td style="text-align: left;font-size: 11px;"> {{SerBck.STANDARD_ACTIVITY_NAME}}</td>
+                                <td style="text-align: left;font-size: 11px;"> {{SerBck.Plan_Start_Date | date : 'MM/dd/yyyy' }}</td>
+                                <td style="text-align: left;font-size: 11px;"> {{SerBck.Plan_End_Date | date : 'MM/dd/yyyy'}}</td>
+                                <td style="text-align: left;font-size: 11px;"> {{SerBck.Replan_Start_Date | date : 'MM/dd/yyyy'}}</td>
+                                <td style="text-align: left;font-size: 11px;"> {{SerBck.RePlan_End_Date | date : 'MM/dd/yyyy'}}</td>
+                                <td style="text-align: left;font-size: 11px;"> {{SerBck.Actual_Start_Date | date : 'MM/dd/yyyy'}}</td>
+                                <td style="text-align: left;font-size: 11px;"> {{SerBck.Actual_End_Date | date : 'MM/dd/yyyy'}}</td>
+                            </tr>
+                        </table>  
+                        <br> 
+                    </mat-card-content>
+                </mat-expansion-panel>  
+                <mat-expansion-panel style="background-color: #FFFFE0;font-size: 11px;" (opened)="getSpBacklogData()" expanded="false">
+                    <mat-expansion-panel-header>
+                    <mat-panel-title style="font-size: 11px;">
+                    Sprint Backlog
+                    </mat-panel-title>
+                    <mat-panel-description>                 
+                    </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <mat-card-content> 
+                        <table style="background-color: #FFFFE0;font-size: 11px;" id="sevensprintTable" border="1">
+                            <tr>
+                                <td style="text-align: left;font-size: 11px;background-color:#1d3649;color:white">Standard Activity Name</td>
+                                <td style="text-align: left;font-size: 11px;background-color:#1d3649;color:white">Planned Start Date</td>
+                                <td style="text-align: left;font-size: 11px;background-color:#1d3649;color:white">Planned End Date</td>
+                                <td style="text-align: left;font-size: 11px;background-color:#1d3649;color:white">RePlanned Start Date</td>
+                                <td style="text-align: left;font-size: 11px;background-color:#1d3649;color:white">RePlanned End Date</td>
+                                <td style="text-align: left;font-size: 11px;background-color:#1d3649;color:white">Actual Start Date</td>
+                                <td style="text-align: left;font-size: 11px;background-color:#1d3649;color:white">Actual End Date</td>
+                            </tr>
+                            <tr *ngFor="let SprintBck of Sprint_Bcklog">
+                                <td style="text-align: left;font-size: 11px;"> {{SprintBck.STANDARD_ACTIVITY_NAME}}</td>
+                                <td style="text-align: left;font-size: 11px;"> {{SprintBck.Plan_Start_Date | date : 'MM/dd/yyyy' }}</td>
+                                <td style="text-align: left;font-size: 11px;"> {{SprintBck.Plan_End_Date | date : 'MM/dd/yyyy'}}</td>
+                                <td style="text-align: left;font-size: 11px;"> {{SprintBck.Replan_Start_Date | date : 'MM/dd/yyyy'}}</td>
+                                <td style="text-align: left;font-size: 11px;"> {{SprintBck.RePlan_End_Date | date : 'MM/dd/yyyy'}}</td>
+                                <td style="text-align: left;font-size: 11px;"> {{SprintBck.Actual_Start_Date | date : 'MM/dd/yyyy'}}</td>
+                                <td style="text-align: left;font-size: 11px;"> {{SprintBck.Actual_End_Date | date : 'MM/dd/yyyy'}}</td>
+                            </tr>
+                        </table>  
+                        <br> 
+                    </mat-card-content>
+                </mat-expansion-panel>  
+            <mat-expansion-panel style="background-color: #C0C0C0;font-size: 11px;" (opened)="getSprint(epName.epicUNID)" *ngFor="let epName of dataSource_epic.data" expanded="false">
+                <mat-expansion-panel-header>
+                <mat-panel-title style="font-size: 11px;">
+                {{epName.epicName}}
+                </mat-panel-title>
+                <mat-panel-description>                 
+                </mat-panel-description>
+                </mat-expansion-panel-header>
+                <mat-card-content> 
+                    <table style="background-color: #C0C0C0;font-size: 11px;" id="sevenEpicTable" border="1" [hidden]="dataSource_epic.data.length === 0">
+                        <tr>
+                            <td style="text-align: left;font-size: 11px;">Planned Start Date</td>
+                            <td style="text-align: left;font-size: 11px;">Planned End Date</td>
+                            <td style="text-align: left;font-size: 11px;">RePlanned Start Date</td>
+                            <td style="text-align: left;font-size: 11px;">RePlanned End Date</td>
+                            <td style="text-align: left;font-size: 11px;">Actual Start Date</td>
+                            <td style="text-align: left;font-size: 11px;">Actual End Date</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;font-size: 11px;"> {{epName.startDate | date : 'MM/dd/yyyy' }}</td>
+                            <td style="text-align: left;font-size: 11px;"> {{epName.endDate | date : 'MM/dd/yyyy'}}</td>
+                            <td style="text-align: left;font-size: 11px;"> {{epName.replanStartDate | date : 'MM/dd/yyyy'}}</td>
+                            <td style="text-align: left;font-size: 11px;"> {{epName.replanEndDate | date : 'MM/dd/yyyy'}}</td>
+                            <td style="text-align: left;font-size: 11px;"> {{epName.actualStartDate | date : 'MM/dd/yyyy'}}</td>
+                            <td style="text-align: left;font-size: 11px;"> {{epName.actualEndDate | date : 'MM/dd/yyyy'}}</td>
+                        </tr>
+                    </table>  
+                    <br>     
+                 <mat-accordion>   
+                  <mat-expansion-panel style="background-color:#E0FFFF;font-size: 11px;" (opened)="getApp(spName.sprintUNID,spName.scopelevel)" *ngFor="let spName of dataSource_sprint.data" expanded="false">
+                  <mat-expansion-panel-header>
+                  <mat-panel-title style="font-size: 11px;">
+                  {{spName.sprintName}}
+                  </mat-panel-title>
+                  <mat-panel-description>
+                  </mat-panel-description>
+                  </mat-expansion-panel-header>
+                  <mat-card-content>    
+                    <table style="background-color:#E0FFFF;font-size: 11px;" id="sevenEpicTable" border="1" [hidden]="dataSource_sprint.data.length === 0">
+                        <tr>
+                            <td style="text-align: left;font-size: 11px;">Planned Start Date</td>
+                            <td style="text-align: left;font-size: 11px;">Planned End Date</td>
+                            <td style="text-align: left;font-size: 11px;">RePlanned Start Date</td>
+                            <td style="text-align: left;font-size: 11px;">RePlanned End Date</td>
+                            <td style="text-align: left;font-size: 11px;">Actual Start Date</td>
+                            <td style="text-align: left;font-size: 11px;">Actual End Date</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;font-size: 11px;"> {{spName.startDate | date : 'MM/dd/yyyy' }}</td>
+                            <td style="text-align: left;font-size: 11px;"> {{spName.endDate | date : 'MM/dd/yyyy'}}</td>
+                            <td style="text-align: left;font-size: 11px;"> {{spName.replanStartDate | date : 'MM/dd/yyyy'}}</td>
+                            <td style="text-align: left;font-size: 11px;"> {{spName.replanEndDate | date : 'MM/dd/yyyy'}}</td>
+                            <td style="text-align: left;font-size: 11px;"> {{spName.actualStartDate | date : 'MM/dd/yyyy'}}</td>
+                            <td style="text-align: left;font-size: 11px;"> {{spName.actualEndDate | date : 'MM/dd/yyyy'}}</td>
+                        </tr>
+                    </table>  
+                    <br>               
+                    <!--Displaying Application Details-->
+                    <table style="background-color:#FFFFE0;font-size: 11px;" mat-table [dataSource]="dataSource_app.data" matSort style="width:95%;">
+                        <ng-container matColumnDef="Application">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                <th class="matHeader">Application</th>
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let element">{{element.AppName}}                
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="ST Scope">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                <th class="matHeader">ST Scope</th>
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                            {{element.STScopeLevel}}-{{element.STScope}}-{{element.STDetailedScope}}-{{element.STScopeActivity}}             
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="Backlog Activity">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                <th class="matHeader">Backlog Activity</th>
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let element">{{element.Scope_BacklogActivity}}                
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="Plan Start Date">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                <th class="matHeader">Plan Start Date</th>
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let element"  >{{element.Plan_Start_Date | date : 'MM/dd/yyyy'}}                
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="Plan End Date">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                <th class="matHeader">Plan End Date</th>
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let element"  >{{element.Plan_End_Date | date : 'MM/dd/yyyy'}}                
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="Replan Start Date">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                <th class="matHeader">Replan Start Date</th>
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let element"  >{{element.Replan_Start_Date | date : 'MM/dd/yyyy'}}                
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="Replan End Date">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                <th class="matHeader">Replan End Date</th>
+                            </mat-header-cell>
+                                                                    
+                            <mat-cell *matCellDef="let element"  >{{element.RePlan_End_Date | date : 'MM/dd/yyyy'}}                
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="Actual Start Date">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                <th class="matHeader">Actual Start Date</th>
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let element"  >{{element.Actual_Start_Date | date : 'MM/dd/yyyy'}}                
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="Actual End Date">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                <th class="matHeader">Actual End Date</th>
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let element"  >{{element.Actual_End_Date | date : 'MM/dd/yyyy'}}                
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="Status">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                <th class="matHeader">Status</th>
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let element">{{(element.status === null||element.status === 'null') ? '' : element.status}}      
+                            </mat-cell>
+                        </ng-container>
+                        <mat-header-row class="columnName" *matHeaderRowDef="displayedColumns_app"></mat-header-row>                        
+                        <mat-row class="result-row" *matRowDef="let row; let element; columns:displayedColumns_app;">
+                        </mat-row>  
+                    </table>
+                  </mat-card-content>
+                  </mat-expansion-panel>  
+                 </mat-accordion>    
+                </mat-card-content>
+            </mat-expansion-panel>  
+            <mat-expansion-panel style="background-color: #FFFFE0;font-size: 11px;" (opened)="getTranClosureData()" expanded="false">
+                <mat-expansion-panel-header>
+                <mat-panel-title style="font-size: 11px;">
+                Transition Closure
+                </mat-panel-title>
+                <mat-panel-description>                 
+                </mat-panel-description>
+                </mat-expansion-panel-header>
+                <mat-card-content> 
+                    <table style="background-color: #FFFFE0;font-size: 11px;" id="sevensprintTable" border="1">
+                        <tr>
+                            <td style="text-align: left;font-size: 11px;background-color:#1d3649;color:white">Standard Activity Name</td>
+                            <td style="text-align: left;font-size: 11px;background-color:#1d3649;color:white">Planned Start Date</td>
+                            <td style="text-align: left;font-size: 11px;background-color:#1d3649;color:white">Planned End Date</td>
+                            <td style="text-align: left;font-size: 11px;background-color:#1d3649;color:white">RePlanned Start Date</td>
+                            <td style="text-align: left;font-size: 11px;background-color:#1d3649;color:white">RePlanned End Date</td>
+                            <td style="text-align: left;font-size: 11px;background-color:#1d3649;color:white">Actual Start Date</td>
+                            <td style="text-align: left;font-size: 11px;background-color:#1d3649;color:white">Actual End Date</td>
+                        </tr>
+                        <tr *ngFor="let TC of TranClosure">
+                            <td style="text-align: left;font-size: 11px;"> {{TC.STANDARD_ACTIVITY_NAME}}</td>
+                            <td style="text-align: left;font-size: 11px;"> {{TC.Plan_Start_Date | date : 'MM/dd/yyyy' }}</td>
+                            <td style="text-align: left;font-size: 11px;"> {{TC.Plan_End_Date | date : 'MM/dd/yyyy'}}</td>
+                            <td style="text-align: left;font-size: 11px;"> {{TC.Replan_Start_Date | date : 'MM/dd/yyyy'}}</td>
+                            <td style="text-align: left;font-size: 11px;"> {{TC.RePlan_End_Date | date : 'MM/dd/yyyy'}}</td>
+                            <td style="text-align: left;font-size: 11px;"> {{TC.Actual_Start_Date | date : 'MM/dd/yyyy'}}</td>
+                            <td style="text-align: left;font-size: 11px;"> {{TC.Actual_End_Date | date : 'MM/dd/yyyy'}}</td>
+                        </tr>
+                    </table>  
+                    <br> 
+                </mat-card-content>
+            </mat-expansion-panel>          
+        </mat-accordion>
+</div>
+</body>
+</html>

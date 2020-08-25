@@ -1,0 +1,142 @@
+.fontsze{
+  font-size: 11px;
+}
+nav.nav-center ul {
+  text-align: center;
+  background-color:paleturquoise;
+}
+/* .tableexpand{
+
+} */
+nav.nav-center ul li {
+  display: inline;
+  float: none;
+}
+nav.nav-center ul li a {
+  display: inline-block;
+}
+
+/* table {
+  width: 100%;
+} */
+
+.headerrow {  
+  font-weight: bold;
+  background-color: #1d3649;
+  text-align: center;
+  color:white;  
+}
+
+
+.headerrowheadpage{
+  color:white;
+  font-weight: bold;
+  background-color: #1d3649;
+  font-size:11px;
+}
+
+
+.headerrow_table {  
+  font-weight: bold;
+  background-color: #1d3649;
+  text-align: center;
+  color:white;
+  font-size:11px;
+  /* width:100px !important; */
+}
+.highlight  {
+  background-color:cornsilk !important;
+  font-weight: bold;
+} 
+
+.headerrow {  
+  font-weight: bold;
+  background-color: #1d3649;
+  text-align: center;
+  color:white;
+  font-size:11px;
+
+}
+.matHeader {
+  font-weight: bold;
+  color:white;    
+  font-size:11px;
+}
+/* .mat-cell{
+  display:flex !important;
+  font-size:11px;
+
+} */
+/* .mat-row {
+  min-height: 10px !important;
+  font-size:11px;
+} */
+ .mat-elevation-z8 {
+  width:  1000px;
+}
+/* th.mat-sort-header {
+  color:white;
+} */
+/* 
+.mat-form-field {  
+  font-size:11px;
+  width:75%    !important 
+}  */
+
+/* ::ng-deep .mat-form-field-label {
+  
+  font-size:11px;
+} */
+
+.mybutton {
+  background-color: #1d3649;
+  color: white;
+  font-size: 11px;
+}
+button.btn-info {
+  background-color: #1d3649;
+  color: white;
+} 
+
+.fntsz{
+  font-size:11px;
+  word-wrap: break-word;
+}
+
+
+.mat-error{
+ font-size: 11px;
+} 
+
+
+.wpd-tool-tip {
+  white-space: pre-line;
+  display: block;
+  width: 900px;
+}
+
+
+/* .mat-form-field {
+  width:100px !important
+} */
+
+.matfieldprop{
+  
+  width: 85%;
+}
+.fieldprop{
+  font-size: 11px;
+  
+}
+.headerwidth-firstcolumn{
+  width: 250px;
+}
+.headerwidth-restofthecolumn{
+width: 150px;
+}
+.example-container {
+  height: auto;
+  width: 1000px;
+  overflow: auto;
+}
+

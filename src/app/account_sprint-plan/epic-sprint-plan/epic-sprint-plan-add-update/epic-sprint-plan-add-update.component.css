@@ -1,0 +1,118 @@
+
+  table {
+    width: 100%;
+  }
+  
+  .mat-form-field {
+    font-size: 11px;
+    /* width: 100%; */
+  }
+  button.btn-info {
+    background-color: #1d3649;
+    color: white;
+    font-size:11px;
+  }
+  .Cellsize{
+    font-size: 11px;
+  }
+  /* .example-form {
+    font-size: 11px;
+    width: 10%;
+  } */
+  .date-full-width {
+    font-size: 11px;
+    width: 12%;
+  }
+  .headerrow {  
+    font-weight: bold;
+    background-color: #1d3649;
+    text-align: center;
+    color:white;
+    width: 100%
+  }
+  .highlight  {
+    background-color:cornsilk !important;
+    font-weight: bold;
+  } 
+.fntsize{
+  font-size: 11px;
+}
+ .columnName {
+    color:white;
+    font-weight: bold;
+    background-color: #1d3649;
+    text-align: center;
+  }
+
+  .matHeader {
+    font-weight: bold;
+    color:white;    
+  }
+  .mat-elevation-z8 {
+    width: 1110px;
+  }
+  /* th.mat-sort-header {
+    color:white;
+  } */
+
+  /* .mat-form-field {
+    font-size: 20px;
+    width: 40%;
+  }  */
+
+  .example-full-width {
+    font-size: 11px;
+    width: 19%;
+  }
+  .text{
+    font-weight: bold;
+    font-size: 11px;
+    color:rgb(48, 48, 121)
+  }
+  .searchField {
+    font-size: 11px;
+    width: 50%;
+  }
+  .green{
+    background-color: green;
+  }
+  .red{
+    background-color: red;
+  }
+  .amber{
+    background-color: rgb(255, 230, 0);
+  }
+
+  .example-radio-group {
+    display: flex;
+    flex-direction: row;
+    margin: 15px 0;
+    font-size: 11px;
+  }
+  
+  .example-radio-button {
+    margin: 5px;
+    font-size: 11px;
+  }
+
+  ::ng-deep .mat-radio-label-content{
+    font-size: 11px
+  }
+  ::ng-deep .mat-radio-outer-circle{
+    height: 12px !important;
+    width: 12px !important;
+    font-size: 11px
+}
+::ng-deep .mat-radio-inner-circle{
+    height: 12px !important;
+    width: 12px !important;
+    font-size: 11px
+}
+
+::ng-deep .mat-radio-container{
+  height: 12px !important;
+  width: 12px !important;
+}
+
+
+ 

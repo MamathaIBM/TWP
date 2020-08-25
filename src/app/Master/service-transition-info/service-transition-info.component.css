@@ -1,0 +1,44 @@
+table {
+  width: 100%;    
+  font-size: 11px;       
+}
+
+button.btn-info {
+    background-color: #1d3649;
+    color: white;
+    font-size:11px;
+  }  
+  .searchstyle{
+    font-size: 11px;
+  }
+  .searchField {
+    font-size: 11px;
+    width:50%;
+  }
+  .text{
+    font-size: 11px;
+    font-weight: bold;
+  }
+  .headerrow {  
+    color:white;
+    font-size:11px;
+    text-align: center;
+  }
+  .columnrrow {     
+    font-size:11px;   
+  }
+  .example-container{
+    height: auto;
+    width: 1000px;
+    overflow: auto;
+  }
+.fieldsize{
+  font-size: 11px;
+  width: 90%;
+}
+.columnName {
+  color:white;
+  font-weight: bold;
+  background-color: #1d3649;  
+  font-size: 11px;  
+}

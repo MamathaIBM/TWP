@@ -1,0 +1,7 @@
+{"message":"/tnt/userFunctionalityList/sahitya.sanagapati@in.ibm.com","level":"info"}
+{"message":"/tnt/userTransitionAccessList/sahitya.sanagapati@in.ibm.com","level":"info"}
+{"message":"/tnt/userAccessData/sahitya.sanagapati@in.ibm.com","level":"info"}
+{"message":"##################### NEW FUNCTIONALITY STARTED ###################### ","level":"info"}
+{"message":"{\"FUNC_NAME\":\"consentScreen\" ,\"USER_NAME\": \"SAHITYA%20SANAGAPATI\" ,\"USER_ID\": \"4\" ,\"USER_EMAIL\": \"sahitya.sanagapati@in.ibm.com\" ,\"ROUTER_LINK\":\"ConsentFormComponent\" ,\"IP_ADDRESS\":\"::1\" ,\"TIME_STAMP\":\"10:13:05 AM\" ,\"DAY\":\"25-7-2020\" }","level":"info"}
+{"message":"##################### NEW FUNCTIONALITY STARTED ###################### ","level":"info"}
+{"message":"{\"FUNC_NAME\":\"ManageActiveTransitions\" ,\"USER_NAME\": \"SAHITYA%20SANAGAPATI\" ,\"USER_ID\": \"4\" ,\"USER_EMAIL\": \"sahitya.sanagapati@in.ibm.com\" ,\"ROUTER_LINK\":\"ManageActiveTransitionsComponent\" ,\"IP_ADDRESS\":\"::1\" ,\"TIME_STAMP\":\"10:13:07 AM\" ,\"DAY\":\"25-7-2020\" }","level":"info"}

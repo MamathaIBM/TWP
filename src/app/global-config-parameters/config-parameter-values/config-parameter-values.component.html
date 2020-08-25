@@ -1,0 +1,75 @@
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!--
+
+&nbsp;&nbsp;&nbsp;
+<div class="container" style="text-align:left;width:80%" >
+    Configuration Parameter Values for {{parameter}}          <button mat-icon-button type="submit" (click)="createNew(parameter)">
+            <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+        </button> 
+
+</div>
+-->
+&nbsp;&nbsp;
+<div class="container" style="text-align:left;width:80%" >
+    <table>
+            <tr>  
+                <td>
+                    <div style="text-align:left;" >   
+                            <div class="headerrowheadpage" style="text-align:left;  font-size:11px;width:40%">
+                                    Configuration Parameter Values for {{parameter}} 
+                            </div>    
+                    </div>  
+                </td>
+                <td style="text-align:right;"> 
+                            <button mat-icon-button type="submit" (click)="createNew(parameter)">
+                                    <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+                            </button> 
+                </td> 
+        </tr>                          
+    </table>    
+
+</div>
+
+<link href="https://1.www.s81c.com/common/v18/css/grid-fluid.css" rel="stylesheet">      
+&nbsp;&nbsp;
+
+
+<div class="container" style="text-align:left;width:80%" >
+
+<table mat-table [dataSource]="dataSource"  matSort >          
+  
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+  
+    <!-- Name Column -->
+    <ng-container matColumnDef="configParameterName">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th class="matHeader">Parameter Values</th>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let parameter" > {{parameter.Categoryvalues}} </mat-cell>
+    </ng-container>
+  
+
+      <!-- Operations Column -->
+      <ng-container matColumnDef="configParameterId">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                    <th class="matHeader">Operations</th>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let parameter" >             
+                <button mat-icon-button type="submit" id="settings_id{{parameter.FieldCategoryName}}" (click)="onEdit(parameter.id, parameter.FieldCategoryName, parameter.Categoryvalues)">
+                    <mat-icon aria-label="">edit</mat-icon>
+                </button>  
+                <button mat-icon-button type="submit" id="delete_id{{parameter.FieldCategoryName}}" (click)="onDelete(parameter.id, parameter.Categoryvalues)">
+                    <mat-icon aria-label="Example icon-button with a heart icon">delete_forever</mat-icon>
+                </button>                                                                   
+            </mat-cell>        
+    </ng-container>      
+    <mat-header-row class="columnName" *matHeaderRowDef="displayedColumns"></mat-header-row>  
+    <mat-row class="result-row" *matRowDef="let row; let element; columns:displayedColumns;"  [ngClass]="{ highlight: row == selectedRow }">
+        </mat-row> 
+
+  </table>
+  </div>

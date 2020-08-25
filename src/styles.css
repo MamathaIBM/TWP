@@ -1,0 +1,63 @@
+/* You can add global styles to this file, and also import other style files */
+
+
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.css";
+
+/* 
+html, body { height: 100%; }
+body { margin: 0; font-family: 'Roboto', sans-serif; }
+
+body { margin: 0; } */
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.pageMarginClass{
+  margin-left: -12px;
+ }
+
+.mat-elevation-z8 {
+  width: 1000px;
+  font-size:11px;
+}
+
+.example-container {
+  height: 400px;
+  width: 1000px;
+  overflow: auto;
+}
+
+  .mat-table-sticky:first-child {
+    border-right: 1px solid #e0e0e0;
+  }
+  .mat-table-sticky:last-child {
+    border-left: 1px solid #e0e0e0;
+  }
+  td.mat-column-star {
+    width: 20px;
+    padding-right: 8px;
+  }
+  
+  th.mat-column-position, td.mat-column-position {
+    padding-left: 8px;
+  }
+  
+  
+  .result-row-red{  
+    width: 100%;    
+    background-color:  #E47297
+    }
+  
+  .result-row-BS{  
+    width: 100%;
+    background-color: #FFB738 
+    /* hsla(38, 100%, 50%, 0.53) */
+  }
+  .result-row-OT{  
+    width: 100%;
+    background-color: #CCFFCC
+  }
+  .result-row-C{  
+    width: 100%;
+    background-color:#66CCFF
+    }

@@ -1,0 +1,104 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://1.www.s81c.com/common/v18/css/grid-fluid.css" rel="stylesheet">      
+<div class="row" style="margin-left: -12px;">
+    <mat-form-field class="fntsz">
+      <mat-select class="fntsz" id="TWBSPhaseName" [(value)]="tailoredSelectedValue" >
+        <mat-option class="fntsz" (onSelectionChange)="change($event)" 
+                    *ngFor="let tailoredValue of tailoredValues" [value]="tailoredValue.PHASE_NAME">{{tailoredValue.PHASE_NAME}}</mat-option>
+      </mat-select>
+    </mat-form-field>   
+    <div style="text-align:right;">
+        <button id="TWBSSave" class="btn btn-info" *ngIf="!(accountExistLength || updateFlag)" [disabled]="progress>0" [hidden] ="FlagHide === 'Yes' || dataLength === 0"  (click)="onSave()">
+            <em class="fa fa-save "></em>Save</button>
+        <button id="TWBSUpdate" class="btn btn-info" *ngIf="accountExistLength || updateFlag " [disabled]="progress>0" [hidden] ="FlagHide === 'Yes' || dataLength === 0"  (click)="onUpdate()">
+                <em class="fa fa-save "></em>Update</button>
+    </div>
+    <br>    
+    <mat-progress-bar mode="indeterminate" *ngIf="progress"></mat-progress-bar>    
+    <div *ngIf="progress" ><h2> Please wait while data loads</h2></div>
+</div> 
+<div class="row" style="margin-left: -12px;" *ngIf="accountExistLength || updateFlag" [hidden] ="FlagHide === 'Yes'">
+    <form #form="ngForm" [formGroup]="tailoredWBSForm">
+        <table id="TWBSNewAddTable" style="width:700px"> <tr>
+                <td>
+                <mat-form-field class="fntsz" style="width:300px">
+                    <mat-label class="fntsz">New Standard Activity</mat-label>
+                    <textarea class="fntsz" id="TWBSNewActivity" rows="0" matInput
+                              [readonly]="FlagHide === 'Yes'" 
+                              formControlName="STANDARD_ACTIVITY_NAME"></textarea>
+                </mat-form-field>
+                </td>
+                &nbsp;&nbsp;
+                <td>
+                <mat-form-field class="fntsz">
+                        <mat-label class="fntsz">Milestone or Task</mat-label>
+                        <mat-select class="fntsz" id="TWBSTask" formControlName="MILESTONE_OR_TASK">
+                        <mat-option class="fntsz" *ngFor="let MilestoneORTask of MilestoneORTasks" [disabled] ="FlagHide === 'Yes'"
+                        [value]="MilestoneORTask.value">
+                            {{MilestoneORTask.value}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                </td>
+                &nbsp;&nbsp;                
+                <td>
+                <button id="TWBSNewAddActivities" class="btn btn-info" [disabled]="progress>0" 
+                                              [disabled] ="FlagHide === 'Yes'"
+                                             [disabled]="tailoredWBSForm.controls['STANDARD_ACTIVITY_NAME']==='' &&  tailoredWBSForm.controls['MILESTONE_OR_TASK']===''"
+                                              (click)="addActivities()">
+                        <em class="fa fa-save "></em>Add Account Specific Activities  
+                </button>
+            </td>
+            </tr></table>
+    </form>    
+</div>       
+<div class="row" style="margin-left: -12px;">  
+      <table id="TWBSDataTable" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+                          <ng-container matColumnDef="STANDARD_ACTIVITY_NAME">
+                              <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass'" style="display:flex !important;">
+                                  <th class="matHeader">STANDARD_ACTIVITY_NAME</th>
+                              </mat-header-cell>
+                              <mat-cell *matCellDef="let element; let i = index;" [ngClass]="'customWidthClass'" style="display:flex !important;">                                  
+                                  <mat-form-field class="fntszTrName">
+                                <textarea class="fntszTrName" id="{{'TWBSActivity'+i}}" matInput [readonly]="FlagHide === 'Yes'"
+                                (keyup)="onKey($event,element)" [value] = "element.STANDARD_ACTIVITY_NAME">                                    
+                                <!-- [disabled]="Baselined===0" -->
+                                </textarea>
+                            </mat-form-field>
+                              </mat-cell>
+                          </ng-container>
+          
+                          <ng-container matColumnDef="MILESTONE_OR_TASK">
+                              <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthlessClass'" style="display:flex !important;justify-content:center!important;">
+                                  <th class="matHeader">MILESTONE_OR_TASK</th>
+                              </mat-header-cell>
+                              <mat-cell *matCellDef="let element" [ngClass]="'customWidthlessClass'" style="display:flex !important;justify-content:center!important;" >                                  
+                                {{element.MILESTONE_OR_TASK}}                
+                              </mat-cell>
+                          </ng-container>
+                          
+                          <ng-container matColumnDef="twbsChecked">
+                              <mat-header-cell *matHeaderCellDef [ngClass]="'customWidthlessClass'" style="display:flex !important;justify-content:center!important;">
+                                  <th class="matHeader">Select All / De-Select All  
+                                    <mat-checkbox class="fntsz" [checked]= "s_dFlag" 
+									 [disabled]="FlagHide === 'Yes'" 
+                                    (change)="select_deselect()">
+                                      </mat-checkbox>  
+                                  </th>
+                              </mat-header-cell>
+                              <mat-cell *matCellDef="let element; let i = index;" [ngClass]="'customWidthlessClass'" style="display:flex !important;justify-content:center!important;">                                  
+                                  <mat-checkbox class="fntsz" id="{{'TWBSCheckBox'+i}}" class="example-margin"  [checked]= "element.CheckedValue"  [disabled]="FlagHide === 'Yes'"                            
+                                  (change)="onChange($event,element)">
+                                    </mat-checkbox>                                                
+                              </mat-cell>
+                          </ng-container>   
+                          
+                          <!-- "element.CheckedValue" -->
+
+                          <mat-header-row class="columnName" *matHeaderRowDef="displayedColumns"></mat-header-row>                                         
+                          <mat-row class="result-row" *matRowDef="let row; let element; columns:displayedColumns;" [ngClass]="{ highlight: row == selectedRow }">
+                              </mat-row>  
+                      </table> 
+                      <!-- <mat-paginator [pageSizeOptions]="[5, 1, 10, 20]" showFirstLastButtons></mat-paginator>  -->
+  </div>

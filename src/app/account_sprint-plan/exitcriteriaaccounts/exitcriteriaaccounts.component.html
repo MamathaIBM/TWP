@@ -1,0 +1,71 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://1.www.s81c.com/common/v18/css/grid-fluid.css" rel="stylesheet">      
+<br>
+<div class="row" style="margin-left: -12px;">
+    <button id="ECAUpdate" class="btn btn-info" [disabled]="progress>0 " [hidden] ="FlagHide === 'Yes' || dataLength === 0" (click)="onUpdate()">
+        <em class="fa fa-save "></em> Update
+    </button>
+</div>   
+<br>
+    <div class="row" style="margin-left: -12px;">  
+    <mat-progress-bar mode="indeterminate" *ngIf="progress"></mat-progress-bar>
+
+    <div *ngIf="progress">
+        <h2> Please wait while data loads</h2>
+    </div>
+    <table id="ECADataTable" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+        <ng-container matColumnDef="Phase_Name">                
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                <th class="matHeader">PHASE NAME</th>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.PHASE_NAME}}           
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Exit_Criteria_NAME">                
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                <th class="matHeader">EXIT CRITERIA</th>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.EXIT_CRITERIA}}           
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Exit_Criteria_Status">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                <th class="matHeader">STATUS</th>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element; let i = index;">                    
+                    <mat-select id="{{'ECAStatus'+i}}" [(value)]="element.EXIT_CRITERIA_Status" style="width: 50%" placeholder="Status" [disabled]="FlagHide === 'Yes'"  >
+                            <mat-option *ngFor="let ECStatus of ECStatus" [value]="ECStatus.Categoryvalues">          
+                                {{ECStatus.Categoryvalues}}
+                            </mat-option>
+                    </mat-select>
+            </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="Exit_Criteria_Comments">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th class="matHeader">Comments</th>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element; let i = index;">     
+        <textarea id="{{'ECAComments'+i}}" matInput placeholder="" (keyup)="onKey($event,element)" [readonly]="FlagHide === 'Yes'"  [value] = "element.EXIT_CRITERIA_Comments">                                    
+        <!-- [disabled]="Baselined===0" -->
+        </textarea>   
+</mat-cell>
+</ng-container>
+<ng-container matColumnDef="EXIT_CRITERIA_URL">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>
+        <th class="matHeader">URL</th>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let element; let i = index;">     
+    <input type="url" id="{{'ECAURL'+i}}" matInput placeholder="" (keyup)="onKeyURL($event,element)" [readonly]="FlagHide === 'Yes'"  [value] = "element.EXIT_CRITERIA_URL">                                    
+    <!-- [disabled]="Baselined===0" -->  
+</mat-cell>
+</ng-container>
+
+    <mat-header-row class="columnName" *matHeaderRowDef="displayedColumns"></mat-header-row>                                         
+    <mat-row class="result-row" *matRowDef="let row; let element; columns:displayedColumns;" [ngClass]="{ highlight: row == selectedRow }">
+    </mat-row> 
+    </table>
+   
+</div>

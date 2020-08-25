@@ -1,0 +1,178 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://1.www.s81c.com/common/v18/css/grid-fluid.css" rel="stylesheet">
+ <div [hidden]="sprinnerFlag === 1" >
+   <mat-spinner></mat-spinner>
+   Please wait....
+ </div>
+   <div [hidden]="sprinnerFlag === 0" style="margin-left: -12px;">
+         <mat-form-field class="searchField">
+               <mat-label style="font-size: 11px;" >Search</mat-label>
+               <input  style="font-size: 11px;" id="EpicSearch" matInput (keyup)="applyFilter($event.target.value)"  >
+            </mat-form-field>
+            <div class="text"> 
+                  <button id="EpicBaseline"  class="btn btn-info"   type="submit" 
+                  [disabled]="dataSource.data===0 || baselinePageFlag === 1 || baselineFlagValue===1" 
+                  [hidden]="FlagHide=== 'Yes'" (click)="onBaseline()">
+                  <em class="fa fa-save "></em> Baseline
+                  </button> &nbsp;
+                  <button id="AddEpic"  class="btn btn-info" 
+                   type="submit" [disabled]="editFlag === 1"  [hidden]="FlagHide=== 'Yes'" (click) ="openDialog()">ADD Epic </button>                                     
+                  &nbsp;&nbsp;                            
+                  Number of Epics : {{dataLength}} &nbsp; Epic Plan Baselined : {{baselineFlagValue === 1 ? "Yes":"No" }}&nbsp;&nbsp;                   
+                   <a> Epic Wise Status Report: <button id="exportEpicAsPPT_btn" (click)="exportEpicAsPPT()" ><em class="fa fa-file-powerpoint-o" style="font-size:20px;color:red"></em></button>             </a>
+                </div>
+       
+   <div class="example-container mat-elevation-z8" >
+
+    <table id="EpicDataTable" mat-table [dataSource]="dataSource" matSort>
+
+         <ng-container matColumnDef="epicName" sticky>
+            <th mat-header-cell class="headerrow" *matHeaderCellDef mat-sort-header >
+             <div class="headerrow"> Epic Name({{dataLength}})      </div>                    
+         </th>       
+            <td mat-cell *matCellDef="let element"> {{element.epicName}}                
+            </td>
+         </ng-container>
+
+         <ng-container matColumnDef="startDate" sticky >
+            <th mat-header-cell class="headerrow" *matHeaderCellDef mat-sort-header >
+                  <div class="headerrow">  Start Date     </div>                        
+           
+</th>
+            <td mat-cell *matCellDef="let element">  {{element.startDate  | date : 'yyyy-MM-dd'}}
+            </td>
+         </ng-container>
+         
+         <ng-container matColumnDef="endDate" sticky >
+            <th mat-header-cell class="headerrow" *matHeaderCellDef mat-sort-header >
+                  <div class="headerrow">   End Date </div>                           
+           
+</th>
+            <td mat-cell *matCellDef="let element">  {{element.endDate | date : 'yyyy-MM-dd'}}                 
+            </td>
+         </ng-container>
+
+         <ng-container matColumnDef="replanStartDate" sticky>
+            <th mat-header-cell class="headerrow" *matHeaderCellDef mat-sort-header  >
+                  <div class="headerrow">  Replan Start Date</div>
+           
+</th>
+            <td mat-cell *matCellDef="let element" >  {{element.replanStartDate  | date : 'yyyy-MM-dd'}} 
+            </td>
+         </ng-container>
+
+         <ng-container matColumnDef="replanEndDate" sticky>
+            <th mat-header-cell class="headerrow" *matHeaderCellDef mat-sort-header  >
+                  <div class="headerrow"> Replan End Date  </div>                              
+           
+</th>
+            <td mat-cell *matCellDef="let element" >  {{element.replanEndDate | date : 'yyyy-MM-dd'}} 
+            </td>
+         </ng-container>
+         
+         <ng-container matColumnDef="actualStartDate">
+            <th mat-header-cell class="headerrow" *matHeaderCellDef mat-sort-header  >
+                  <div class="headerrow">  Actual Start Date  </div>                              
+           
+</th>
+            <td mat-cell *matCellDef="let element" >
+                     {{element.actualStartDate  | date : 'yyyy-MM-dd'}}                
+            </td>
+         </ng-container>
+
+         <ng-container matColumnDef="actualEndDate" >
+            <th mat-header-cell class="headerrow" *matHeaderCellDef mat-sort-header  >
+                  <div class="headerrow"> Actual End Date </div>                                   
+           
+</th>
+            <td mat-cell *matCellDef="let element" >  {{element.actualEndDate  | date : 'yyyy-MM-dd'}} 
+            </td>
+         </ng-container>
+         
+         <ng-container matColumnDef="rag" >
+            <th mat-header-cell class="headerrow" *matHeaderCellDef mat-sort-header  >
+                  <div class="headerrow">  RAG  </div>
+           
+</th>
+            <td mat-cell *matCellDef="let element" > {{element.rag}} 
+            </td>
+         </ng-container>
+         
+         <ng-container matColumnDef="owner">
+            <th mat-header-cell class="headerrow" *matHeaderCellDef mat-sort-header  >
+                  <div class="headerrow"> Owner </div>
+           
+</th>
+            <td mat-cell  *matCellDef="let element" >            
+                     {{element.owner}}                            
+            </td>
+         </ng-container>
+         
+         <ng-container matColumnDef="remarks">
+            <th mat-header-cell class="headerrow" *matHeaderCellDef mat-sort-header  >
+                  <div class="headerrow">  Remarks </div>
+           
+</th>
+
+            <td mat-cell *matCellDef="let element"   >
+               <mat-form-field style="width: 90%;"  >
+                  <textarea  class="headerrow" matInput   rows="1" [readonly]= true [value] = "element.remarks">                                                        
+                  </textarea>
+               </mat-form-field>
+            </td>
+         </ng-container>
+         
+         <ng-container matColumnDef="reasonfornotgreen">
+            <th mat-header-cell class="headerrow" *matHeaderCellDef mat-sort-header  >
+                  <div class="headerrow"> Reason for not Green </div>
+           
+</th>
+
+            <td mat-cell *matCellDef="let element" >
+               <mat-form-field   style="width: 90%;" >
+                  <textarea  class="headerrow" matInput  rows="1" [readonly]= true [value] = "element.reason_for_not_green">                                                        
+                  </textarea>
+               </mat-form-field>         
+            </td>
+         </ng-container>
+
+         <ng-container matColumnDef="gotogreenplan">
+            <th mat-header-cell class="headerrow" *matHeaderCellDef mat-sort-header  >
+                  <div class="headerrow"> Go to Green Plan </div>
+           
+</th>
+            <td mat-cell *matCellDef="let element" >
+               <mat-form-field style="width: 90%;" >
+                  <textarea  class="headerrow" matInput   rows="1" [readonly]= true [value] = "element.green_plan">                                                        
+                  </textarea>
+               </mat-form-field>            
+            </td>
+         </ng-container>
+
+         <ng-container matColumnDef="icon" stickyEnd>
+                <th mat-header-cell *matHeaderCellDef> </th>
+                <td mat-cell class="headerrow" *matCellDef="let element; let i = index;" >  
+                        <button id="{{'EpicEdit'+i}}" class="btn btn-info" [hidden]="FlagHide=== 'Yes'"  (click)="setClickedRow(i,element,'Edit')"> <em class="fa fa-edit"></em>
+                        </button>     &nbsp;  
+                        <button id="{{'ViewEdit'+i}}" class="btn btn-info" [hidden]="FlagHide !== 'Yes'"  (click)="setClickedRow(i,element,'View')"> <em class="fa fa-eye"></em>
+                        </button>     &nbsp;                                                       
+                        <button id="{{'EpicDelete'+i}}" class="btn btn-info" [hidden]="FlagHide=== 'Yes'|| baselinePageFlag === 1 || baselineFlagValue===1" (click)="onDelete(element)">
+                        <em class="fa fa-trash"></em>
+                        </button>
+                     </td>
+              </ng-container>
+
+
+         <tr mat-header-row class="columnName" *matHeaderRowDef="displayedColumns; sticky : true;">
+         </tr>
+         <tr mat-row  class="result-row" *matRowDef="let row; let element; columns:displayedColumns;">
+         </tr> 
+
+
+      </table>
+     
+</div>
+<mat-paginator class="mat-elevation-z8" [pageSizeOptions]="[5, 1, 10, 20]" showFirstLastButtons></mat-paginator>
+   </div>
+   
+
